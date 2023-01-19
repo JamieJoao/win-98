@@ -1,0 +1,16 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+//FONTS
+@font-face {
+  font-family: $coders;
+  src: url("../assets/fonts/coders.ttf");
+}
+
+@font-face {
+  font-family: $windows;
+  src: url("../assets/fonts/windows-regular.ttf");
+}
