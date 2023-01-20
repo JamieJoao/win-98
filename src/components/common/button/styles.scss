@@ -14,7 +14,7 @@
     border-left-color: $white;
     border-bottom-color: $gray-2;
     border-right-color: $gray-2;
-    padding: 2px;
+    // padding: 2px;
 
     display: flex;
     justify-content: center;
@@ -52,6 +52,47 @@
       &__label {
         font-weight: 900;
       }
+    }
+  }
+
+  // VARIATIONS
+  &-minimize,
+  &-maximize,
+  &-close {
+    width: 16px;
+    height: 14px;
+
+    &__icon {
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+  }
+
+  &-minimize {
+    &__icon {
+      align-items: flex-end;
+      padding: 1px 2px;
+    }
+  }
+
+  &-close,
+  &-maximize {
+    margin-left: 2px;
+
+    &__icon {
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &-maximize {
+    margin-left: 0;
+  }
+
+  &-start {
+    &__content {
+      padding: 2px;
     }
   }
 }

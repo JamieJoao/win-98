@@ -1,0 +1,49 @@
+.w98-taskbar-button {
+  height: 25px;
+  max-width: 160px;
+  background-color: $gray-1;
+  border: 1px solid;
+  grid-row: 1;
+
+  @include border-color-container;
+
+  &__content {
+    height: 100%;
+    border: 1px solid;
+    padding: 0 2px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 4px;
+
+    @include border-color-box;
+
+    span {
+      font-family: $windows;
+      font-size: 12px;
+    }
+
+  }
+
+  //MUTATORS
+  &.--bold {
+    .w98-taskbar-button {
+      &__content {
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  &:focus {
+    @include border-color-container-inv;
+
+    .w98-taskbar-button {
+      &__content {
+        @include border-color-box-inv;
+      }
+    }
+  }
+}

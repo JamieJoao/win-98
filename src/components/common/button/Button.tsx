@@ -1,25 +1,35 @@
-import classnames from 'classnames'
+import cn from 'classnames'
+
+import { IPropsButton } from './types'
 
 import './styles.scss'
 
-interface Props {
-  label?: string
-  iconUrl?: string
-  bold?: boolean
-  disabled?: boolean
-}
-
-export const Button = ({ label, disabled, iconUrl, bold }: Props) => {
+export const Button = ({
+  label,
+  disabled,
+  iconUrl,
+  bold,
+  className,
+  children,
+  classNameContent,
+  onClick,
+}: IPropsButton) => {
   return (
     <button
-      className={classnames('w98-button', bold && '--bold')}
-      disabled={disabled}>
-      <div className="w98-button__content">
-        {iconUrl && <img src={iconUrl} />}
+      className={cn('w98-button', bold && '--bold', className)}
+      disabled={disabled}
+      onClick={onClick}>
+      <div
+        className={cn('w98-button__content', classNameContent)}>
+        {iconUrl && <img src={iconUrl} draggable={false} />}
 
-        <span className='w98-button__label'>
-          { label }
-        </span>
+        {!children && (
+          <span className='w98-button__label'>
+            { label }
+          </span>
+        )}
+
+        { children }
       </div>
     </button>
   )

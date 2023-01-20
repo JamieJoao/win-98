@@ -1,0 +1,35 @@
+@for $i from 1 through 8 {
+  // MARGIN
+  .mt-#{$i} {
+    margin-top: #{$i * 8}px;
+  }
+
+  .mb-#{$i} {
+    margin-bottom: #{$i * 8}px;
+  }
+
+  .ml-#{$i} {
+    margin-left: #{$i * 8}px;
+  }
+
+  .mr-#{$i} {
+    margin-right: #{$i * 8}px;
+  }
+
+  // PADDING
+  .pt-#{$i} {
+    padding-top: #{$i * 8}px;
+  }
+
+  .pb-#{$i} {
+    padding-bottom: #{$i * 8}px;
+  }
+
+  .pl-#{$i} {
+    padding-left: #{$i * 8}px;
+  }
+
+  .pr-#{$i} {
+    padding-right: #{$i * 8}px;
+  }
+}
