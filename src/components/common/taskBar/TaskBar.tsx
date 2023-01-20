@@ -10,16 +10,16 @@ interface Props {
 }
 
 export const TaskBar = ({ }: Props) => {
-  const windowsOpenned = [1, 2, 3, 4]
+  const windowsOpenned = [1]
 
   return (
     <div className="w98-taskbar">
       <div className="w98-taskbar__container">
-        <TaskBarButton iconUrl={StartIcon} label='Start' bold />
+        <TaskBarButton iconUrl={StartIcon} label='Inicio' bold />
 
         <div className="w98-taskbar__group">
           {windowsOpenned.map(obj => (
-            <TaskBarButton key={obj} iconUrl={NotePadIcon} label={`Paint ${obj}`} />
+            <TaskBarButton key={obj} iconUrl={NotePadIcon} label={`untitled - Paint`} />
           ))}
         </div>
 

@@ -2,17 +2,17 @@ import './styles.scss'
 
 interface IProps {
   url: string
-  onClick?: () => void
+  onDoubleClick?: () => void
 }
 
 export const Icon = (props: IProps) => {
-  const { url, onClick } = props
+  const { url, onDoubleClick } = props
 
   return (
-    <div className="w98-icon" onClick={onClick}>
+    <div className="w98-icon" onDoubleClick={onDoubleClick}>
       <img src={url} />
 
-      <span>My Computer</span>
+      <span>Mi PC</span>
     </div>
   )
 }

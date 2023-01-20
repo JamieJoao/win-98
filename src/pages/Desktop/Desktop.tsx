@@ -5,7 +5,7 @@ import {
 } from 'components'
 
 import './styles.scss'
-import IconPencil from 'assets/icons/computer_user_pencil-1.png'
+import IconPencil from 'assets/icons/directory_favorites_small-5.png'
 import IconMyPc from 'assets/icons/computer_explorer-5.png'
 
 export const Desktop = () => {
@@ -16,10 +16,10 @@ export const Desktop = () => {
   return (
     <div className="w98-desktop">
 
-      {/* <Window iconUrl={IconPencil} /> */}
+      <Window iconUrl={IconPencil} coords={{ top: 100, left: 100 }} />
 
       <div className="w98-desktop__icon-group">
-        <Icon url={IconMyPc} onClick={handleOpenIcon} />
+        <Icon url={IconMyPc} onDoubleClick={handleOpenIcon} />
       </div>
 
       <TaskBar />

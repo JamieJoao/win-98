@@ -1,0 +1,50 @@
+.w98-button {
+
+  // VARIATIONS
+  &-minimize,
+  &-maximize,
+  &-close {
+    width: 22px;
+    height: 20px;
+
+    &__icon {
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+  }
+
+  &-minimize {
+    &__icon {
+      align-items: flex-end;
+      padding: 2px 4px;
+
+      img {
+        width: 9px;
+      }
+    }
+  }
+
+  &-close,
+  &-maximize {
+    &__icon {
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+
+  &-close {
+    margin-left: 4px;
+  }
+
+  &-start {
+    &__content {
+      padding: 2px;
+    }
+  }
+}

@@ -1,3 +1,6 @@
+// LOCAL VARIABLES
+$side-spacing: 4px;
+
 .w98-taskbar {
   position: absolute;
   bottom: 0;
@@ -21,18 +24,18 @@
   }
 
   &__container {
-    padding: 2px;
+    padding: $side-spacing;
     display: flex;
     flex: 1;
     flex-direction: row;
     justify-content: space-between;
-    column-gap: 4px;
+    column-gap: $side-spacing;
   }
 
   &__group {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 160px);
-    column-gap: 4px;
+    grid-template-columns: repeat(auto-fill, 230px);
+    column-gap: $side-spacing;
   }
 }

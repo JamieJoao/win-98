@@ -1,9 +1,6 @@
 import {
   TaskBar,
   Button,
-  ButtonMinimize,
-  ButtonMaximize,
-  ButtonClose,
   Icon,
 } from './common'
 
@@ -14,9 +11,6 @@ import {
 export {
   TaskBar,
   Button,
-  ButtonMinimize,
-  ButtonMaximize,
-  ButtonClose,
   Icon,
   Window,
 }
