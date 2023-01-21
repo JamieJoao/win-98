@@ -1,3 +1,6 @@
+import { useDispatch, useSelector } from 'react-redux'
+
+import { setActiveWindow } from 'context/actions'
 import {
   TaskBar,
   Window,
@@ -9,9 +12,14 @@ import IconPencil from 'assets/icons/directory_favorites_small-5.png'
 import IconMyPc from 'assets/icons/computer_explorer-5.png'
 
 export const Desktop = () => {
+  const activeWindow = useSelector((state: any) => state.activeWindow)
+  const dispatch = useDispatch()
+
   const handleOpenIcon = () => {
-    /** CREAR STORE PARA ALMACENAR VENTANA NUEVA */
+    dispatch(setActiveWindow({ title: 'Mi Pc', icon: IconPencil, buttons: [] }))
   }
+
+  console.log('activeWindow', activeWindow)
 
   return (
     <div className="w98-desktop">

@@ -37,7 +37,7 @@ export const Window = (props: IProps) => {
           </div>
 
           <div className="w98-window-header__actions">
-            <ButtonMinimize disabled onClick={handleMinimize} />
+            <ButtonMinimize onClick={handleMinimize} />
             <ButtonMaximize onClick={handleMaximize} />
             <ButtonClose onClick={handleClose} />
           </div>
