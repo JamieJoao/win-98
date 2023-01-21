@@ -1,7 +1,7 @@
-import { setActiveWindow, setWindows, storeWindows } from "./actions"
+import { setActiveWindow, setWindows, addWindow } from "./actions"
 
 export {
   setActiveWindow,
   setWindows,
-  storeWindows,
+  addWindow,
 }
