@@ -9,9 +9,14 @@ type coordsType = {
 
 export const useDragDrop = () => {
   const containerRef = useRef<HTMLElement | null>(null)
+  const screenRef = useRef<HTMLDivElement | null>(null)
   const boxRef = useRef<HTMLDivElement | null>(null)
   const handleRef = useRef<HTMLDivElement | null>(null)
   const coordsRef = useRef<coordsType>({ startX: 0, startY: 0 })
+
+  useLayoutEffect(() => {
+    screenRef.current = document.querySelector<HTMLDivElement>('.w98-screen__content')
+  }, [])
 
   useEffect(() => {
     containerRef.current = document.body
@@ -28,18 +33,18 @@ export const useDragDrop = () => {
       if (box) {
         box.style.top = `${e.clientY - startY}px`
         box.style.left = `${e.clientX - startX}px`
-        console.log(e.clientX, startX, e.offsetX)
       }
     }
 
     const mouseDown = (e: MouseEvent) => {
       const fixErrorBorders = PADDING_BOX + BORDER_BOX + BORDER_CONTENT
+      const { offsetLeft = 0, offsetTop = 0 } = screenRef.current ?? {}
 
       coordsRef.current = {
-        startX: e.offsetX + fixErrorBorders,
-        startY: e.offsetY + fixErrorBorders,
+        startX: e.offsetX + fixErrorBorders + offsetLeft,
+        startY: e.offsetY + fixErrorBorders + offsetTop
       }
-      
+
       container?.addEventListener('mousemove', mouseMove)
     }
 
