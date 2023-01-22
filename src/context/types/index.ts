@@ -9,3 +9,7 @@ export interface IRootState {
   [ERootStateLabels.activeWindow]: IWindow | null,
   [ERootStateLabels.windows]: IWindow[]
 }
+
+export type TRootAction = 
+  | { key: 'activeWindow', payload: IWindow }
+  | { key: 'windows', payload: IWindow[] }

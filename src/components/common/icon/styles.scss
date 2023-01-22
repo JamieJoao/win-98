@@ -5,6 +5,9 @@
   align-items: center;
   row-gap: 6px;
   cursor: pointer;
+  padding: 8px;
+  text-align: center;
+  user-select: none;
 
   img {
     width: 32px;
@@ -16,5 +19,10 @@
     font-family: $windows;
     font-size: 12px;
     letter-spacing: 1px;
+    line-height: 12px;
+  }
+
+  &:hover {
+    border: 1px dotted $gray-1;
   }
 }

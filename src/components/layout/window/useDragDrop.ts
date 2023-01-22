@@ -28,6 +28,7 @@ export const useDragDrop = () => {
       if (box) {
         box.style.top = `${e.clientY - startY}px`
         box.style.left = `${e.clientX - startX}px`
+        console.log(e.clientX, startX, e.offsetX)
       }
     }
 

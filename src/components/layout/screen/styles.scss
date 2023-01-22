@@ -1,0 +1,15 @@
+.w98-screen {
+  width: 100%;
+  height: 100vh;
+  background-color: $black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  &__content {
+    width: 640px;
+    height: 480px;
+    position: relative;
+    overflow: hidden;
+  }
+}

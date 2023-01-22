@@ -1,38 +1,49 @@
-import { useDispatch, useSelector } from 'react-redux'
-
-import { setActiveWindow, addWindow } from 'context/actions'
-import { IRootState } from 'context/types/types.state'
+import { useEffect } from 'react'
+import { fetchPrograms, addWindow } from 'redux-tk/slice'
+import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 import {
   TaskBar,
-  Window,
   Icon,
+  Window,
+  Screen,
 } from 'components'
+import { IProgram } from 'types'
 
 import './styles.scss'
-import IconPencil from 'assets/icons/directory_favorites_small-5.png'
-import IconMyPc from 'assets/icons/computer_explorer-5.png'
 
 export const Desktop = () => {
-  const windows = useSelector<IRootState>(state => state.windows)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const programs = useAppSelector(state => state.programs)
+  const windows = useAppSelector(state => state.windows)
 
-  const handleOpenIcon = () => {
-    // dispatch(setActiveWindow({ title: 'Mi Pc', icon: IconPencil, buttons: [] }))
-    dispatch(addWindow({ title: 'Mi Pc', icon: IconPencil, buttons: [] }))
+  useEffect(() => {
+    dispatch(fetchPrograms())
+  }, [])
+
+  const handleOpenIcon = (program: IProgram) => {
+    dispatch(addWindow({ program, active: true, size: 'minimized' }))
   }
 
-  console.log('windows', windows)
-
   return (
-    <div className="w98-desktop">
+    <Screen>
+      <div className="w98-desktop">
 
-      <Window iconUrl={IconPencil} coords={{ top: 100, left: 100 }} />
+        <div className="w98-desktop__icon-group">
+          {programs.map(obj => (
+            <Icon
+              key={obj.id}
+              url={obj.iconUrl}
+              name={obj.name}
+              onDoubleClick={() => handleOpenIcon(obj)} />
+          ))}
+        </div>
 
-      <div className="w98-desktop__icon-group">
-        <Icon url={IconMyPc} onDoubleClick={handleOpenIcon} />
+        {windows.map(obj => (
+          <Window key={obj.program.id} iconUrl={obj.program.iconUrl} coords={{ left: 0, top: 0 }} />
+        ))}
+
+        <TaskBar />
       </div>
-
-      <TaskBar />
-    </div>
+    </Screen>
   )
 }

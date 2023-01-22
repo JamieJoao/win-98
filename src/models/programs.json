@@ -1,0 +1,16 @@
+{
+  "programs": [
+    {
+      "id": 1,
+      "iconUrl": "src/assets/icons/computer_explorer-5.png",
+      "name": "Mi PC",
+      "template": "MyPC"
+    },
+    {
+      "id": 2,
+      "iconUrl": "src/assets/icons/directory_open_file_mydocs-5.png",
+      "name": "Mis documentos",
+      "template": "MyDocuments"
+    }
+  ]
+}

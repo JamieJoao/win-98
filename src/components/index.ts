@@ -6,6 +6,7 @@ import {
 
 import {
   Window,
+  Screen,
 } from './layout'
 
 export {
@@ -13,4 +14,5 @@ export {
   Button,
   Icon,
   Window,
+  Screen,
 }
