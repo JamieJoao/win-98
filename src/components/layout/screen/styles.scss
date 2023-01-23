@@ -5,11 +5,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url('src/assets/images/old-monitor.png');
+  background-size: 934px;
+  background-repeat: no-repeat;
+  background-position: center;
   
   &__content {
+    position: absolute;
+    top: 152px;
     width: 640px;
     height: 480px;
-    position: relative;
     overflow: hidden;
   }
 }
