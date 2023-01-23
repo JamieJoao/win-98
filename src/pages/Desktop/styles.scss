@@ -1,7 +1,9 @@
 .w98-desktop {
+  position: relative;
   width: 100%;
   height: 100%;
-  background-color: #008080;
+  // background-color: #008080; // quitar
+  overflow: hidden;
 
   &__icon-group {
     width: 100%;
