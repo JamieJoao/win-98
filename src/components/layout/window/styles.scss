@@ -2,12 +2,31 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
-  height: 50%;
   background: $gray-1;
   border: 1px solid $black;
   border-top-color: $gray-4;
   border-left-color: $gray-4;
+
+  &.--regular {
+    width: 50%;
+    height: 50%;
+  }
+
+  &.--fullscreen {
+    width: 100%;
+    height: calc(100% - $taskbar-height - 1px);
+    border: none;
+
+    .w98-window {
+      &__content {
+        border: none;
+      }
+    }
+  }
+
+  &.--minimized {
+    display: none;
+  }
 
   &__content {
     height: 100%;
@@ -26,7 +45,7 @@
     align-items: center;
     padding-right: 4px;
     user-select: none;
-    
+
     &-handle {
       font-family: $windows;
       font-size: 14px;
@@ -39,7 +58,7 @@
       display: flex;
       align-items: center;
       padding-left: 4px;
-      
+
       img {
         height: 20px;
         margin-right: 4px;

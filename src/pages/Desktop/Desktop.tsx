@@ -21,7 +21,13 @@ export const Desktop = () => {
   }, [])
 
   const handleOpenIcon = (program: IProgram) => {
-    dispatch(addWindow({ program, active: true, size: 'minimized' }))
+    dispatch(addWindow({
+      program,
+      active: true,
+      size: 'regular',
+      minimized: false,
+      uid: new Date().valueOf()
+    }))
   }
 
   return (
@@ -31,7 +37,7 @@ export const Desktop = () => {
         <div className="w98-desktop__icon-group">
           {programs.map(obj => (
             <Icon
-              key={obj.id}
+              key={obj.uid}
               url={obj.iconUrl}
               name={obj.name}
               onDoubleClick={() => handleOpenIcon(obj)} />
@@ -39,7 +45,9 @@ export const Desktop = () => {
         </div>
 
         {windows.map(obj => (
-          <Window key={obj.program.id} iconUrl={obj.program.iconUrl} coords={{ left: 0, top: 0 }} />
+          <Window
+            key={obj.program.uid}
+            data={obj} />
         ))}
 
         <TaskBar />

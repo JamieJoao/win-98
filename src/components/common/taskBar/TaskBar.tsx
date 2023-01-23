@@ -18,9 +18,9 @@ export const TaskBar = ({ }: Props) => {
         <TaskBarButton iconUrl={StartIcon} label='Inicio' bold />
 
         <div className="w98-taskbar__group">
-          {windows.map(obj => (
+          {windows.map((obj, index) => (
             <TaskBarButton
-              key={obj.program.id}
+              key={index}
               iconUrl={obj.program.iconUrl}
               label={obj.program.name} />
           ))}

@@ -3,7 +3,7 @@ export interface IButton {
 }
 
 export interface IProgram {
-  id: number
+  uid: number
   iconUrl: string
   name: string
   template: string
@@ -11,7 +11,10 @@ export interface IProgram {
 }
 
 export interface IWindow {
+  uid: number
   program: IProgram
   active: boolean
-  size: 'maximized' | 'minimized'
+  size: 'fullscreen' | 'regular'
+  lastCoords?: { left: number, top: number }
+  minimized: boolean
 }
