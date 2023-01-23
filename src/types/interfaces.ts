@@ -13,7 +13,6 @@ export interface IProgram {
 export interface IWindow {
   uid: number
   program: IProgram
-  active: boolean
   size: 'fullscreen' | 'regular'
   lastCoords?: { left: number, top: number }
   minimized: boolean

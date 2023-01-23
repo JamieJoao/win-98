@@ -3,24 +3,29 @@ import cn from 'classnames'
 
 import { IWindow } from 'types'
 import { ButtonMinimize, ButtonMaximize, ButtonClose } from './components'
-import { useDragDrop } from './useDragDrop'
-import { updateWindow } from 'redux-tk/slice'
-import { useAppDispatch } from 'redux-tk/store'
+import { useDragDrop } from '../../../hooks/useDragDrop'
+import { setKeyValue, updateWindow } from 'redux-tk/slice'
+import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 
 import './styles.scss'
 import './components/styles.scss'
 
 interface IProps {
   data: IWindow
+  position: number
   onClose?: () => void
 }
 
 export const Window = (props: IProps) => {
-  const { data, onClose } = props
-  const { program, active, minimized, size, lastCoords } = data
+  const { data, position, onClose } = props
+  const { program, minimized, size, lastCoords, uid } = data
 
   const dispatch = useAppDispatch()
+  const activeWindow = useAppSelector(state => state.activeWindow)
+  const windows = useAppSelector(state => state.windows)
   const { boxRef, handleRef, startDrag, getCurrentPosition, setPosition } = useDragDrop()
+
+  const focused = activeWindow?.uid === uid
 
   useEffect(() => {
     if (startDrag && size === 'fullscreen') {
@@ -56,15 +61,23 @@ export const Window = (props: IProps) => {
     if (onClose) onClose()
   }
 
+  const handleFocus = () => {
+    if (!focused) {
+      dispatch(setKeyValue({ key: 'activeWindow', value: data }))
+    }
+  }
+
   return (
     <div
-      className={cn('w98-window', `--${size}`, minimized && '--minimized', active && '--active')}
-      ref={boxRef}>
+      className={cn('w98-window', `--${size}`, minimized && '--minimized', focused && '--focused')}
+      ref={boxRef}
+      onMouseDown={handleFocus}
+      style={{ zIndex: focused ? windows.length + 1 : position + 1 }}>
       <div className="w98-window__content">
         <div className="w98-window__header">
           <div className="w98-window__header-handle" ref={handleRef}>
             {program.iconUrl && <img src={program.iconUrl} draggable={false} />}
-            <span>(C:)</span>
+            <span>{ program.name }</span>
           </div>
 
           <div className="w98-window-header__actions">

@@ -19,7 +19,10 @@ const slice = createSlice({
       return { ...state, [payload.key]: payload.value }
     },
     addWindow(state, action: PayloadAction<IWindow>) {
-      const newWindows = [...state.windows, action.payload]
+      const newWindows = [
+        ...state.windows.map(obj => ({ ...obj, focused: false })),
+        action.payload
+      ]
 
       return { ...state, windows: newWindows, activeWindow: action.payload }
     },
@@ -32,7 +35,7 @@ const slice = createSlice({
       ]
 
       return { ...state, windows: newWindows }
-    }
+    },
   }
 })
 

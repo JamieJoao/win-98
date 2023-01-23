@@ -23,7 +23,6 @@ export const Desktop = () => {
   const handleOpenIcon = (program: IProgram) => {
     dispatch(addWindow({
       program,
-      active: true,
       size: 'regular',
       minimized: false,
       uid: new Date().valueOf()
@@ -44,10 +43,11 @@ export const Desktop = () => {
           ))}
         </div>
 
-        {windows.map(obj => (
+        {windows.map((obj, index) => (
           <Window
             key={obj.program.uid}
-            data={obj} />
+            data={obj}
+            position={index} />
         ))}
 
         <TaskBar />

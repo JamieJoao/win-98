@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect, useEffect, useState } from 'react'
 
-import { PADDING_BOX, BORDER_BOX, BORDER_CONTENT } from './const'
+import { PADDING_BOX, BORDER_BOX, BORDER_CONTENT } from 'utils/const'
 
 type coordsType = {
   startX: number

@@ -11,9 +11,10 @@ interface Props {
 
 export const TaskBar = ({ }: Props) => {
   const windows = useAppSelector(state => state.windows)
+  const activeWindow = useAppSelector(state => state.activeWindow)
 
   return (
-    <div className="w98-taskbar">
+    <div className="w98-taskbar" style={{ zIndex: windows.length + 1 }}>
       <div className="w98-taskbar__container">
         <TaskBarButton iconUrl={StartIcon} label='Inicio' bold />
 
@@ -22,7 +23,8 @@ export const TaskBar = ({ }: Props) => {
             <TaskBarButton
               key={index}
               iconUrl={obj.program.iconUrl}
-              label={obj.program.name} />
+              label={obj.program.name}
+              active={obj.uid === activeWindow?.uid} />
           ))}
         </div>
 
