@@ -1,16 +1,20 @@
 import {
   TaskBar,
+  TaskBarButton,
   Button,
-  Icon,
+  DirectAccess,
 } from './common'
 
 import {
   Window,
+  Screen,
 } from './layout'
 
 export {
   TaskBar,
+  TaskBarButton,
   Button,
-  Icon,
+  DirectAccess,
   Window,
+  Screen,
 }

@@ -2,8 +2,18 @@ export interface IButton {
 
 }
 
+export interface IProgram {
+  uid: number
+  iconUrl: string
+  name: string
+  template: string
+  position: number
+}
+
 export interface IWindow {
-  icon: any
-  title: string
-  buttons: IButton[]
+  uid: number
+  program: IProgram
+  size: 'fullscreen' | 'regular'
+  lastCoords?: { left: number, top: number }
+  minimized: boolean
 }

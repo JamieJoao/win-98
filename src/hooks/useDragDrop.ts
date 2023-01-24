@@ -1,6 +1,6 @@
-import { useRef, useLayoutEffect, useEffect } from 'react'
+import { useRef, useLayoutEffect, useEffect, useState } from 'react'
 
-import { PADDING_BOX, BORDER_BOX, BORDER_CONTENT } from './const'
+import { PADDING_BOX, BORDER_BOX, BORDER_CONTENT } from 'utils/const'
 
 type coordsType = {
   startX: number
@@ -9,9 +9,17 @@ type coordsType = {
 
 export const useDragDrop = () => {
   const containerRef = useRef<HTMLElement | null>(null)
+  const screenRef = useRef<HTMLDivElement | null>(null)
   const boxRef = useRef<HTMLDivElement | null>(null)
   const handleRef = useRef<HTMLDivElement | null>(null)
   const coordsRef = useRef<coordsType>({ startX: 0, startY: 0 })
+  const draggingRef = useRef<boolean>(false)
+
+  const [startDrag, setStartDrag] = useState(false)
+
+  useLayoutEffect(() => {
+    screenRef.current = document.querySelector<HTMLDivElement>('.w98-screen__content')
+  }, [])
 
   useEffect(() => {
     containerRef.current = document.body
@@ -28,21 +36,27 @@ export const useDragDrop = () => {
       if (box) {
         box.style.top = `${e.clientY - startY}px`
         box.style.left = `${e.clientX - startX}px`
+
+        if (!startDrag) {
+          setStartDrag(true)
+        }
       }
     }
 
     const mouseDown = (e: MouseEvent) => {
       const fixErrorBorders = PADDING_BOX + BORDER_BOX + BORDER_CONTENT
+      const { offsetLeft = 0, offsetTop = 0 } = screenRef.current ?? {}
 
       coordsRef.current = {
-        startX: e.offsetX + fixErrorBorders,
-        startY: e.offsetY + fixErrorBorders,
+        startX: e.offsetX + fixErrorBorders + offsetLeft,
+        startY: e.offsetY + fixErrorBorders + offsetTop
       }
-      
+
       container?.addEventListener('mousemove', mouseMove)
     }
 
     const mouseUp = (e: MouseEvent) => {
+      setStartDrag(false)
       container?.removeEventListener('mousemove', mouseMove)
     }
 
@@ -57,10 +71,31 @@ export const useDragDrop = () => {
     return cleanEvent
   }, [])
 
+  const getCurrentPosition = (): { left: number, top: number } => {
+    const box = boxRef.current
+
+    if (!box) return { left: 0, top: 0 }
+
+    return { left: box.offsetLeft, top: box.offsetTop }
+  }
+
+  const setPosition = (positionLeft: number = 0, positionTop: number = 0): void => {
+    const box = boxRef.current
+
+    if (!box) return
+
+    box.style.left = `${positionLeft}px`
+    box.style.top = `${positionTop}px`
+  }
+
   return {
     containerRef,
     boxRef,
     handleRef,
     coordsRef,
+    startDrag,
+
+    getCurrentPosition,
+    setPosition,
   }
 }

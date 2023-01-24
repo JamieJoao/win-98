@@ -14,7 +14,7 @@ import {
 export const MainRoute = () => {
 
   return (
-    <Router>
+    <Router basename='/win-98'>
       <Routes>
         <Route path='/' element={<Desktop />} />
       </Routes>

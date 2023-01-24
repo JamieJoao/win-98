@@ -1,10 +1,14 @@
-.w98-icon {
+.w98-direct-access {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   row-gap: 6px;
   cursor: pointer;
+  padding: 8px;
+  text-align: center;
+  user-select: none;
+  z-index: 1;
 
   img {
     width: 32px;
@@ -16,5 +20,11 @@
     font-family: $windows;
     font-size: 12px;
     letter-spacing: 1px;
+    line-height: 12px;
+    word-break: break-all;
+  }
+
+  &:hover {
+    border: 1px dotted $gray-1;
   }
 }

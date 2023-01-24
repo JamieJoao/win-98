@@ -1,13 +1,19 @@
+// LOCAL VARIABLES
+$size-direct-access: 70px;
+
 .w98-desktop {
+  position: relative;
   width: 100%;
-  height: 100vh;
-  background-color: #008080;
+  height: 100%;
+  // background-color: #008080; // quitar
+  overflow: hidden;
 
   &__icon-group {
     width: 100%;
     height: calc(100% - $taskbar-height - 1px);
     display: grid;
-    grid-template-columns: repeat(auto-fill, 100px);
-    grid-template-rows: repeat(auto-fill, 120px);
+    grid-template-columns: repeat(auto-fill, $size-direct-access);
+    grid-template-rows: repeat(auto-fill, $size-direct-access);
+    grid-auto-flow: column;
   }
 }
