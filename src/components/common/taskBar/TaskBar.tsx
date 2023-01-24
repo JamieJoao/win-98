@@ -7,7 +7,7 @@ import './styles.scss'
 
 export const TaskBar = () => {
   const dispatch = useAppDispatch()
-  const windows = useAppSelector(state => state.windows)
+  const windowsStack = useAppSelector(state => state.windowsStack)
   const activeWindow = useAppSelector(state => state.activeWindow)
 
   const handleClickStart = () => {
@@ -15,7 +15,7 @@ export const TaskBar = () => {
   }
 
   return (
-    <div className="w98-taskbar" style={{ zIndex: windows.length + 1 }}>
+    <div className="w98-taskbar" style={{ zIndex: windowsStack.length + 1 }}>
       <div className="w98-taskbar__container">
         <TaskBarButton
           iconUrl={StartIcon}
@@ -24,7 +24,7 @@ export const TaskBar = () => {
           onClick={handleClickStart} />
 
         <div className="w98-taskbar__group">
-          {windows.map((obj, index) => (
+          {windowsStack.map((obj, index) => (
             <TaskBarButton
               key={index}
               iconUrl={obj.program.iconUrl}

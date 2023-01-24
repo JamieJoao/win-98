@@ -21,7 +21,7 @@ export const Window = (props: IProps) => {
 
   const dispatch = useAppDispatch()
   const activeWindow = useAppSelector(state => state.activeWindow)
-  const windows = useAppSelector(state => state.windows)
+  const windowsStack = useAppSelector(state => state.windowsStack)
   const { boxRef, handleRef, startDrag, getCurrentPosition, setPosition } = useDragDrop()
 
   const focused = activeWindow?.uid === uid
@@ -73,12 +73,12 @@ export const Window = (props: IProps) => {
       className={cn('w98-window', `--${size}`, minimized && '--minimized', focused && '--focused')}
       ref={boxRef}
       onMouseDown={handleFocus}
-      style={{ zIndex: focused ? windows.length + 1 : position + 1 }}>
+      style={{ zIndex: focused ? windowsStack.length + 1 : position + 1 }}>
       <div className="w98-window__content">
         <div className="w98-window__header">
           <div className="w98-window__header-handle" ref={handleRef} onDoubleClick={handleToggleMaximize}>
             {program.iconUrl && <img src={program.iconUrl} draggable={false} />}
-            <span>{ program.name }</span>
+            <span>{program.name}</span>
           </div>
 
           <div className="w98-window-header__actions">

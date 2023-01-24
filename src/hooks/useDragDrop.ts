@@ -1,10 +1,17 @@
 import { useRef, useLayoutEffect, useEffect, useState } from 'react'
 
-import { PADDING_BOX, BORDER_BOX, BORDER_CONTENT } from 'utils/const'
+import { PADDING_BOX, BORDER_BOX, BORDER_CONTENT, TASKBAR_HEIGHT, WINDOW_HEADER_SPACING } from 'utils/const'
 
 type coordsType = {
   startX: number
   startY: number
+}
+
+type limitsType = {
+  top: number
+  bottom: number
+  left: number
+  right: number
 }
 
 export const useDragDrop = () => {
@@ -13,29 +20,44 @@ export const useDragDrop = () => {
   const boxRef = useRef<HTMLDivElement | null>(null)
   const handleRef = useRef<HTMLDivElement | null>(null)
   const coordsRef = useRef<coordsType>({ startX: 0, startY: 0 })
-  const draggingRef = useRef<boolean>(false)
+  const limitsRef = useRef<limitsType>({ top: 0, bottom: 0, left: 0, right: 0 })
 
   const [startDrag, setStartDrag] = useState(false)
 
   useLayoutEffect(() => {
     screenRef.current = document.querySelector<HTMLDivElement>('.w98-screen__content')
+    const screen = screenRef.current
+
+    if (screen) {
+      const { top, bottom, left, right } = screen.getBoundingClientRect()
+
+      limitsRef.current = { top, bottom, left, right }
+    }
   }, [])
 
   useEffect(() => {
     containerRef.current = document.body
 
-    if (!containerRef.current || !boxRef.current) return
+    if (!containerRef.current || !boxRef.current || !screenRef.current) return
 
     const container = containerRef.current
+    const screen = screenRef.current
     const box = boxRef.current
     const handle = handleRef.current
 
     const mouseMove = (e: MouseEvent) => {
       const { startX, startY } = coordsRef.current
+        , auxY = e.clientY - startY
+        , auxX = e.clientX - startX
 
       if (box) {
-        box.style.top = `${e.clientY - startY}px`
-        box.style.left = `${e.clientX - startX}px`
+        if (auxY >= 0 && auxY <= screen.clientHeight - WINDOW_HEADER_SPACING) {
+          box.style.top = `${auxY}px`
+        }
+
+        if (auxX >= 0 && auxX <= screen.clientWidth - box.clientWidth) {
+          box.style.left = `${auxX}px`
+        }
 
         if (!startDrag) {
           setStartDrag(true)

@@ -12,5 +12,19 @@
     "name": "Mis documentos",
     "template": "MyDocuments",
     "position": 0
+  },
+  {
+    "uid": 3,
+    "imageKey": "internetExplorer",
+    "name": "Internet Explorer",
+    "template": "InternetExplorer",
+    "position": 0
+  },
+  {
+    "uid": 4,
+    "imageKey": "recycleBin",
+    "name": "Papelera de Reciclaje",
+    "template": "RecybleBin",
+    "position": 0
   }
 ]

@@ -8,7 +8,7 @@ import DirectsAccess from 'models/directsAccess.json'
 
 const initialState: IState = {
   directsAccess: transformImageKeys(DirectsAccess),
-  windows: [],
+  windowsStack: [],
   activeWindow: null,
 }
 
@@ -23,26 +23,26 @@ const slice = createSlice({
     },
     addWindow(state, action: PayloadAction<IWindow>) {
       const newWindows = [
-        ...state.windows.map(obj => ({ ...obj, focused: false })),
+        ...state.windowsStack.map(obj => ({ ...obj, focused: false })),
         action.payload
       ]
 
-      return { ...state, windows: newWindows, activeWindow: action.payload }
+      return { ...state, windowsStack: newWindows, activeWindow: action.payload }
     },
     removeWindow(state, action: PayloadAction<number>) {
-      const newWindows = state.windows.filter(obj => obj.uid !== action.payload)
+      const newWindows = state.windowsStack.filter(obj => obj.uid !== action.payload)
 
-      return { ...state, windows: newWindows }
+      return { ...state, windowsStack: newWindows, activeWindow: newWindows[newWindows.length - 1] ?? null }
     },
     updateWindow(state, action: PayloadAction<IWindow>) {
-      const index = state.windows.findIndex(obj => obj.uid === action.payload.uid)
+      const index = state.windowsStack.findIndex(obj => obj.uid === action.payload.uid)
       const newWindows = [
-        ...state.windows.slice(0, index),
+        ...state.windowsStack.slice(0, index),
         action.payload,
-        ...state.windows.slice(index + 1)
+        ...state.windowsStack.slice(index + 1)
       ]
 
-      return { ...state, windows: newWindows }
+      return { ...state, windowsStack: newWindows }
     },
   }
 })
