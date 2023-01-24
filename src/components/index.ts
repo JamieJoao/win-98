@@ -1,7 +1,8 @@
 import {
   TaskBar,
+  TaskBarButton,
   Button,
-  Icon,
+  DirectAccess,
 } from './common'
 
 import {
@@ -11,8 +12,9 @@ import {
 
 export {
   TaskBar,
+  TaskBarButton,
   Button,
-  Icon,
+  DirectAccess,
   Window,
   Screen,
 }

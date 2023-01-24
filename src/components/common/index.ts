@@ -1,9 +1,11 @@
 import { TaskBar } from './taskBar/TaskBar'
+import { TaskBarButton } from './taskBarButton/taskBarButton'
 import { Button } from './button/Button'
-import { Icon } from './icon/Icon'
+import { DirectAccess } from './directAccess/DirectAccess'
 
 export {
   TaskBar,
+  TaskBarButton,
   Button,
-  Icon,
+  DirectAccess,
 }

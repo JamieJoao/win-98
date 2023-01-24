@@ -5,15 +5,15 @@ import { IProgram, IWindow } from 'types'
 import store from './store'
 
 export interface IState {
-  programs: IProgram[]
+  directsAccess: IProgram[]
   windows: IWindow[]
   activeWindow: IWindow | null
 }
 
 export type TAction =
-  | { key: 'programs', value: IProgram[] }
+  | { key: 'directsAccess', value: IProgram[] }
   | { key: 'windows', value: IWindow[] }
-  | { key: 'activeWindow', value: IWindow }
+  | { key: 'activeWindow', value: IWindow | null }
 
 export type TDispatch = () => typeof store.dispatch
 export type TSelector = TypedUseSelectorHook<ReturnType<typeof store.getState>>

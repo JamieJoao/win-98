@@ -6,11 +6,11 @@ interface IProps {
   onDoubleClick?: () => void
 }
 
-export const Icon = (props: IProps) => {
+export const DirectAccess = (props: IProps) => {
   const { url, name, onDoubleClick } = props
 
   return (
-    <div className="w98-icon" onDoubleClick={onDoubleClick}>
+    <div className="w98-direct-access" onDoubleClick={onDoubleClick}>
       <img src={url} draggable={false} />
 
       <span>{ name }</span>

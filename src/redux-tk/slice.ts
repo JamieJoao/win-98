@@ -1,10 +1,12 @@
-import { createSlice, PayloadAction, current } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { IWindow } from 'types'
-import { IState, TAction, TReturnThunk } from './types'
+import { IState, TAction } from './types'
+
+import DirectsAccess from 'models/directsAccess.json'
 
 const initialState: IState = {
-  programs: [],
+  directsAccess: DirectsAccess,
   windows: [],
   activeWindow: null,
 }
@@ -41,6 +43,7 @@ const slice = createSlice({
 
 export const { setKeyValue, addWindow, updateWindow } = slice.actions
 
+/*
 export const fetchPrograms = (): TReturnThunk => async (dispatch: any) => {
   try {
     const { programs } = await fetch('src/models/programs.json').then(obj => obj.json())
@@ -50,5 +53,6 @@ export const fetchPrograms = (): TReturnThunk => async (dispatch: any) => {
     console.log(error)
   }
 }
+*/
 
 export default slice.reducer

@@ -1,4 +1,4 @@
-.w98-icon {
+.w98-direct-access {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,6 +21,7 @@
     font-size: 12px;
     letter-spacing: 1px;
     line-height: 12px;
+    word-break: break-all;
   }
 
   &:hover {

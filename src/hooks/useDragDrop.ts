@@ -36,6 +36,10 @@ export const useDragDrop = () => {
       if (box) {
         box.style.top = `${e.clientY - startY}px`
         box.style.left = `${e.clientX - startX}px`
+
+        if (!startDrag) {
+          setStartDrag(true)
+        }
       }
     }
 
@@ -49,12 +53,11 @@ export const useDragDrop = () => {
       }
 
       container?.addEventListener('mousemove', mouseMove)
-      setStartDrag(true)
     }
 
     const mouseUp = (e: MouseEvent) => {
-      container?.removeEventListener('mousemove', mouseMove)
       setStartDrag(false)
+      container?.removeEventListener('mousemove', mouseMove)
     }
 
     const cleanEvent = () => {

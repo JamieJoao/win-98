@@ -29,7 +29,8 @@ export const Window = (props: IProps) => {
 
   useEffect(() => {
     if (startDrag && size === 'fullscreen') {
-      handleToggleMaximize()
+      /** EN TEST */
+      // handleToggleMaximize()
     }
   }, [startDrag])
 
@@ -55,6 +56,7 @@ export const Window = (props: IProps) => {
       lastCoords: getCurrentPosition(),
       minimized: true,
     }))
+    dispatch(setKeyValue({ key: 'activeWindow', value: null }))
   }
 
   const handleClose = () => {
@@ -75,7 +77,7 @@ export const Window = (props: IProps) => {
       style={{ zIndex: focused ? windows.length + 1 : position + 1 }}>
       <div className="w98-window__content">
         <div className="w98-window__header">
-          <div className="w98-window__header-handle" ref={handleRef}>
+          <div className="w98-window__header-handle" ref={handleRef} onDoubleClick={handleToggleMaximize}>
             {program.iconUrl && <img src={program.iconUrl} draggable={false} />}
             <span>{ program.name }</span>
           </div>
