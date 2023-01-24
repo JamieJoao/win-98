@@ -1,14 +1,14 @@
 [
   {
     "uid": 1,
-    "iconUrl": "src/assets/icons/computer_explorer-5.png",
+    "imageKey": "myPc",
     "name": "Mi PC",
     "template": "MyPC",
     "position": 0
   },
   {
     "uid": 2,
-    "iconUrl": "src/assets/icons/directory_open_file_mydocs-5.png",
+    "imageKey": "myDocuments",
     "name": "Mis documentos",
     "template": "MyDocuments",
     "position": 0

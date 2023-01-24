@@ -2,11 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { IWindow } from 'types'
 import { IState, TAction } from './types'
+import { transformImageKeys } from 'utils/transform'
 
 import DirectsAccess from 'models/directsAccess.json'
 
 const initialState: IState = {
-  directsAccess: DirectsAccess,
+  directsAccess: transformImageKeys(DirectsAccess),
   windows: [],
   activeWindow: null,
 }
@@ -28,6 +29,11 @@ const slice = createSlice({
 
       return { ...state, windows: newWindows, activeWindow: action.payload }
     },
+    removeWindow(state, action: PayloadAction<number>) {
+      const newWindows = state.windows.filter(obj => obj.uid !== action.payload)
+
+      return { ...state, windows: newWindows }
+    },
     updateWindow(state, action: PayloadAction<IWindow>) {
       const index = state.windows.findIndex(obj => obj.uid === action.payload.uid)
       const newWindows = [
@@ -41,7 +47,7 @@ const slice = createSlice({
   }
 })
 
-export const { setKeyValue, addWindow, updateWindow } = slice.actions
+export const { setKeyValue, addWindow, updateWindow, removeWindow } = slice.actions
 
 /*
 export const fetchPrograms = (): TReturnThunk => async (dispatch: any) => {

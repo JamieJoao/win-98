@@ -5,17 +5,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // background-image: url('src/assets/images/old-monitor.png');
-  // background-size: 912px;
-  // background-repeat: no-repeat;
-  // background-position: center;
+  // background-color: #008080;
+  // background-image: url(https://rare-gallery.com/mocahbig/407399-Microsoft-Microsoft-Windows-Windows-95-Windows-98.png);
 
   &__content {
     position: relative;
     top: -88px;
     width: 640px;
     height: 480px;
-    outline: 1px solid red;
 
     &::before {
       content: '';
@@ -24,9 +21,8 @@
       left: 50%;
       width: 900px;
       height: 900px;
-      // background-color: blue;
       transform: translate(-50%, -364px);
-      background-image: url('src/assets/images/old-monitor.png');
+      background-image: url('/src/assets/images/old-monitor.png');
       background-size: 918px;
       background-repeat: no-repeat;
       background-position: center;

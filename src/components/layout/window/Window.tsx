@@ -4,7 +4,7 @@ import cn from 'classnames'
 import { IWindow } from 'types'
 import { ButtonMinimize, ButtonMaximize, ButtonClose } from './components'
 import { useDragDrop } from '../../../hooks/useDragDrop'
-import { setKeyValue, updateWindow } from 'redux-tk/slice'
+import { removeWindow, setKeyValue, updateWindow } from 'redux-tk/slice'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 
 import './styles.scss'
@@ -13,11 +13,10 @@ import './components/styles.scss'
 interface IProps {
   data: IWindow
   position: number
-  onClose?: () => void
 }
 
 export const Window = (props: IProps) => {
-  const { data, position, onClose } = props
+  const { data, position } = props
   const { program, minimized, size, lastCoords, uid } = data
 
   const dispatch = useAppDispatch()
@@ -60,7 +59,7 @@ export const Window = (props: IProps) => {
   }
 
   const handleClose = () => {
-    if (onClose) onClose()
+    dispatch(removeWindow(uid))
   }
 
   const handleFocus = () => {
