@@ -23,8 +23,8 @@ export const TaskBarButton = (props: IProps) => {
   const handleClick = () => {
     if (onClick) onClick()
     if (data) {
-      dispatch(updateWindow({ ...data, minimized: false }))
-      dispatch(setKeyValue({ key: 'activeWindow', value: data }))
+      dispatch(updateWindow({ ...data, minimized: !!active }))
+      dispatch(setKeyValue({ key: 'activeWindow', value: active ? null : data }))
     }
   }
 
