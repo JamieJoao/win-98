@@ -4,7 +4,7 @@ import cn from 'classnames'
 import { IWindow } from 'types'
 import { ButtonMinimize, ButtonMaximize, ButtonClose } from './components'
 import { useDragDrop } from '../../../hooks/useDragDrop'
-import { removeWindow, setKeyValue, updateWindow } from 'redux-tk/slice'
+import { changePositionWindow, deleteWindow, minimizeWindow, setKeyValue, updateWindow } from 'redux-tk/slice'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 
 import './styles.scss'
@@ -24,7 +24,7 @@ export const Window = (props: IProps) => {
   const windowsStack = useAppSelector(state => state.windowsStack)
   const { boxRef, handleRef, startDrag, getCurrentPosition, setPosition } = useDragDrop()
 
-  const focused = activeWindow?.uid === uid
+  const focused = windowsStack[0].uid === uid
 
   useEffect(() => {
     if (startDrag && size === 'fullscreen') {
@@ -50,21 +50,16 @@ export const Window = (props: IProps) => {
   }
 
   const handleMinimize = () => {
-    dispatch(updateWindow({
-      ...data,
-      lastCoords: getCurrentPosition(),
-      minimized: true,
-    }))
-    dispatch(setKeyValue({ key: 'activeWindow', value: null }))
+    dispatch(minimizeWindow({ ...data, lastCoords: getCurrentPosition() }))
   }
 
   const handleClose = () => {
-    dispatch(removeWindow(uid))
+    dispatch(deleteWindow(uid))
   }
 
   const handleFocus = () => {
     if (!focused) {
-      dispatch(setKeyValue({ key: 'activeWindow', value: data }))
+      dispatch(changePositionWindow({ uid, destIndex: 0 }))
     }
   }
 
@@ -73,7 +68,7 @@ export const Window = (props: IProps) => {
       className={cn('w98-window', `--${size}`, minimized && '--minimized', focused && '--focused')}
       ref={boxRef}
       onMouseDown={handleFocus}
-      style={{ zIndex: focused ? windowsStack.length + 1 : position + 1 }}>
+      style={{ zIndex: windowsStack.length - position }}>
       <div className="w98-window__content">
         <div className="w98-window__header">
           <div className="w98-window__header-handle" ref={handleRef} onDoubleClick={handleToggleMaximize}>

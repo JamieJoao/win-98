@@ -1,40 +1,48 @@
 import cn from 'classnames'
 
-import { IWindow } from 'types'
-import { useAppDispatch } from 'redux-tk/store'
-import { setKeyValue, updateWindow } from 'redux-tk/slice'
+import { ITaskBarButton } from 'types'
+import { useAppDispatch, useAppSelector } from 'redux-tk/store'
+import { setKeyValue, updateWindow, changePositionWindow } from 'redux-tk/slice'
 
 import './styles.scss'
 
 interface IProps {
-  iconUrl: string
+  iconUrl?: string
   bold?: boolean
   label?: string
-  active?: boolean
-  data?: IWindow
+  data?: ITaskBarButton
   onClick?: () => void
 }
 
 export const TaskBarButton = (props: IProps) => {
-  const { bold, label, iconUrl, active, data, onClick } = props
+  const { bold, label, iconUrl, data, onClick } = props
 
   const dispatch = useAppDispatch()
+  const taskBarButtonsStack = useAppSelector(state => state.taskBarButtonsStack)
+  const windowsStack = useAppSelector(state => state.windowsStack)
+
+  const windowAbove = windowsStack[0]
+  const active = windowAbove && windowAbove.uid === data?.window.uid && !windowAbove.minimized
 
   const handleClick = () => {
     if (onClick) onClick()
     if (data) {
-      dispatch(updateWindow({ ...data, minimized: !!active }))
-      dispatch(setKeyValue({ key: 'activeWindow', value: active ? null : data }))
+      const { window } = data
+      const { minimized, uid } = window
+      const isFocused = windowAbove.uid === uid
+
+      dispatch(updateWindow({ ...data.window, minimized: active }))
+      dispatch(changePositionWindow({ uid: data.window.uid, destIndex: active ? windowsStack.length - 1 : 0 }))
     }
   }
 
   return (
-    <button 
+    <button
       className={cn('w98-taskbar-button', bold && '--bold', active && '--active')}
       onClick={handleClick}>
       <div className="w98-taskbar-button__content">
-        { iconUrl && <img src={iconUrl} draggable={false} /> }
-        <span>{ label }</span>
+        {iconUrl && <img src={iconUrl} draggable={false} />}
+        <span>{label}</span>
       </div>
     </button>
   )

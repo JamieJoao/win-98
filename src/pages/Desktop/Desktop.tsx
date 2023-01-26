@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { addWindow } from 'redux-tk/slice'
+import { createWindow } from 'redux-tk/slice'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 import {
   TaskBar,
@@ -17,12 +17,7 @@ export const Desktop = () => {
   const windowsStack = useAppSelector(state => state.windowsStack)
 
   const handleOpenIcon = (program: IProgram) => {
-    dispatch(addWindow({
-      program,
-      size: 'regular',
-      minimized: false,
-      uid: new Date().valueOf()
-    }))
+    dispatch(createWindow(program))
   }
 
   return (
@@ -41,7 +36,7 @@ export const Desktop = () => {
 
         {windowsStack.map((obj, index) => (
           <Window
-            key={obj.program.uid}
+            key={obj.uid}
             data={obj}
             position={index} />
         ))}

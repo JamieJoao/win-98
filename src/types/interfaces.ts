@@ -7,13 +7,17 @@ export interface IProgram {
   iconUrl: string
   name: string
   template: string
-  position: number
 }
 
 export interface IWindow {
   uid: number
   program: IProgram
   size: 'fullscreen' | 'regular'
-  lastCoords?: { left: number, top: number }
+  lastCoords: { left: number, top: number }
   minimized: boolean
+}
+
+export interface ITaskBarButton {
+  uid: number
+  window: IWindow
 }
