@@ -20,7 +20,6 @@ export const Window = (props: IProps) => {
   const { program, minimized, size, lastCoords, uid } = data
 
   const dispatch = useAppDispatch()
-  const activeWindow = useAppSelector(state => state.activeWindow)
   const windowsStack = useAppSelector(state => state.windowsStack)
   const { boxRef, handleRef, startDrag, getCurrentPosition, setPosition } = useDragDrop()
 

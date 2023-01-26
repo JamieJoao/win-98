@@ -2,7 +2,7 @@ import { IProgram } from 'types'
 import { directsAccessImages } from './imageFiles'
 
 interface IImageDirty {
-  uid: number
+  uid: string
   imageKey: string
   name: string
   template: string

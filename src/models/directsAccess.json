@@ -1,27 +1,27 @@
 [
   {
-    "uid": 1,
+    "uid": "1",
     "imageKey": "myPc",
     "name": "Mi PC",
     "template": "MyPC",
     "position": 0
   },
   {
-    "uid": 2,
+    "uid": "2",
     "imageKey": "myDocuments",
     "name": "Mis documentos",
     "template": "MyDocuments",
     "position": 0
   },
   {
-    "uid": 3,
+    "uid": "3",
     "imageKey": "internetExplorer",
     "name": "Internet Explorer",
     "template": "InternetExplorer",
     "position": 0
   },
   {
-    "uid": 4,
+    "uid": "4",
     "imageKey": "recycleBin",
     "name": "Papelera de Reciclaje",
     "template": "RecybleBin",

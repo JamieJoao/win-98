@@ -15,7 +15,6 @@ export type TAction =
   | { key: 'directsAccess', value: IProgram[] }
   | { key: 'windowsStack', value: IWindow[] }
   | { key: 'taskBarButtonsStack', value: ITaskBarButton[] }
-  | { key: 'activeWindow', value: IWindow | null }
 
 export type TDispatch = () => typeof store.dispatch
 export type TSelector = TypedUseSelectorHook<ReturnType<typeof store.getState>>

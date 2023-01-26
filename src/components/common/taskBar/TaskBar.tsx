@@ -2,7 +2,7 @@ import { setKeyValue } from 'redux-tk/slice'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 import { TaskBarButton } from 'components'
 
-import StartIcon from 'assets/icons/icon-start.svg'
+import StartIcon from 'assets/icons/icon-windows-start.png'
 import './styles.scss'
 
 export const TaskBar = () => {
@@ -10,7 +10,7 @@ export const TaskBar = () => {
   const taskBarButtonsStack = useAppSelector(state => state.taskBarButtonsStack)
 
   const handleClickStart = () => {
-    dispatch(setKeyValue({ key: 'activeWindow', value: null }))
+    
   }
 
   return (

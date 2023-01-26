@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid'
 
 import { IProgram, ITaskBarButton, IWindow } from 'types'
 import { IState, TAction, TReturnThunk } from './types'
@@ -24,7 +25,7 @@ const slice = createSlice({
     },
     createWindow(state, action: PayloadAction<IProgram>) {
       const newWindow: IWindow = {
-        uid: new Date().valueOf(),
+        uid: uuidv4(),
         program: action.payload,
         size: 'regular',
         lastCoords: { left: 0, top: 0 },
@@ -37,14 +38,14 @@ const slice = createSlice({
       const newTaskBarButtonsStack: ITaskBarButton[] = [
         ...state.taskBarButtonsStack,
         {
-          uid: new Date().valueOf(),
+          uid: uuidv4(),
           window: newWindow,
         },
       ]
 
       return { ...state, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
     },
-    deleteWindow(state, action: PayloadAction<number>) {
+    deleteWindow(state, action: PayloadAction<string>) {
       const newWindowsStack = state.windowsStack.filter(obj => obj.uid !== action.payload)
       const newTaskBarButtonsStack = state.taskBarButtonsStack.filter(obj => obj.uid !== action.payload)
 
@@ -59,7 +60,7 @@ const slice = createSlice({
 
       return { ...state, windowsStack: newWindowsStack }
     },
-    changePositionWindow(state, action: PayloadAction<{ uid: number, destIndex: number }>) {
+    changePositionWindow(state, action: PayloadAction<{ uid: string, destIndex: number }>) {
       const cloneWindowsStack = [...state.windowsStack]
         , { uid, destIndex } = action.payload
         , windowsIndex = cloneWindowsStack.findIndex(obj => obj.uid === uid)
