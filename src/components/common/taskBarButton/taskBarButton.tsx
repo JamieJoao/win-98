@@ -7,15 +7,17 @@ import { setKeyValue, updateWindow, changePositionWindow } from 'redux-tk/slice'
 import './styles.scss'
 
 interface IProps {
+  className?: string
   iconUrl?: string
   bold?: boolean
   label?: string
   data?: ITaskBarButton
+  width?: number
   onClick?: () => void
 }
 
 export const TaskBarButton = (props: IProps) => {
-  const { bold, label, iconUrl, data, onClick } = props
+  const { className, bold, label, iconUrl, data, width, onClick } = props
 
   const dispatch = useAppDispatch()
   const taskBarButtonsStack = useAppSelector(state => state.taskBarButtonsStack)
@@ -38,8 +40,9 @@ export const TaskBarButton = (props: IProps) => {
 
   return (
     <button
-      className={cn('w98-taskbar-button', bold && '--bold', active && '--active')}
-      onClick={handleClick}>
+      className={cn('w98-taskbar-button', bold && '--bold', active && '--active', className)}
+      onClick={handleClick}
+      style={{ width }}>
       <div className="w98-taskbar-button__content">
         {iconUrl && <img src={iconUrl} draggable={false} />}
         <span>{label}</span>

@@ -1,6 +1,7 @@
 .w98-taskbar-button {
   height: 30px;
   // max-width: 158px;
+  // width: 91px;
   background-color: $gray-1;
   border: 1px solid;
   grid-row: 1;
@@ -28,6 +29,10 @@
     span {
       font-family: $windows;
       font-size: 14px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      color: $black;
     }
 
   }

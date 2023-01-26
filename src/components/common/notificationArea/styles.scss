@@ -1,0 +1,39 @@
+.w98-narea {
+  height: 30px;
+  background-color: $gray-1;
+  border: 1px solid;
+  user-select: none;
+  padding-left: 4px;
+  padding-right: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 96px;
+
+  border: 1px solid;
+  border-top-color: $gray-5;
+  border-left-color: $gray-5;
+  border-bottom-color: $white;
+  border-right-color: $white;
+
+  &__notifications {
+    .w98-narea {
+      &__icon-container {
+        display: flex;
+
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+
+  &__date {
+    font-family: $windows;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}

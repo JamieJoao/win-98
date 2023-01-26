@@ -47,7 +47,7 @@ const slice = createSlice({
     },
     deleteWindow(state, action: PayloadAction<string>) {
       const newWindowsStack = state.windowsStack.filter(obj => obj.uid !== action.payload)
-      const newTaskBarButtonsStack = state.taskBarButtonsStack.filter(obj => obj.uid !== action.payload)
+      const newTaskBarButtonsStack = state.taskBarButtonsStack.filter(obj => obj.window.uid !== action.payload)
 
       return { ...state, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
     },
