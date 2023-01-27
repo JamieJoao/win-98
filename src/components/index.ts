@@ -1,6 +1,8 @@
 import {
   TaskBar,
   TaskBarButton,
+  TaskBarButtonBase,
+  TaskBarButtonStart,
   NotificationArea,
   Button,
   DirectAccess,
@@ -14,6 +16,8 @@ import {
 export {
   TaskBar,
   TaskBarButton,
+  TaskBarButtonBase,
+  TaskBarButtonStart,
   NotificationArea,
   Button,
   DirectAccess,

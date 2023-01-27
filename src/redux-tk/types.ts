@@ -8,7 +8,6 @@ export interface IState {
   directsAccess: IProgram[]
   windowsStack: IWindow[]
   taskBarButtonsStack: ITaskBarButton[]
-  activeWindow: IWindow | null
 }
 
 export type TAction =

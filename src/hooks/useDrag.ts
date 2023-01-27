@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, RefObject } from 'react'
+import { useLayoutEffect, useRef, RefObject, useEffect } from 'react'
 
 interface IProps {
   onDragStart: () => void
@@ -50,7 +50,7 @@ export const useDrag = (props: IProps) => {
     handleDragRef.current?.removeEventListener('mousedown', handlePointerDown)
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     containerRef.current = document.querySelector('.w98-screen__content')
 
     handleDragRef.current?.addEventListener('mouseup', handlePointerUp)

@@ -1,7 +1,5 @@
 // LOCAL VARIABLES
 $side-spacing: 4px;
-$button-start-width-desktop: 60px;
-$button-start-width-mobile: 30px;
 
 .w98-taskbar {
   position: absolute;
@@ -40,16 +38,6 @@ $button-start-width-mobile: 30px;
     justify-content: space-between;
     column-gap: $side-spacing;
     width: 100%;
-
-    .w98-taskbar {
-      &__button-start {
-        width: $button-start-width-mobile;
-
-        @include media-desktop {
-          width: $button-start-width-desktop;
-        }
-      }
-    }
   }
 
   &__group {

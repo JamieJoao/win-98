@@ -11,7 +11,6 @@ const initialState: IState = {
   directsAccess: transformImageKeys(DirectsAccess),
   windowsStack: [],
   taskBarButtonsStack: [],
-  activeWindow: null,
 }
 
 const slice = createSlice({
