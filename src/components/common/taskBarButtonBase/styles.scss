@@ -1,7 +1,5 @@
-.w98-taskbar-button {
+.w98-taskbar-button-base {
   height: 30px;
-  // max-width: 158px;
-  // width: 91px;
   background-color: $gray-1;
   border: 1px solid;
   grid-row: 1;
@@ -39,7 +37,7 @@
 
   //MUTATORS
   &.--bold {
-    .w98-taskbar-button {
+    .w98-taskbar-button-base {
       &__content {
         span {
           font-weight: bold;
@@ -53,7 +51,7 @@
 
     @include border-color-container-inv;
 
-    .w98-taskbar-button {
+    .w98-taskbar-button-base {
       &__content {
         @include border-color-box-inv;
       }

@@ -1,41 +1,46 @@
-import cn from 'classnames'
-
-import { IWindow } from 'types'
-import { useAppDispatch } from 'redux-tk/store'
-import { setKeyValue, updateWindow } from 'redux-tk/slice'
+import { TaskBarButtonBase } from 'components'
+import { ITaskBarButton } from 'types'
+import { useAppDispatch, useAppSelector } from 'redux-tk/store'
+import { updateWindow, changePositionWindow } from 'redux-tk/slice'
 
 import './styles.scss'
 
 interface IProps {
-  iconUrl: string
-  bold?: boolean
-  label?: string
-  active?: boolean
-  data?: IWindow
+  className?: string
+  data: ITaskBarButton
+  width: number
   onClick?: () => void
 }
 
 export const TaskBarButton = (props: IProps) => {
-  const { bold, label, iconUrl, active, data, onClick } = props
+  const { data: { window: { uid, program: { iconUrl, name } } }, width, onClick } = props
 
   const dispatch = useAppDispatch()
+  const windowsStack = useAppSelector(state => state.windowsStack)
+
+  const windowAbove = windowsStack[0]
+  const linkedWindow = windowsStack.find(obj => obj.uid === uid)
+  const active = windowAbove && windowAbove.uid === uid && !windowAbove.minimized
 
   const handleClick = () => {
     if (onClick) onClick()
-    if (data) {
-      dispatch(updateWindow({ ...data, minimized: false }))
-      dispatch(setKeyValue({ key: 'activeWindow', value: data }))
+    if (linkedWindow) {
+      dispatch(changePositionWindow({
+        uid: linkedWindow.uid,
+        destIndex: active
+          ? windowsStack.length - 1
+          : 0
+      }))
+      dispatch(updateWindow({ ...linkedWindow, minimized: active }))
     }
   }
 
   return (
-    <button 
-      className={cn('w98-taskbar-button', bold && '--bold', active && '--active')}
-      onClick={handleClick}>
-      <div className="w98-taskbar-button__content">
-        { iconUrl && <img src={iconUrl} draggable={false} /> }
-        <span>{ label }</span>
-      </div>
-    </button>
+    <TaskBarButtonBase
+      className={`${active && '--active'}`}
+      iconUrl={iconUrl}
+      label={name}
+      style={{ width }}
+      onClick={handleClick} />
   )
 }

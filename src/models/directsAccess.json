@@ -1,16 +1,30 @@
 [
   {
-    "uid": 1,
-    "iconUrl": "src/assets/icons/computer_explorer-5.png",
+    "uid": "1",
+    "imageKey": "myPc",
     "name": "Mi PC",
     "template": "MyPC",
     "position": 0
   },
   {
-    "uid": 2,
-    "iconUrl": "src/assets/icons/directory_open_file_mydocs-5.png",
+    "uid": "2",
+    "imageKey": "myDocuments",
     "name": "Mis documentos",
     "template": "MyDocuments",
+    "position": 0
+  },
+  {
+    "uid": "3",
+    "imageKey": "internetExplorer",
+    "name": "Internet Explorer",
+    "template": "InternetExplorer",
+    "position": 0
+  },
+  {
+    "uid": "4",
+    "imageKey": "recycleBin",
+    "name": "Papelera de Reciclaje",
+    "template": "RecybleBin",
     "position": 0
   }
 ]

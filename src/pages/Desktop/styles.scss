@@ -1,12 +1,13 @@
 // LOCAL VARIABLES
-$size-direct-access: 70px;
+$size-direct-access: 80px;
 
 .w98-desktop {
   position: relative;
   width: 100%;
   height: 100%;
-  // background-color: #008080; // quitar
+  background-color: #008080; // quitar
   overflow: hidden;
+  padding: 1px;
 
   &__icon-group {
     width: 100%;

@@ -1,41 +1,48 @@
-import { setKeyValue } from 'redux-tk/slice'
-import { useAppDispatch, useAppSelector } from 'redux-tk/store'
-import { TaskBarButton } from 'components'
+import { useMemo, useRef } from 'react'
 
-import StartIcon from 'assets/icons/icon-start.svg'
+import { useAppSelector } from 'redux-tk/store'
+import { TaskBarButton, NotificationArea, TaskBarButtonStart } from 'components'
+
 import './styles.scss'
 
-export const TaskBar = () => {
-  const dispatch = useAppDispatch()
-  const windows = useAppSelector(state => state.windows)
-  const activeWindow = useAppSelector(state => state.activeWindow)
+const COLUMN_GAP = 4
+const WIDTH_BASE = 158
 
-  const handleClickStart = () => {
-    dispatch(setKeyValue({ key: 'activeWindow', value: null }))
-  }
+export const TaskBar = () => {
+  const taskBarButtonsStack = useAppSelector(state => state.taskBarButtonsStack)
+  const taskBarRef = useRef<HTMLDivElement | null>(null)
+
+  const buttonWidthMemo = useMemo<number>(() => {
+    if (!taskBarRef.current) return 0
+    if (WIDTH_BASE * taskBarButtonsStack.length < taskBarRef.current.clientWidth) return WIDTH_BASE
+
+    const fixColumnGap = (taskBarButtonsStack.length - 1) * COLUMN_GAP
+      , widthContainer = taskBarRef.current.clientWidth - fixColumnGap
+      , finalWidth = widthContainer / taskBarButtonsStack.length
+
+    return finalWidth
+  }, [taskBarButtonsStack])
 
   return (
-    <div className="w98-taskbar" style={{ zIndex: windows.length + 1 }}>
+    <div className="w98-taskbar" style={{ zIndex: taskBarButtonsStack.length + 1 }}>
       <div className="w98-taskbar__container">
-        <TaskBarButton
-          iconUrl={StartIcon}
-          label='Inicio'
-          bold
-          onClick={handleClickStart} />
+        <TaskBarButtonStart />
 
-        <div className="w98-taskbar__group">
-          {windows.map((obj, index) => (
+        <div className="w98-taskbar__separator" />
+
+        <div className="w98-taskbar__group" ref={taskBarRef}>
+          {taskBarButtonsStack.map((obj, index) => (
             <TaskBarButton
               key={index}
-              iconUrl={obj.program.iconUrl}
-              label={obj.program.name}
-              active={obj.uid === activeWindow?.uid}
-              data={obj} />
+              data={obj}
+              width={buttonWidthMemo} />
           ))}
         </div>
 
-        <div className="w98-taskbar__info">
+        <div className="w98-taskbar__separator" />
 
+        <div className="w98-taskbar__info">
+          <NotificationArea />
         </div>
       </div>
     </div>

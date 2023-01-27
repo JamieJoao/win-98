@@ -1,14 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid'
 
-import { IWindow } from 'types'
-import { IState, TAction } from './types'
+import { IProgram, ITaskBarButton, IWindow } from 'types'
+import { IState, TAction, TReturnThunk } from './types'
+import { transformImageKeys } from 'utils/transform'
 
 import DirectsAccess from 'models/directsAccess.json'
 
 const initialState: IState = {
-  directsAccess: DirectsAccess,
-  windows: [],
-  activeWindow: null,
+  directsAccess: transformImageKeys(DirectsAccess),
+  windowsStack: [],
+  taskBarButtonsStack: [],
 }
 
 const slice = createSlice({
@@ -20,39 +22,84 @@ const slice = createSlice({
 
       return { ...state, [payload.key]: payload.value }
     },
-    addWindow(state, action: PayloadAction<IWindow>) {
-      const newWindows = [
-        ...state.windows.map(obj => ({ ...obj, focused: false })),
-        action.payload
+    createWindow(state, action: PayloadAction<IProgram>) {
+      const newWindow: IWindow = {
+        uid: uuidv4(),
+        program: action.payload,
+        size: 'regular',
+        lastCoords: { left: 0, top: 0 },
+        minimized: false,
+      }
+      const newWindowsStack: IWindow[] = [
+        newWindow,
+        ...state.windowsStack,
+      ]
+      const newTaskBarButtonsStack: ITaskBarButton[] = [
+        ...state.taskBarButtonsStack,
+        {
+          uid: uuidv4(),
+          window: newWindow,
+        },
       ]
 
-      return { ...state, windows: newWindows, activeWindow: action.payload }
+      return { ...state, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
+    },
+    deleteWindow(state, action: PayloadAction<string>) {
+      const newWindowsStack = state.windowsStack.filter(obj => obj.uid !== action.payload)
+      const newTaskBarButtonsStack = state.taskBarButtonsStack.filter(obj => obj.window.uid !== action.payload)
+
+      return { ...state, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
     },
     updateWindow(state, action: PayloadAction<IWindow>) {
-      const index = state.windows.findIndex(obj => obj.uid === action.payload.uid)
-      const newWindows = [
-        ...state.windows.slice(0, index),
-        action.payload,
-        ...state.windows.slice(index + 1)
-      ]
+      const newWindowsStack = state.windowsStack.map(obj => {
+        if (obj.uid !== action.payload.uid) return obj
 
-      return { ...state, windows: newWindows }
+        return action.payload
+      })
+
+      return { ...state, windowsStack: newWindowsStack }
     },
+    changePositionWindow(state, action: PayloadAction<{ uid: string, destIndex: number }>) {
+      const cloneWindowsStack = [...state.windowsStack]
+        , { uid, destIndex } = action.payload
+        , windowsIndex = cloneWindowsStack.findIndex(obj => obj.uid === uid)
+        , windowRemoved = cloneWindowsStack.splice(windowsIndex, 1)
+
+      cloneWindowsStack.splice(destIndex, 0, windowRemoved[0])
+
+      return { ...state, windowsStack: cloneWindowsStack }
+    },
+    reorderTaskBarsStack(state, action: PayloadAction<IWindow>) {
+
+    }
   }
 })
 
-export const { setKeyValue, addWindow, updateWindow } = slice.actions
+export const {
+  setKeyValue,
+  createWindow,
+  updateWindow,
+  deleteWindow,
+  reorderTaskBarsStack,
+  changePositionWindow,
+} = slice.actions
+
+export const minimizeWindow = (window: IWindow): TReturnThunk => (dispatch: any, getState) => {
+  const state = getState()
+
+  dispatch(updateWindow({ ...window, minimized: true }))
+  dispatch(changePositionWindow({ uid: window.uid, destIndex: state.windowsStack.length - 1 }))
+}
 
 /*
-export const fetchPrograms = (): TReturnThunk => async (dispatch: any) => {
-  try {
-    const { programs } = await fetch('src/models/programs.json').then(obj => obj.json())
+export const asyncChangePositionWindow = createAsyncThunk(
+  'slice/asyncChangePositionWindow',
+  (payload: { uid: string, destIndex: number }, { dispatch, getState }) => {
+    dispatch(changePositionWindow(payload))
 
-    dispatch(setKeyValue({ key: 'programs', value: programs }))
-  } catch (error) {
-    console.log(error)
+    return Promise.resolve(2)
   }
-}
+)
 */
 
 export default slice.reducer

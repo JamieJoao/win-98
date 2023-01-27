@@ -23,6 +23,13 @@ $side-spacing: 4px;
     background-color: $gray-3;
   }
 
+  &__separator {
+    width: 0;
+    height: 30px;
+    border-right: 1px solid $white;
+    border-left: 1px solid $gray-5;
+  }
+
   &__container {
     padding: $side-spacing;
     display: flex;
@@ -30,12 +37,18 @@ $side-spacing: 4px;
     flex-direction: row;
     justify-content: space-between;
     column-gap: $side-spacing;
+    width: 100%;
   }
 
   &__group {
     flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 158px);
+    display: flex;
     column-gap: $side-spacing;
+    overflow: hidden;
+    width: calc(100% - $button-start-width-mobile - $side-spacing);
+
+    @include media-desktop {
+      width: calc(100% - $button-start-width-desktop - $side-spacing);
+    }
   }
 }

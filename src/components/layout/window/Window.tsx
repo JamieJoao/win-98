@@ -3,8 +3,8 @@ import cn from 'classnames'
 
 import { IWindow } from 'types'
 import { ButtonMinimize, ButtonMaximize, ButtonClose } from './components'
-import { useDragDrop } from '../../../hooks/useDragDrop'
-import { setKeyValue, updateWindow } from 'redux-tk/slice'
+import { useDrag } from 'hooks/useDrag'
+import { changePositionWindow, deleteWindow, minimizeWindow, updateWindow } from 'redux-tk/slice'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 
 import './styles.scss'
@@ -13,26 +13,31 @@ import './components/styles.scss'
 interface IProps {
   data: IWindow
   position: number
-  onClose?: () => void
 }
 
 export const Window = (props: IProps) => {
-  const { data, position, onClose } = props
+  const { data, position } = props
   const { program, minimized, size, lastCoords, uid } = data
 
   const dispatch = useAppDispatch()
-  const activeWindow = useAppSelector(state => state.activeWindow)
-  const windows = useAppSelector(state => state.windows)
-  const { boxRef, handleRef, startDrag, getCurrentPosition, setPosition } = useDragDrop()
+  const windowsStack = useAppSelector(state => state.windowsStack)
+  const [coords, setCoords] = useState({ left: 0, top: 0 })
+  const canDragRef = useRef<boolean>(false)
 
-  const focused = activeWindow?.uid === uid
+  const focused = windowsStack[0].uid === uid
 
   useEffect(() => {
-    if (startDrag && size === 'fullscreen') {
-      /** EN TEST */
-      // handleToggleMaximize()
-    }
-  }, [startDrag])
+    canDragRef.current = size === 'regular'
+  }, [size])
+
+  const { elementRef, handleDragRef, getCoords: getWindowCoords } = useDrag({
+    onDragStart() { },
+    onDragEnd() { },
+    onDragging(left, top) {
+      setCoords({ left, top })
+    },
+    canDragRef,
+  })
 
   const handleToggleMaximize = () => {
     const finalSize = size === 'fullscreen' ? 'regular' : 'fullscreen'
@@ -40,46 +45,42 @@ export const Window = (props: IProps) => {
     dispatch(updateWindow({
       ...data,
       size: finalSize,
-      lastCoords: getCurrentPosition(),
+      lastCoords: canDragRef.current ? getWindowCoords() : lastCoords,
     }))
-
-    if (finalSize === 'fullscreen') {
-      setPosition()
-    } else {
-      setPosition(lastCoords?.left, lastCoords?.top)
-    }
   }
 
   const handleMinimize = () => {
-    dispatch(updateWindow({
-      ...data,
-      lastCoords: getCurrentPosition(),
-      minimized: true,
-    }))
-    dispatch(setKeyValue({ key: 'activeWindow', value: null }))
+    dispatch(minimizeWindow({ ...data }))
   }
 
   const handleClose = () => {
-    if (onClose) onClose()
+    dispatch(deleteWindow(uid))
   }
 
   const handleFocus = () => {
     if (!focused) {
-      dispatch(setKeyValue({ key: 'activeWindow', value: data }))
+      dispatch(changePositionWindow({ uid, destIndex: 0 }))
     }
   }
 
   return (
     <div
       className={cn('w98-window', `--${size}`, minimized && '--minimized', focused && '--focused')}
-      ref={boxRef}
+      ref={elementRef}
       onMouseDown={handleFocus}
-      style={{ zIndex: focused ? windows.length + 1 : position + 1 }}>
+      style={
+        size === 'regular'
+          ? { zIndex: windowsStack.length - position, ...coords }
+          : { zIndex: windowsStack.length - position }
+      }>
       <div className="w98-window__content">
         <div className="w98-window__header">
-          <div className="w98-window__header-handle" ref={handleRef} onDoubleClick={handleToggleMaximize}>
+          <div
+            className="w98-window__header-handle"
+            ref={handleDragRef}
+            onDoubleClick={handleToggleMaximize}>
             {program.iconUrl && <img src={program.iconUrl} draggable={false} />}
-            <span>{ program.name }</span>
+            <span>{program.name}</span>
           </div>
 
           <div className="w98-window-header__actions">

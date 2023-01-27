@@ -1,19 +1,19 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook } from 'react-redux'
 
-import { IProgram, IWindow } from 'types'
+import { IProgram, IWindow, ITaskBarButton } from 'types'
 import store from './store'
 
 export interface IState {
   directsAccess: IProgram[]
-  windows: IWindow[]
-  activeWindow: IWindow | null
+  windowsStack: IWindow[]
+  taskBarButtonsStack: ITaskBarButton[]
 }
 
 export type TAction =
   | { key: 'directsAccess', value: IProgram[] }
-  | { key: 'windows', value: IWindow[] }
-  | { key: 'activeWindow', value: IWindow | null }
+  | { key: 'windowsStack', value: IWindow[] }
+  | { key: 'taskBarButtonsStack', value: ITaskBarButton[] }
 
 export type TDispatch = () => typeof store.dispatch
 export type TSelector = TypedUseSelectorHook<ReturnType<typeof store.getState>>

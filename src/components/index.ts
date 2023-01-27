@@ -1,6 +1,9 @@
 import {
   TaskBar,
   TaskBarButton,
+  TaskBarButtonBase,
+  TaskBarButtonStart,
+  NotificationArea,
   Button,
   DirectAccess,
 } from './common'
@@ -13,6 +16,9 @@ import {
 export {
   TaskBar,
   TaskBarButton,
+  TaskBarButtonBase,
+  TaskBarButtonStart,
+  NotificationArea,
   Button,
   DirectAccess,
   Window,
