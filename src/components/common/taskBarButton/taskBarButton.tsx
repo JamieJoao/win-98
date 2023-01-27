@@ -2,7 +2,7 @@ import cn from 'classnames'
 
 import { ITaskBarButton } from 'types'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
-import { setKeyValue, updateWindow, changePositionWindow } from 'redux-tk/slice'
+import { updateWindow, changePositionWindow } from 'redux-tk/slice'
 
 import './styles.scss'
 
@@ -20,7 +20,6 @@ export const TaskBarButton = (props: IProps) => {
   const { className, bold, label, iconUrl, data, width, onClick } = props
 
   const dispatch = useAppDispatch()
-  const taskBarButtonsStack = useAppSelector(state => state.taskBarButtonsStack)
   const windowsStack = useAppSelector(state => state.windowsStack)
 
   const windowAbove = windowsStack[0]
@@ -29,12 +28,17 @@ export const TaskBarButton = (props: IProps) => {
   const handleClick = () => {
     if (onClick) onClick()
     if (data) {
-      const { window } = data
-      const { minimized, uid } = window
-      const isFocused = windowAbove.uid === uid
+      const linkedWindow = windowsStack.find(obj => obj.uid === data.window.uid)
 
-      dispatch(updateWindow({ ...data.window, minimized: active }))
-      dispatch(changePositionWindow({ uid: data.window.uid, destIndex: active ? windowsStack.length - 1 : 0 }))
+      if (linkedWindow) {
+        dispatch(changePositionWindow({
+          uid: linkedWindow.uid,
+          destIndex: active
+            ? windowsStack.length - 1
+            : 0
+        }))
+        dispatch(updateWindow({ ...linkedWindow, minimized: active }))
+      }
     }
   }
 

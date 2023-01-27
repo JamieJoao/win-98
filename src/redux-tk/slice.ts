@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
 
 import { IProgram, ITaskBarButton, IWindow } from 'types'
@@ -91,5 +91,16 @@ export const minimizeWindow = (window: IWindow): TReturnThunk => (dispatch: any,
   dispatch(updateWindow({ ...window, minimized: true }))
   dispatch(changePositionWindow({ uid: window.uid, destIndex: state.windowsStack.length - 1 }))
 }
+
+/*
+export const asyncChangePositionWindow = createAsyncThunk(
+  'slice/asyncChangePositionWindow',
+  (payload: { uid: string, destIndex: number }, { dispatch, getState }) => {
+    dispatch(changePositionWindow(payload))
+
+    return Promise.resolve(2)
+  }
+)
+*/
 
 export default slice.reducer

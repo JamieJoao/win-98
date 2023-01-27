@@ -1,7 +1,7 @@
 .w98-window {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 100px;
+  left: 100px;
   background: $gray-1;
   border: 1px solid $black;
   border-top-color: $gray-4;
@@ -14,6 +14,8 @@
   }
 
   &.--fullscreen {
+    top: 0;
+    left: 0;
     width: 100%;
     height: calc(100% - $taskbar-height - 1px);
     border: none;

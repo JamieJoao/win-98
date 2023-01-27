@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef } from 'react'
 
-import { setKeyValue } from 'redux-tk/slice'
+import { } from 'redux-tk/slice'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 import { TaskBarButton, NotificationArea } from 'components'
 
@@ -40,7 +40,7 @@ export const TaskBar = () => {
           bold
           onClick={handleClickStart} />
 
-        <div className="w98-taskbar__separator"></div>
+        <div className="w98-taskbar__separator" />
 
         <div className="w98-taskbar__group" ref={taskBarRef}>
           {taskBarButtonsStack.map((obj, index) => {
@@ -56,7 +56,7 @@ export const TaskBar = () => {
           })}
         </div>
 
-        <div className="w98-taskbar__separator"></div>
+        <div className="w98-taskbar__separator" />
 
         <div className="w98-taskbar__info">
           <NotificationArea />
