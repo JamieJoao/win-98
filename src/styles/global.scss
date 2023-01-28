@@ -17,6 +17,17 @@ body {
 }
 
 @font-face {
+  -webkit-font-smoothing: none;
   font-family: $windows;
-  src: url("../assets/fonts/windows-regular.ttf");
+  line-height: 1.5px;
+  src: url("../assets/fonts/ms_sans_serif.woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  -webkit-font-smoothing: none;
+  font-family: $windows;
+  line-height: 1.5px;
+  src: url("../assets/fonts/ms_sans_serif_bold.woff2");
+  font-weight: 700;
 }

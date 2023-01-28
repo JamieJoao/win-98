@@ -6,6 +6,8 @@ import {
   NotificationArea,
   Button,
   DirectAccess,
+  BordererPanel,
+  ContextMenu,
 } from './common'
 
 import {
@@ -21,6 +23,8 @@ export {
   NotificationArea,
   Button,
   DirectAccess,
+  BordererPanel,
+  ContextMenu,
   Window,
   Screen,
 }

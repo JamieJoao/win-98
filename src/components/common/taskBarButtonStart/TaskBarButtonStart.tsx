@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 
-import { TaskBarButtonBase } from 'components'
+import { TaskBarButtonBase, BordererPanel } from 'components'
 import { programsList, IMenuItem } from './const'
 
 import StartIcon from 'assets/icons/icon-windows-start.png'
@@ -64,7 +64,7 @@ export const TaskBarButtonStart = () => {
     <div className='w98-start-menu' ref={buttonRef}>
       {open && (
         <div className="w98-start-menu__wrapper">
-          <StartMenuPanel>
+          <BordererPanel>
             <>
               <div className={cn('w98-start-menu__banner', focusChildren && '--inverse-focus')}>
                 <div className="w98-start-menu__banner-text">
@@ -103,7 +103,7 @@ export const TaskBarButtonStart = () => {
                 </li>
               </ul>
             </>
-          </StartMenuPanel>
+          </BordererPanel>
         </div>
       )}
 
@@ -113,18 +113,6 @@ export const TaskBarButtonStart = () => {
         label='Inicio'
         bold
         onClick={handleToggleMenu} />
-    </div>
-  )
-}
-
-export const StartMenuPanel = (props: IProps) => {
-  const { children } = props
-
-  return (
-    <div className="w98-start-menu__panel">
-      <div className="w98-start-menu__panel-content">
-        {children}
-      </div>
     </div>
   )
 }
@@ -144,7 +132,7 @@ export const RecursiveListMenu = (props: IPropsRecursive) => {
 
   const listMenu = (parentSublist: IMenuItem[], show: boolean = false) => (
     <div className={cn('w98-start-menu__list-wrapper', show && '--show')}>
-      <StartMenuPanel>
+      <BordererPanel>
         <ul className="w98-start-menu__list">
           {parentSublist.map((obj: IMenuItem) => (
             <div
@@ -167,7 +155,7 @@ export const RecursiveListMenu = (props: IPropsRecursive) => {
             </div>
           ))}
         </ul>
-      </StartMenuPanel>
+      </BordererPanel>
     </div>
   )
 

@@ -1,0 +1,64 @@
+.w98-context-menu {
+  &__wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    // width: max-content;
+    z-index: 9999;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 1px;
+  }
+
+  &__item {
+    font-family: $windows;
+    font-size: 11px;
+    cursor: pointer;
+    flex: 1;
+    padding: 4px 22px;
+
+
+    &-wrapper {
+      padding-left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        background-color: $blue;
+        color: $white;
+      }
+
+      &.--expansible {
+        &::after {
+          content: '';
+          width: 7px;
+          height: 7px;
+          margin-right: 7px;
+          background-image: url('/src/assets/icons/caret-right.png');
+        }
+
+        &:hover {
+          &::after {
+            background-image: url('/src/assets/icons/caret-right-hover.png');
+          }
+        }
+      }
+    }
+  }
+
+  &__separator {
+    width: 100%;
+    height: 0px;
+    border-top: 1px solid $gray-5;
+    border-bottom: 1px solid $white;
+  }
+}

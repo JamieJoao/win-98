@@ -5,6 +5,8 @@ import { TaskBarButtonStart } from './taskBarButtonStart/TaskBarButtonStart'
 import { NotificationArea } from './notificationArea/NotificationArea'
 import { Button } from './button/Button'
 import { DirectAccess } from './directAccess/DirectAccess'
+import { BordererPanel } from './bordererPanel/BordererPanel'
+import { ContextMenu } from './contextMenu/ContextMenu'
 
 export {
   TaskBar,
@@ -14,4 +16,6 @@ export {
   NotificationArea,
   Button,
   DirectAccess,
+  BordererPanel,
+  ContextMenu,
 }

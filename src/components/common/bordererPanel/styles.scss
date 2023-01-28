@@ -1,0 +1,14 @@
+.w98-borderer-panel {
+  background-color: $gray-1;
+  border: 1px solid;
+  border-top-color: $gray-4;
+  border-left-color: $gray-4;
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid $gray-5;
+    border-top-color: $white;
+    border-left-color: $white;
+  }
+}

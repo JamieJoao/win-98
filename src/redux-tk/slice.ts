@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
 
-import { IProgram, ITaskBarButton, IWindow } from 'types'
+import { IProgram, ITaskBarButton, IWindow, IContextMenuItem } from 'types'
 import { IState, TAction, TReturnThunk } from './types'
 import { transformImageKeys } from 'utils/transform'
 
@@ -11,6 +11,10 @@ const initialState: IState = {
   directsAccess: transformImageKeys(DirectsAccess),
   windowsStack: [],
   taskBarButtonsStack: [],
+  contextMenu: {
+    position: { left: 0, top: 0, offsetX: 0, offsetY: 0 },
+    items: [],
+  }
 }
 
 const slice = createSlice({

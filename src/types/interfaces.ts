@@ -21,3 +21,9 @@ export interface ITaskBarButton {
   uid: string
   window: IWindow
 }
+
+export interface IContextMenuItem {
+  id: number
+  name: string
+  subitems?: IContextMenuItem[]
+}
