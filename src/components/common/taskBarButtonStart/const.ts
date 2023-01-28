@@ -4,12 +4,24 @@ import SettingsIcon from 'assets/icons/settings_gear_cool-5.png'
 import FindIcon from 'assets/icons/search_file-1.png'
 import HelpIcon from 'assets/icons/help_book_cool-4.png'
 import RunIcon from 'assets/icons/application_hourglass_small_cool-5.png'
+import InternetExplorerIcon from 'assets/icons/internet-explorer.png'
+import WindowsExplorerIcon from 'assets/icons/directory_explorer-5.png'
+import CalculatorIcon from 'assets/icons/calculator-0.png'
+import NotepadIcon from 'assets/icons/notepad-5.png'
+import AddressBookIcon from 'assets/icons/address_book-0.png'
+import WordPadIcon from 'assets/icons/write_wordpad-1.png'
+import PaintIcon from 'assets/icons/paint_file-4.png'
+import FreeCellIcon from 'assets/icons/game_freecell-1.png'
+import GameMineIcon from 'assets/icons/game_mine_1-0.png'
+import SolitarieIcon from 'assets/icons/game_solitaire-0.png'
+import FavoritesIcon from 'assets/icons/directory_favorites-2.png'
 
 export interface IMenuItem {
   id: number
   iconUrl: string
   name: string
   sublist?: IMenuItem[]
+  showed?: boolean
 }
 
 export const programsList: IMenuItem[] = [
@@ -21,36 +33,83 @@ export const programsList: IMenuItem[] = [
       {
         id: 1,
         iconUrl: ProgramsIcon,
-        name: 'Accesorios'
-      },
-      {
-        id: 2,
-        iconUrl: ProgramsIcon,
-        name: 'StartUp',
+        name: 'Accesorios',
         sublist: [
           {
             id: 1,
             iconUrl: ProgramsIcon,
-            name: 'Accesorios'
+            name: 'Accesibilidad'
           },
           {
             id: 2,
             iconUrl: ProgramsIcon,
-            name: 'StartUp'
+            name: 'Juegos',
+            sublist: [
+              {
+                id: 1,
+                iconUrl: FreeCellIcon,
+                name: 'Celda Libre'
+              },
+              {
+                id: 2,
+                iconUrl: GameMineIcon,
+                name: 'Buscaminas'
+              },
+              {
+                id: 3,
+                iconUrl: SolitarieIcon,
+                name: 'Solitario'
+              },
+            ]
+          },
+          {
+            id: 3,
+            iconUrl: CalculatorIcon,
+            name: 'Calculadora'
+          },
+          {
+            id: 4,
+            iconUrl: NotepadIcon,
+            name: 'Block de Notas'
+          },
+          {
+            id: 5,
+            iconUrl: AddressBookIcon,
+            name: 'Libro de Direcciones'
+          },
+          {
+            id: 6,
+            iconUrl: WordPadIcon,
+            name: 'WordPad'
+          },
+          {
+            id: 7,
+            iconUrl: PaintIcon,
+            name: 'Paint'
           },
         ]
       },
       {
-        id: 3,
+        id: 2,
         iconUrl: ProgramsIcon,
-        name: 'Exchange'
+        name: 'StartUp'
+      },
+      {
+        id: 3,
+        iconUrl: InternetExplorerIcon,
+        name: 'Internet Explorer'
       },
       {
         id: 4,
-        iconUrl: ProgramsIcon,
-        name: 'Explorador'
+        iconUrl: WindowsExplorerIcon,
+        name: 'Windows Explorer'
       },
     ]
+  },
+  {
+    id: 7,
+    iconUrl: FavoritesIcon,
+    name: 'Favoritos'
   },
   {
     id: 2,
@@ -65,7 +124,7 @@ export const programsList: IMenuItem[] = [
   {
     id: 4,
     iconUrl: FindIcon,
-    name: 'Buscar',
+    name: 'Buscar'
   },
   {
     id: 5,

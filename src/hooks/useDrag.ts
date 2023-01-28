@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef, RefObject, useEffect } from 'react'
+import { useRef, RefObject, useEffect } from 'react'
+import { PADDING_BOX, BORDER_BOX, BORDER_CONTENT, TASKBAR_HEIGHT, WINDOW_HEADER_SPACING } from 'utils/const'
 
 interface IProps {
   onDragStart: () => void
@@ -35,14 +36,15 @@ export const useDrag = (props: IProps) => {
       onDragEnd?.call(e)
     }
 
-    handleDragRef.current?.removeEventListener('mousemove', handlePointerMove)
+    elementRef.current?.removeEventListener('mousemove', handlePointerMove)
   }
 
   const handlePointerDown = (e: MouseEvent) => {
+    const fixErrorBorders = PADDING_BOX + BORDER_BOX + BORDER_CONTENT
     if (!canDragRef.current || !handleDragRef.current) return
 
-    pointersRef.current = { startLeft: e.offsetX, startTop: e.offsetY }
-    handleDragRef.current?.addEventListener('mousemove', handlePointerMove)
+    pointersRef.current = { startLeft: e.offsetX + fixErrorBorders, startTop: e.offsetY + fixErrorBorders }
+    elementRef.current?.addEventListener('mousemove', handlePointerMove)
   }
 
   const cleanEvents = () => {
