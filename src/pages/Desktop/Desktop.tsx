@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from 'react'
+import { useRef, useLayoutEffect, useEffect } from 'react'
 import { createWindow } from 'redux-tk/slice'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 import {
@@ -8,27 +8,11 @@ import {
   Screen,
   ContextMenu,
 } from 'components'
-import { IProgram, IContextMenuItem } from 'types'
+import { IProgram } from 'types'
 import { useContextMenu } from 'hooks'
 
 import './styles.scss'
-
-const contextMenuItems: IContextMenuItem[] = [
-  {
-    id: 1,
-    name: 'Arrange Icons',
-    subitems: [
-      {
-        id: 1,
-        name: 'Line up Icons',
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Line up Icons',
-  }
-]
+import { contextMenuItems } from './const'
 
 export const Desktop = () => {
   const dispatch = useAppDispatch()
@@ -38,7 +22,7 @@ export const Desktop = () => {
   const windowsStack = useAppSelector(state => state.windowsStack)
   const screenRef = useRef<HTMLDivElement | null>(null)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setData(contextMenuItems, screenRef)
   }, [])
 

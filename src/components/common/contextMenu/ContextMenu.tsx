@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 
+import { SCREEN_CLASS } from 'utils/const'
 import { BordererPanel } from 'components'
 import { closeContextMenu } from 'redux-tk/slice'
 import { useAppSelector, useAppDispatch } from 'redux-tk/store'
@@ -12,10 +13,10 @@ export const ContextMenu = () => {
   const dispatch = useAppDispatch()
   const screenRef = useRef<HTMLDivElement | null>(null)
   const menuRef = useRef<HTMLDivElement | null>(null)
-  const [coords, setCoords] = useState<{ left: number, top: number }>(position)
+  const [coords, setCoords] = useState<{ left: number, top: number } | null>(null)
 
   useLayoutEffect(() => {
-    screenRef.current = document.querySelector('.w98-screen__content')
+    screenRef.current = document.querySelector(SCREEN_CLASS)
     screenRef.current?.addEventListener('click', handleOutsideClick)
 
     return () => {
@@ -30,11 +31,16 @@ export const ContextMenu = () => {
 
     if (!screen || !menu) return
 
+    const finalLeft = left - (offsetX + menu.clientWidth > screen.clientWidth ? menu.clientWidth : 0)
+      , finalTop = top - (offsetY + menu.clientHeight > screen.clientHeight ? menu.clientHeight : 0)
+
     setCoords({
-      left: left - (offsetX + menu.clientWidth > screen.clientWidth ? menu.clientWidth : 0),
-      top: top - (offsetY + menu.clientHeight > screen.clientHeight ? menu.clientHeight : 0),
+      ...coords,
+      left: finalLeft,
+      top: finalTop,
     })
   }, [position])
+  
 
   const handleOutsideClick = (e: any) => {
     const menu = menuRef.current
@@ -52,7 +58,7 @@ export const ContextMenu = () => {
 
   return (
     <div
-      className="w98-context-menu__wrapper"
+      className={cn('w98-context-menu__wrapper', !coords && '--hide')}
       style={{ ...coords }}
       ref={menuRef}>
       <BordererPanel
