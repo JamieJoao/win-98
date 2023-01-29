@@ -1,14 +1,17 @@
 .w98-borderer-panel {
   background-color: $gray-1;
-  border: 1px solid;
-  border-top-color: $gray-4;
-  border-left-color: $gray-4;
+  padding: 2px;
+
+  &.--window {
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
+  }
+
+  &.--button {
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+  }
 
   &__content {
     display: flex;
     flex-direction: row;
-    border: 1px solid $gray-5;
-    border-top-color: $white;
-    border-left-color: $white;
   }
 }

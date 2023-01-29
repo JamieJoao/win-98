@@ -12,7 +12,7 @@ export const ContextMenu = () => {
   const dispatch = useAppDispatch()
   const screenRef = useRef<HTMLDivElement | null>(null)
   const menuRef = useRef<HTMLDivElement | null>(null)
-  const [coords, setCoords] = useState<{ left: number, top: number }>({ left: 0, top: 0 })
+  const [coords, setCoords] = useState<{ left: number, top: number }>(position)
 
   useLayoutEffect(() => {
     screenRef.current = document.querySelector('.w98-screen__content')
@@ -56,6 +56,7 @@ export const ContextMenu = () => {
       style={{ ...coords }}
       ref={menuRef}>
       <BordererPanel
+        type='window'
         className='w98-context-menu'>
         <ul className='w98-context-menu__list'>
           {contextMenuItems?.map(obj => (

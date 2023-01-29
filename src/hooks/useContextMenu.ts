@@ -1,7 +1,7 @@
 import { RefObject, useEffect, useRef } from 'react'
 
 import { IContextMenuItem } from 'types'
-import { openContextMenu } from 'redux-tk/slice'
+import { setKeyValue, closeContextMenu } from 'redux-tk/slice'
 import { useAppDispatch } from 'redux-tk/store'
 import { IContextMenuStore } from 'redux-tk/types'
 
@@ -26,7 +26,10 @@ export const useContextMenu = () => {
       items: itemsRef.current,
     }
 
-    dispatch(openContextMenu(auxMenu))
+    dispatch(closeContextMenu())
+    setTimeout(() => {
+      dispatch(setKeyValue({ key: 'contextMenu', value: auxMenu }))
+    })
   }
 
   const setData = (items: IContextMenuItem[], ref: RefObject<HTMLElement>) => {

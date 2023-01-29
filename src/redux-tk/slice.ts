@@ -108,7 +108,7 @@ export const minimizeWindow = (window: IWindow): TReturnThunk => (dispatch: any,
 export const openContextMenu = createAsyncThunk(
   'slice/openContextMenu',
   (payload: IContextMenuStore, { dispatch }) => {
-    dispatch(setKeyValue({ key: 'contextMenu', value: payload }))    
+    dispatch(setKeyValue({ key: 'contextMenu', value: payload }))
 
     return Promise.resolve()
   }

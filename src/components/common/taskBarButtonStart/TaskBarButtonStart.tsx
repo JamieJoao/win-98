@@ -64,7 +64,7 @@ export const TaskBarButtonStart = () => {
     <div className='w98-start-menu' ref={buttonRef}>
       {open && (
         <div className="w98-start-menu__wrapper">
-          <BordererPanel>
+          <BordererPanel type='window'>
             <>
               <div className={cn('w98-start-menu__banner', focusChildren && '--inverse-focus')}>
                 <div className="w98-start-menu__banner-text">
@@ -132,7 +132,7 @@ export const RecursiveListMenu = (props: IPropsRecursive) => {
 
   const listMenu = (parentSublist: IMenuItem[], show: boolean = false) => (
     <div className={cn('w98-start-menu__list-wrapper', show && '--show')}>
-      <BordererPanel>
+      <BordererPanel type='window'>
         <ul className="w98-start-menu__list">
           {parentSublist.map((obj: IMenuItem) => (
             <div
