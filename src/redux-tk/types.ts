@@ -13,7 +13,7 @@ export interface IState {
 
 export interface IContextMenuStore {
   position: { left: number, top: number, offsetX: number, offsetY: number }
-  items: IContextMenuItem[] | null
+  items: IContextMenuItem[]
 }
 
 export type TAction =

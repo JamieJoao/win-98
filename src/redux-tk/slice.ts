@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
 
-import { IProgram, ITaskBarButton, IWindow, IContextMenuItem } from 'types'
-import { IState, TAction, TReturnThunk } from './types'
+import { IProgram, ITaskBarButton, IWindow } from 'types'
+import { IContextMenuStore, IState, TAction, TReturnThunk } from './types'
 import { transformImageKeys } from 'utils/transform'
 
 import DirectsAccess from 'models/directsAccess.json'
@@ -76,7 +76,7 @@ const slice = createSlice({
     reorderTaskBarsStack(state, action: PayloadAction<IWindow>) {
 
     },
-    resetContextMenu(state) {
+    closeContextMenu(state) {
       return {
         ...state,
         contextMenu: {
@@ -95,7 +95,7 @@ export const {
   deleteWindow,
   reorderTaskBarsStack,
   changePositionWindow,
-  resetContextMenu,
+  closeContextMenu,
 } = slice.actions
 
 export const minimizeWindow = (window: IWindow): TReturnThunk => (dispatch: any, getState) => {
@@ -105,15 +105,13 @@ export const minimizeWindow = (window: IWindow): TReturnThunk => (dispatch: any,
   dispatch(changePositionWindow({ uid: window.uid, destIndex: state.windowsStack.length - 1 }))
 }
 
-/*
-export const asyncChangePositionWindow = createAsyncThunk(
-  'slice/asyncChangePositionWindow',
-  (payload: { uid: string, destIndex: number }, { dispatch, getState }) => {
-    dispatch(changePositionWindow(payload))
+export const openContextMenu = createAsyncThunk(
+  'slice/openContextMenu',
+  (payload: IContextMenuStore, { dispatch }) => {
+    dispatch(setKeyValue({ key: 'contextMenu', value: payload }))    
 
-    return Promise.resolve(2)
+    return Promise.resolve()
   }
 )
-*/
 
 export default slice.reducer

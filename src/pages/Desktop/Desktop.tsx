@@ -33,6 +33,7 @@ const contextMenuItems: IContextMenuItem[] = [
 export const Desktop = () => {
   const dispatch = useAppDispatch()
   const { setData } = useContextMenu()
+  const { items } = useAppSelector(state => state.contextMenu)
   const directsAccess = useAppSelector(state => state.directsAccess)
   const windowsStack = useAppSelector(state => state.windowsStack)
   const screenRef = useRef<HTMLDivElement | null>(null)
@@ -71,7 +72,9 @@ export const Desktop = () => {
         <TaskBar />
       </div>
 
-      <ContextMenu />
+      <>
+        {!!items.length && <ContextMenu />}
+      </>
     </Screen>
   )
 }

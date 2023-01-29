@@ -2,17 +2,12 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 
 import { BordererPanel } from 'components'
-import { resetContextMenu } from 'redux-tk/slice'
+import { closeContextMenu } from 'redux-tk/slice'
 import { useAppSelector, useAppDispatch } from 'redux-tk/store'
 
 import './styles.scss'
 
-interface IProps {
-
-}
-
-export const ContextMenu = (props: IProps) => {
-  const { } = props
+export const ContextMenu = () => {
   const { items: contextMenuItems, position } = useAppSelector(state => state.contextMenu)
   const dispatch = useAppDispatch()
   const screenRef = useRef<HTMLDivElement | null>(null)
@@ -21,9 +16,10 @@ export const ContextMenu = (props: IProps) => {
 
   useLayoutEffect(() => {
     screenRef.current = document.querySelector('.w98-screen__content')
+    screenRef.current?.addEventListener('click', handleOutsideClick)
 
-    if (screenRef.current) {
-      screenRef.current.addEventListener('mousedown', handleOutsideClick)
+    return () => {
+      screenRef.current?.removeEventListener('click', handleOutsideClick)
     }
   }, [])
 
@@ -51,30 +47,28 @@ export const ContextMenu = (props: IProps) => {
       return
     }
 
-    dispatch(resetContextMenu())
+    dispatch(closeContextMenu())
   }
 
-  return contextMenuItems?.length
-    ? (
-      <div
-        className="w98-context-menu__wrapper"
-        style={{ ...coords }}
-        ref={menuRef}>
-        <BordererPanel
-          className='w98-context-menu'>
-          <ul className='w98-context-menu__list'>
-            {contextMenuItems.map(obj => (
-              <li
-                key={obj.id}
-                className={cn('w98-context-menu__item-wrapper', obj.subitems && '--expansible')}>
-                <div className="w98-context-menu__item">
-                  {obj.name}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </BordererPanel>
-      </div>
-    )
-    : null
+  return (
+    <div
+      className="w98-context-menu__wrapper"
+      style={{ ...coords }}
+      ref={menuRef}>
+      <BordererPanel
+        className='w98-context-menu'>
+        <ul className='w98-context-menu__list'>
+          {contextMenuItems?.map(obj => (
+            <li
+              key={obj.id}
+              className={cn('w98-context-menu__item-wrapper', obj.subitems && '--expansible')}>
+              <div className="w98-context-menu__item">
+                {obj.name}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </BordererPanel>
+    </div>
+  )
 }
