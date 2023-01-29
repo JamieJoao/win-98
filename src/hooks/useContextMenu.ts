@@ -1,4 +1,4 @@
-import { RefObject, useLayoutEffect, useRef } from 'react'
+import { RefObject, useEffect, useRef } from 'react'
 
 import { IContextMenuItem } from 'types'
 import { setKeyValue } from 'redux-tk/slice'
@@ -8,9 +8,17 @@ import { IContextMenuStore } from 'redux-tk/types'
 export const useContextMenu = () => {
   const dispatch = useAppDispatch()
   const itemsRef = useRef<IContextMenuItem[]>([])
+  const elementRef = useRef<HTMLElement | null>(null)
 
-  const handleContextMenu = (event: any) => {
+  useEffect(() => {
+    return () => {
+      elementRef.current?.removeEventListener('contextmenu', handleContextMenu)
+    }
+  }, [])
+
+  const handleContextMenu = (event: MouseEvent) => {
     event.preventDefault()
+    event.stopPropagation()
 
     const { offsetX, offsetY, clientX, clientY } = event
     const auxMenu: IContextMenuStore = {
@@ -21,9 +29,11 @@ export const useContextMenu = () => {
     dispatch(setKeyValue({ key: 'contextMenu', value: auxMenu }))
   }
 
-  const setData = (items: IContextMenuItem[], elementRef: RefObject<HTMLElement>) => {
+  const setData = (items: IContextMenuItem[], ref: RefObject<HTMLElement>) => {
+    elementRef.current = ref.current
     itemsRef.current = items
-    elementRef.current?.addEventListener('contextmenu', (e) => handleContextMenu(e))
+
+    elementRef.current?.addEventListener('contextmenu', handleContextMenu)
   }
 
   return {

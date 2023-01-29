@@ -38,7 +38,7 @@ export const Desktop = () => {
   const screenRef = useRef<HTMLDivElement | null>(null)
 
   useLayoutEffect(() => {
-    if (screenRef.current) setData(contextMenuItems, screenRef)
+    setData(contextMenuItems, screenRef)
   }, [])
 
   const handleOpenIcon = (program: IProgram) => {
@@ -46,34 +46,32 @@ export const Desktop = () => {
   }
 
   return (
-    <>
-      <Screen>
-        <div
-          className="w98-desktop"
-          ref={screenRef}>
+    <Screen>
+      <div
+        className="w98-desktop"
+        ref={screenRef}>
 
-          <div className="w98-desktop__icon-group">
-            {directsAccess.map(obj => (
-              <DirectAccess
-                key={obj.uid}
-                url={obj.iconUrl}
-                name={obj.name}
-                onDoubleClick={() => handleOpenIcon(obj)} />
-            ))}
-          </div>
-
-          {windowsStack.map((obj, index) => (
-            <Window
+        <div className="w98-desktop__icon-group">
+          {directsAccess.map(obj => (
+            <DirectAccess
               key={obj.uid}
-              data={obj}
-              position={index} />
+              url={obj.iconUrl}
+              name={obj.name}
+              onDoubleClick={() => handleOpenIcon(obj)} />
           ))}
-
-          <TaskBar />
         </div>
-      </Screen>
+
+        {windowsStack.map((obj, index) => (
+          <Window
+            key={obj.uid}
+            data={obj}
+            position={index} />
+        ))}
+
+        <TaskBar />
+      </div>
 
       <ContextMenu />
-    </>
+    </Screen>
   )
 }

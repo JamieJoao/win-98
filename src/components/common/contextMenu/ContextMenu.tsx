@@ -1,9 +1,9 @@
-import { useEffect, RefObject, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 
-import { IContextMenuItem } from 'types'
 import { BordererPanel } from 'components'
-import { useAppSelector } from 'redux-tk/store'
+import { resetContextMenu } from 'redux-tk/slice'
+import { useAppSelector, useAppDispatch } from 'redux-tk/store'
 
 import './styles.scss'
 
@@ -14,6 +14,7 @@ interface IProps {
 export const ContextMenu = (props: IProps) => {
   const { } = props
   const { items: contextMenuItems, position } = useAppSelector(state => state.contextMenu)
+  const dispatch = useAppDispatch()
   const screenRef = useRef<HTMLDivElement | null>(null)
   const menuRef = useRef<HTMLDivElement | null>(null)
   const [coords, setCoords] = useState<{ left: number, top: number }>({ left: 0, top: 0 })
@@ -21,16 +22,9 @@ export const ContextMenu = (props: IProps) => {
   useLayoutEffect(() => {
     screenRef.current = document.querySelector('.w98-screen__content')
 
-    const handleContextMenu = (e: MouseEvent) => {
-      console.log(e)
-      e.preventDefault()
+    if (screenRef.current) {
+      screenRef.current.addEventListener('mousedown', handleOutsideClick)
     }
-
-    if (menuRef.current) {
-      menuRef.current.addEventListener('contextmenu', handleContextMenu)
-    }
-
-    return () => menuRef.current?.removeEventListener('contextmenu', handleContextMenu)
   }, [])
 
   useEffect(() => {
@@ -45,6 +39,20 @@ export const ContextMenu = (props: IProps) => {
       top: top - (offsetY + menu.clientHeight > screen.clientHeight ? menu.clientHeight : 0),
     })
   }, [position])
+
+  const handleOutsideClick = (e: any) => {
+    const menu = menuRef.current
+
+    if (
+      menu &&
+      menu.contains(e.target) &&
+      menu === e.target.closest('.w98-context-menu__wrapper')
+    ) {
+      return
+    }
+
+    dispatch(resetContextMenu())
+  }
 
   return contextMenuItems?.length
     ? (

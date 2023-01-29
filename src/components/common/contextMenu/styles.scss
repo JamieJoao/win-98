@@ -5,6 +5,7 @@
     left: 50%;
     // width: max-content;
     z-index: 9999;
+    user-select: none;
   }
 
   &__list {

@@ -75,7 +75,16 @@ const slice = createSlice({
     },
     reorderTaskBarsStack(state, action: PayloadAction<IWindow>) {
 
-    }
+    },
+    resetContextMenu(state) {
+      return {
+        ...state,
+        contextMenu: {
+          position: { left: 0, top: 0, offsetX: 0, offsetY: 0 },
+          items: [],
+        }
+      }
+    },
   }
 })
 
@@ -86,6 +95,7 @@ export const {
   deleteWindow,
   reorderTaskBarsStack,
   changePositionWindow,
+  resetContextMenu,
 } = slice.actions
 
 export const minimizeWindow = (window: IWindow): TReturnThunk => (dispatch: any, getState) => {
