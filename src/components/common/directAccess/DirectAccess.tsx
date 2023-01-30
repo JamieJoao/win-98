@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useContextMenu } from 'hooks'
+import { directAccessContextMenu } from './const'
 
 import './styles.scss'
 
@@ -16,7 +17,7 @@ export const DirectAccess = (props: IProps) => {
   const directAccessRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setData([{ id: 1, name: 'aaa' }], directAccessRef)
+    setData(directAccessContextMenu, directAccessRef)
   }, [])
 
   return (

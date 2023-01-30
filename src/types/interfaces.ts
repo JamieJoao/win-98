@@ -24,6 +24,10 @@ export interface ITaskBarButton {
 
 export interface IContextMenuItem {
   id: number
-  name: string
+  name?: string
+  underlineLetter?: string
   subitems?: IContextMenuItem[]
+  separator?: boolean
+  showed?: boolean
+  action?: () => void
 }

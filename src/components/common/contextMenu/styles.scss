@@ -1,12 +1,10 @@
 .w98-context-menu {
   &__wrapper {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    // width: max-content;
+    min-width: 182px;
     z-index: 9999;
     user-select: none;
-    
+
     &.--hide {
       visibility: hidden;
     }
@@ -14,25 +12,42 @@
 
   &__list {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
     width: 100%;
     padding: 1px;
+    margin: 3px 0;
+
+    &-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .w98-context-submenu {
+      &__wrapper {
+        position: absolute;
+        top: -6px;
+        left: calc(100% - 5px);
+        max-width: 182px;
+        z-index: 9999;
+      }
+    }
   }
 
   &__item {
     font-family: $windows;
     font-size: 11px;
-    cursor: pointer;
+    cursor: default;
     flex: 1;
     padding: 4px 22px;
 
+    span {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inherit;
+      max-width: 132px;
+    }
 
     &-wrapper {
-      padding-left: 0;
-      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -61,9 +76,6 @@
   }
 
   &__separator {
-    width: 100%;
-    height: 0px;
-    border-top: 1px solid $gray-5;
-    border-bottom: 1px solid $white;
+    margin: 3px 0;
   }
 }

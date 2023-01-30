@@ -8,6 +8,7 @@ import {
   DirectAccess,
   BordererPanel,
   ContextMenu,
+  Separator,
 } from './common'
 
 import {
@@ -25,6 +26,7 @@ export {
   DirectAccess,
   BordererPanel,
   ContextMenu,
+  Separator,
   Window,
   Screen,
 }

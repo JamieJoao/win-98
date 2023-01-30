@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 
-import { TaskBarButtonBase, BordererPanel } from 'components'
+import {
+  TaskBarButtonBase,
+  BordererPanel,
+  Separator,
+} from 'components'
 import { programsList, IMenuItem } from './const'
 
 import StartIcon from 'assets/icons/icon-windows-start.png'
@@ -76,14 +80,16 @@ export const TaskBarButtonStart = () => {
               <ul className="w98-start-menu__list">
                 {programsListMapped.map(obj => (
                   <div className='w98-start-menu__list-main-wrapper' key={obj.id}>
-                    <li
-                      className={cn('w98-start-menu__item', obj.sublist && '--expansible', obj.showed && '--active')}
-                      onMouseEnter={() => handleClickOption(obj)}>
-                      <img src={obj.iconUrl} draggable={false} />
-                      <span>{obj.name}</span>
-
-
-                    </li>
+                    {obj.separator
+                      ? (<li className='w98-start-menu__separator'>
+                        <Separator aligment='horizontal' />
+                      </li>)
+                      : (<li
+                        className={cn('w98-start-menu__item', obj.sublist && '--expansible', obj.showed && '--active')}
+                        onMouseEnter={() => handleClickOption(obj)}>
+                        <img src={obj.iconUrl} draggable={false} />
+                        <span>{obj.name}</span>
+                      </li>)}
 
                     {obj.sublist && obj.showed && (
                       <RecursiveListMenu
@@ -94,13 +100,15 @@ export const TaskBarButtonStart = () => {
                   </div>
                 ))}
 
-                <li className='w98-start-menu__separator'></li>
+                {/* <li className='w98-start-menu__separator'>
+                  <Separator aligment='horizontal' />
+                </li>
 
                 <li
                   className="w98-start-menu__item">
                   <img src={ShutDownIcon} draggable={false} />
                   <span>Apagar</span>
-                </li>
+                </li> */}
               </ul>
             </>
           </BordererPanel>
@@ -138,13 +146,16 @@ export const RecursiveListMenu = (props: IPropsRecursive) => {
             <div
               className='w98-start-menu__item-wrapper'
               key={obj.id}>
-              <li
-                className={cn('w98-start-menu__item', obj.sublist && '--expansible', obj.showed && '--active')}
-                onMouseEnter={() => handleClickOption(obj)}>
-                <img src={obj.iconUrl} draggable={false} />
-                <span>{obj.name}</span>
-
-              </li>
+              {obj.separator
+                ? (<li className='w98-start-menu__separator'>
+                  <Separator aligment='horizontal' />
+                </li>)
+                : (<li
+                  className={cn('w98-start-menu__item', obj.sublist && '--expansible', obj.showed && '--active')}
+                  onMouseEnter={() => handleClickOption(obj)}>
+                  <img src={obj.iconUrl} draggable={false} />
+                  <span>{obj.name}</span>
+                </li>)}
 
               {obj.sublist && obj.showed && (
                 <RecursiveListMenu

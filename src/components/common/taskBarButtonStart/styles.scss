@@ -138,9 +138,6 @@
   }
 
   &__separator {
-    width: 100%;
-    height: 0px;
-    border-top: 1px solid $gray-5;
-    border-bottom: 1px solid $white;
+    margin: 1px;
   }
 }

@@ -7,6 +7,7 @@ import { Button } from './button/Button'
 import { DirectAccess } from './directAccess/DirectAccess'
 import { BordererPanel } from './bordererPanel/BordererPanel'
 import { ContextMenu } from './contextMenu/ContextMenu'
+import { Separator } from './separator/Separator'
 
 export {
   TaskBar,
@@ -18,4 +19,5 @@ export {
   DirectAccess,
   BordererPanel,
   ContextMenu,
+  Separator,
 }
