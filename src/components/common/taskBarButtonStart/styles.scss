@@ -3,9 +3,18 @@
 
   &__button {
     width: $button-start-width-mobile;
+    font-weight: bold;
+
+    span {
+      display: none;
+    }
 
     @include media-tablet {
       width: $button-start-width-desktop;
+
+      span {
+        display: initial;
+      }
     }
   }
 

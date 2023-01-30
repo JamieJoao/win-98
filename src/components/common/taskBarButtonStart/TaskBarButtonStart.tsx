@@ -119,7 +119,6 @@ export const TaskBarButtonStart = () => {
         className={cn('w98-start-menu__button', open && '--active')}
         iconUrl={StartIcon}
         label='Inicio'
-        bold
         onClick={handleToggleMenu} />
     </div>
   )
