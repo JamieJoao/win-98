@@ -1,7 +1,11 @@
-import { Window } from './window/Window'
 import { Screen } from './screen/Screen'
+import { DraggableWindow } from './draggableWindow/DraggableWidow'
+import { HeaderWindow } from './headerWindow/HeaderWindow'
+import { ButtonControlWindow } from './buttonControlWindow/ButtonControlWindow'
 
 export {
-  Window,
   Screen,
+  DraggableWindow,
+  HeaderWindow,
+  ButtonControlWindow,
 }

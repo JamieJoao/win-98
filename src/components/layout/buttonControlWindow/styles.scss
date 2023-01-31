@@ -1,0 +1,43 @@
+.w98-button-window {
+  border: none;
+  background-color: $gray-1;
+  width: 16px;
+  height: 14px;
+  display: flex;
+  padding: 2px;
+  background-repeat: no-repeat;
+
+  @include box-shadow-normal;
+
+  &:active {
+    @include box-shadow-normal(true);
+  }
+
+  &.--minimize {
+    background-image: url('/src/assets/icons/icon-minimize.svg');
+    background-position: left 4px bottom 4px;
+  }
+
+  &.--maximize,
+  &.--unmaximize,
+  &.--question {
+    background-position: bottom 3px center;
+  }
+
+  &.--maximize {
+    background-image: url('/src/assets/icons/icon-maximize.svg');
+  }
+
+  &.--unmaximize {
+    background-image: url('/src/assets/icons/icon-unmaximize.svg');
+  }
+
+  &.--close {
+    background-image: url('/src/assets/icons/icon-close.svg');
+    background-position: bottom 4px center;
+  }
+
+  &.--question {
+    background-image: url('/src/assets/icons/icon-question.svg');
+  }
+}

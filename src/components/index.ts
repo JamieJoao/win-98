@@ -12,8 +12,10 @@ import {
 } from './common'
 
 import {
-  Window,
   Screen,
+  DraggableWindow,
+  HeaderWindow,
+  ButtonControlWindow,
 } from './layout'
 
 export {
@@ -27,6 +29,8 @@ export {
   BordererPanel,
   ContextMenu,
   Separator,
-  Window,
   Screen,
+  DraggableWindow,
+  HeaderWindow,
+  ButtonControlWindow,
 }

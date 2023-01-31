@@ -17,6 +17,7 @@ export const MainRoute = () => {
     <Router basename='/win-98'>
       <Routes>
         <Route path='/' element={<Desktop />} />
+        {/* <Route path='/' element={<Home />} /> */}
       </Routes>
     </Router>
   )

@@ -1,0 +1,30 @@
+.w98-float-window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  &.--regular {
+    width: 210px;
+    height: 200px;
+  }
+
+  &.--fullscreen {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - $taskbar-height);
+  }
+
+  &.--minimized {
+    display: none;
+  }
+
+  &__wrapper {
+    height: 100%;
+  }
+
+  &__content {
+    padding: 2px;
+  }
+}

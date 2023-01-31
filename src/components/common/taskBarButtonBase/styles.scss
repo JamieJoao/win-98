@@ -42,5 +42,13 @@
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAG0lEQVQYV2M8cODAf3t7ewbG/////z948CADAFuqCj64BtLKAAAAAElFTkSuQmCC);
 
     @include box-shadow-normal(true);
+
+    .w98-taskbar-button-base {
+      &__content {
+        span {
+          font-weight: 700;
+        }
+      }
+    }
   }
 }

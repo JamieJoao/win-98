@@ -1,18 +1,18 @@
-import { useRef, useLayoutEffect, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { createWindow } from 'redux-tk/slice'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 import {
   TaskBar,
   DirectAccess,
-  Window,
+  DraggableWindow,
   Screen,
   ContextMenu,
 } from 'components'
 import { IProgram } from 'types'
 import { useContextMenu } from 'hooks'
+import { contextMenuItems } from './const'
 
 import './styles.scss'
-import { contextMenuItems } from './const'
 
 export const Desktop = () => {
   const dispatch = useAppDispatch()
@@ -47,7 +47,7 @@ export const Desktop = () => {
         </div>
 
         {windowsStack.map((obj, index) => (
-          <Window
+          <DraggableWindow
             key={obj.uid}
             data={obj}
             position={index} />
