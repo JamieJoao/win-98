@@ -14,7 +14,8 @@ const initialState: IState = {
   contextMenu: {
     position: { left: 0, top: 0, offsetX: 0, offsetY: 0 },
     items: [],
-  }
+  },
+  outOfFocus: false,
 }
 
 const slice = createSlice({
@@ -46,7 +47,7 @@ const slice = createSlice({
         },
       ]
 
-      return { ...state, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
+      return { ...state, outOfFocus: false, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
     },
     deleteWindow(state, action: PayloadAction<string>) {
       const newWindowsStack = state.windowsStack.filter(obj => obj.uid !== action.payload)
@@ -61,7 +62,7 @@ const slice = createSlice({
         return action.payload
       })
 
-      return { ...state, windowsStack: newWindowsStack }
+      return { ...state, outOfFocus: false, windowsStack: newWindowsStack }
     },
     changePositionWindow(state, action: PayloadAction<{ uid: string, destIndex: number }>) {
       const cloneWindowsStack = [...state.windowsStack]
@@ -71,7 +72,7 @@ const slice = createSlice({
 
       cloneWindowsStack.splice(destIndex, 0, windowRemoved[0])
 
-      return { ...state, windowsStack: cloneWindowsStack }
+      return { ...state, outOfFocus: false, windowsStack: cloneWindowsStack }
     },
     reorderTaskBarsStack(state, action: PayloadAction<IWindow>) {
 

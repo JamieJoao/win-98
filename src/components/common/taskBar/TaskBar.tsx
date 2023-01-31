@@ -11,7 +11,7 @@ import {
 import './styles.scss'
 
 const COLUMN_GAP = 4
-const WIDTH_BASE = 158
+const WIDTH_BASE = 95
 
 export const TaskBar = () => {
   const taskBarButtonsStack = useAppSelector(state => state.taskBarButtonsStack)
