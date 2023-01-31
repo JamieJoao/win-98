@@ -1,0 +1,82 @@
+.w98-context-menu {
+  &__wrapper {
+    position: fixed;
+    min-width: 120px;
+    z-index: 9999;
+    user-select: none;
+
+    &.--hide {
+      visibility: hidden;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    width: 100%;
+    padding: 1px;
+    margin: 3px 0;
+
+    &-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .w98-context-submenu {
+      &__wrapper {
+        position: absolute;
+        top: -6px;
+        left: calc(100% - 5px);
+        max-width: 120px;
+        z-index: 9999;
+      }
+    }
+  }
+
+  &__item {
+    font-family: $ms-sans;
+    font-size: 11px;
+    letter-spacing: 0.2px;
+    cursor: default;
+    flex: 1;
+    padding: 4px 22px;
+
+    span {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inherit;
+      max-width: 132px;
+    }
+
+    &-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        background-color: $blue;
+        color: $white;
+      }
+
+      &.--expansible {
+        &::after {
+          content: '';
+          width: 7px;
+          height: 7px;
+          margin-right: 7px;
+          background-image: url('/src/assets/icons/caret-right.png');
+        }
+
+        &:hover {
+          &::after {
+            background-image: url('/src/assets/icons/caret-right-hover.png');
+          }
+        }
+      }
+    }
+  }
+
+  &__separator {
+    margin: 3px 0;
+  }
+}

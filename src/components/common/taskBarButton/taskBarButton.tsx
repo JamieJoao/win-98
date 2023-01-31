@@ -3,8 +3,6 @@ import { ITaskBarButton } from 'types'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 import { updateWindow, changePositionWindow } from 'redux-tk/slice'
 
-import './styles.scss'
-
 interface IProps {
   className?: string
   data: ITaskBarButton

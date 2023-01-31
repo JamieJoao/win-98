@@ -1,11 +1,11 @@
 // LOCAL VARIABLES
-$size-direct-access: 80px;
+$size-direct-access: 74px;
 
 .w98-desktop {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #008080; // quitar
+  background-color: $green-1; // quitar
   overflow: hidden;
   padding: 1px;
 

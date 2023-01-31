@@ -1,8 +1,9 @@
-import { IWindow, IButton, IProgram, ITaskBarButton } from './interfaces'
+import { IWindow, IButton, IProgram, ITaskBarButton, IContextMenuItem } from './interfaces'
 
 export {
   IWindow,
   IButton,
   IProgram,
   ITaskBarButton,
+  IContextMenuItem
 }

@@ -1,39 +1,40 @@
-@mixin border-color-container {
-  border-top-color: $white;
-  border-left-color: $white;
-  border-bottom-color: $black;
-  border-right-color: $black;
+@mixin box-shadow-normal($invert: false) {
+  @if $invert {
+    box-shadow:
+      inset -1px -1px #fff,
+      inset 1px 1px #0a0a0a,
+      inset -2px -2px #dfdfdf,
+      inset 2px 2px grey;
+  }
+
+  @else {
+    box-shadow:
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #fff,
+      inset -2px -2px grey,
+      inset 2px 2px #dfdfdf;
+  }
 }
 
-@mixin border-color-box {
-  border-top-color: $gray-3;
-  border-left-color: $gray-3;
-  border-bottom-color: $gray-2;
-  border-right-color: $gray-2;
-}
-
-@mixin border-color-container-inv {
-  border-top-color: $black;
-  border-left-color: $black;
-  border-bottom-color: $white;
-  border-right-color: $white;
-}
-
-@mixin border-color-box-inv {
-  border-top-color: $gray-2;
-  border-left-color: $gray-2;
-  border-bottom-color: $gray-3;
-  border-right-color: $gray-3;
+@mixin fix-font {
+  letter-spacing: .8px;
+  text-shadow: 1px 0 black;
 }
 
 @mixin media-mobile() {
-  @media(max-width: 599px) {
+  @media(min-width: 375px) {
+    @content;
+  }
+}
+
+@mixin media-tablet() {
+  @media(min-width: 768px) {
     @content;
   }
 }
 
 @mixin media-desktop() {
-  @media(min-width: 900px) {
+  @media(min-width: 1024px) {
     @content;
   }
 }

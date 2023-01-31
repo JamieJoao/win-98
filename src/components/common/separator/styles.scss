@@ -1,0 +1,13 @@
+.w98-separator {
+  &.--horizontal {
+    height: 0;
+    border-bottom: 1px solid $white;
+    border-top: 1px solid $gray-5;
+  }
+
+  &.--vertical {
+    width: 0;
+    border-right: 1px solid $white;
+    border-left: 1px solid $gray-5;
+  }
+}

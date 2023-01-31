@@ -1,7 +1,12 @@
 import { useMemo, useRef } from 'react'
 
 import { useAppSelector } from 'redux-tk/store'
-import { TaskBarButton, NotificationArea, TaskBarButtonStart } from 'components'
+import {
+  TaskBarButton,
+  NotificationArea,
+  TaskBarButtonStart,
+  Separator,
+} from 'components'
 
 import './styles.scss'
 
@@ -28,7 +33,7 @@ export const TaskBar = () => {
       <div className="w98-taskbar__container">
         <TaskBarButtonStart />
 
-        <div className="w98-taskbar__separator" />
+        <Separator aligment='vertical' />
 
         <div className="w98-taskbar__group" ref={taskBarRef}>
           {taskBarButtonsStack.map((obj, index) => (
@@ -39,7 +44,7 @@ export const TaskBar = () => {
           ))}
         </div>
 
-        <div className="w98-taskbar__separator" />
+        <Separator aligment='vertical' />
 
         <div className="w98-taskbar__info">
           <NotificationArea />

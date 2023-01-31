@@ -6,11 +6,16 @@ import {
   NotificationArea,
   Button,
   DirectAccess,
+  BordererPanel,
+  ContextMenu,
+  Separator,
 } from './common'
 
 import {
-  Window,
   Screen,
+  DraggableWindow,
+  HeaderWindow,
+  ButtonControlWindow,
 } from './layout'
 
 export {
@@ -21,6 +26,11 @@ export {
   NotificationArea,
   Button,
   DirectAccess,
-  Window,
+  BordererPanel,
+  ContextMenu,
+  Separator,
   Screen,
+  DraggableWindow,
+  HeaderWindow,
+  ButtonControlWindow,
 }

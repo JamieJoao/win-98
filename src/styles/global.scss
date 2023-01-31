@@ -17,6 +17,24 @@ body {
 }
 
 @font-face {
+  -webkit-font-smoothing: none;
   font-family: $windows;
+  line-height: 1.5px;
+  // src: url("../assets/fonts/ms_sans_serif.woff2");
   src: url("../assets/fonts/windows-regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  -webkit-font-smoothing: none;
+  font-family: $ms-sans;
+  src: url("../assets/fonts/ms_sans_serif.woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  -webkit-font-smoothing: none;
+  font-family: $ms-sans;
+  src: url("../assets/fonts/ms_sans_serif_bold.woff2");
+  font-weight: 700;
 }

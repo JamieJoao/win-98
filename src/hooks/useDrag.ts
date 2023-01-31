@@ -1,14 +1,27 @@
-import { useLayoutEffect, useRef, RefObject, useEffect } from 'react'
+import { useRef, RefObject, useEffect } from 'react'
+import { isMobile } from 'react-device-detect';
+import {
+  PADDING_BOX,
+  BORDER_BOX,
+  BORDER_CONTENT,
+  SCREEN_CLASS,
+} from 'utils/const'
 
 interface IProps {
+  canDragRef?: RefObject<boolean>
   onDragStart: () => void
   onDragEnd: () => void
   onDragging: (left: number, top: number) => void
-  canDragRef: RefObject<boolean>
+}
+
+const PLATFORM = isMobile ? 'mobile' : 'desktop'
+const METHODS_MAPPED = {
+  mobile: { start: 'touchstart', end: 'touchend', move: 'touchmove' },
+  desktop: { start: 'mousedown', end: 'mouseup', move: 'mousemove' },
 }
 
 export const useDrag = (props: IProps) => {
-  const { onDragStart, onDragEnd, onDragging, canDragRef } = props
+  const { onDragStart, onDragEnd, onDragging, canDragRef, } = props
 
   const containerRef = useRef<HTMLDivElement | null>(null)
   const elementRef = useRef<HTMLDivElement | null>(null)
@@ -16,45 +29,70 @@ export const useDrag = (props: IProps) => {
   const draggingRef = useRef<boolean>(false)
   const pointersRef = useRef<{ startLeft: number, startTop: number }>({ startTop: 0, startLeft: 0 })
 
-  const handlePointerMove = (e: MouseEvent) => {
+  const handlePointerMove = (event: any) => {
+    let useEvent = event
+
     if (!elementRef.current || !containerRef.current) return
     if (!draggingRef.current) {
-      onDragStart?.call(e)
+      onDragStart?.call(event)
       draggingRef.current = true
+    }
+
+    if (isMobile) {
+      useEvent = event.targetTouches[0]
     }
 
     const { offsetLeft, offsetTop } = containerRef.current
     const { startLeft, startTop } = pointersRef.current
 
-    onDragging?.call(e, e.clientX - offsetLeft - startLeft, e.clientY - offsetTop - startTop)
+    onDragging?.call(
+      event,
+      useEvent.clientX - offsetLeft - startLeft,
+      useEvent.clientY - offsetTop - startTop
+    )
   }
 
-  const handlePointerUp = (e: MouseEvent) => {
+  const handlePointerUp = (event: any) => {
     if (draggingRef.current) {
       draggingRef.current = false
-      onDragEnd?.call(e)
+      onDragEnd?.call(event)
     }
 
-    handleDragRef.current?.removeEventListener('mousemove', handlePointerMove)
+    containerRef.current?.removeEventListener(METHODS_MAPPED[PLATFORM].move, handlePointerMove)
   }
 
-  const handlePointerDown = (e: MouseEvent) => {
-    if (!canDragRef.current || !handleDragRef.current) return
+  const handlePointerDown = (event: any) => {
+    const fixErrorBorders = PADDING_BOX + BORDER_BOX + BORDER_CONTENT
+    let startLeft = event.offsetX
+      , startTop = event.offsetY
 
-    pointersRef.current = { startLeft: e.offsetX, startTop: e.offsetY }
-    handleDragRef.current?.addEventListener('mousemove', handlePointerMove)
+    if ((canDragRef && !canDragRef.current) || !handleDragRef.current) return
+
+    if (isMobile) {
+      const rect = event.target.getBoundingClientRect()
+        , targetTouches = event.targetTouches[0]
+
+      startLeft = targetTouches.clientX - window.pageXOffset - rect.left
+      startTop = targetTouches.clientY - window.pageYOffset - rect.top
+    }
+
+    pointersRef.current = {
+      startLeft: startLeft + fixErrorBorders,
+      startTop: startTop + fixErrorBorders
+    }
+    containerRef.current?.addEventListener(METHODS_MAPPED[PLATFORM].move, handlePointerMove)
   }
 
   const cleanEvents = () => {
-    handleDragRef.current?.removeEventListener('mouseup', handlePointerUp)
-    handleDragRef.current?.removeEventListener('mousedown', handlePointerDown)
+    handleDragRef.current?.removeEventListener(METHODS_MAPPED[PLATFORM].end, handlePointerUp)
+    handleDragRef.current?.removeEventListener(METHODS_MAPPED[PLATFORM].start, handlePointerDown)
   }
 
   useEffect(() => {
-    containerRef.current = document.querySelector('.w98-screen__content')
+    containerRef.current = document.querySelector(SCREEN_CLASS)
 
-    handleDragRef.current?.addEventListener('mouseup', handlePointerUp)
-    handleDragRef.current?.addEventListener('mousedown', handlePointerDown)
+    handleDragRef.current?.addEventListener(METHODS_MAPPED[PLATFORM].end, handlePointerUp)
+    handleDragRef.current?.addEventListener(METHODS_MAPPED[PLATFORM].start, handlePointerDown)
 
     return cleanEvents
   }, [])

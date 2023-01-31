@@ -2,10 +2,19 @@
   user-select: none;
 
   &__button {
-    width: $button-start-width-mobile;
+    // width: $button-start-width-mobile;
+    font-weight: bold;
 
-    @include media-desktop {
+    span {
+      display: none;
+    }
+
+    @include media-tablet {
       width: $button-start-width-desktop;
+
+      span {
+        display: initial;
+      }
     }
   }
 
@@ -19,8 +28,11 @@
   &__banner {
     position: relative;
     width: 21px;
-    // background-color: $gray-2; // NO FOCUS
     background-color: $blue;
+
+    &.--inverse-focus {
+      background-color: $gray-2;
+    }
 
     &-text {
       position: absolute;
@@ -29,11 +41,11 @@
       top: 50%;
 
       span {
-        font-family: $windows;
-        font-size: 12px;
+        font-family: $ms-sans;
+        font-size: 11px;
 
         &:first-child {
-          font-weight: 900;
+          font-weight: 700;
           color: $gray-4;
         }
 
@@ -49,16 +61,48 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+
+    &-main-wrapper {
+      position: relative;
+    }
+
+    &-wrapper {
+      position: absolute;
+      top: -2px;
+      width: max-content;
+      left: calc(100% - 5px);
+      background-color: $gray-1;
+      display: none;
+      z-index: 1;
+
+      &.--show {
+        display: block;
+      }
+    }
   }
 
   &__item {
-    position: relative;
     padding: 4px 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     column-gap: 10px;
     cursor: default;
+
+    &-wrapper {
+      position: relative;
+
+      .w98-start-menu {
+        &__item {
+          padding: 2px 10px;
+
+          img {
+            width: 15px;
+            height: 15px;
+          }
+        }
+      }
+    }
 
     &.--expansible {
       &::after {
@@ -77,17 +121,16 @@
       }
     }
 
-    &:hover {
+    &:hover,
+    &.--active {
       background-color: $blue;
 
       &>span {
         color: $white;
       }
 
-      &>.w98-start-menu {
-        &__item-wrapper {
-          display: block;
-        }
+      &::after {
+        background-image: url('/src/assets/icons/caret-right-hover.png');
       }
     }
 
@@ -97,52 +140,13 @@
     }
 
     span {
-      font-family: $windows;
-      font-size: 12px;
-    }
-
-    &-wrapper {
-      position: absolute;
-      width: 162px;
-      top: -2px;
-      left: calc(100% - 5px);
-      background-color: $gray-1;
-      display: none;
-
-      img {
-        width: 15px;
-        height: 15px;
-      }
-
-      .w98-start-menu {
-        &__item {
-          padding: 2px 10px;
-        }
-      }
+      font-family: $ms-sans;
+      font-size: 11px;
+      letter-spacing: 0.2px;
     }
   }
 
   &__separator {
-    width: 100%;
-    height: 0px;
-    border-top: 1px solid $gray-5;
-    border-bottom: 1px solid $white;
-  }
-}
-
-.w98-start-menu {
-  &__panel {
-    background-color: $gray-1;
-    border: 1px solid;
-    border-top-color: $gray-4;
-    border-left-color: $gray-4;
-
-    &-content {
-      display: flex;
-      flex-direction: row;
-      border: 1px solid $gray-5;
-      border-top-color: $white;
-      border-left-color: $white;
-    }
+    margin: 1px;
   }
 }
