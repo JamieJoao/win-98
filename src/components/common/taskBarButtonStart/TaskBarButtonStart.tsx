@@ -26,7 +26,6 @@ export const TaskBarButtonStart = () => {
   const [open, setOpen] = useState<boolean>(false)
   const buttonRef = useRef<HTMLDivElement>(null)
   const [programsListMapped, setProgramsListMapped] = useState(programsList.map(obj => ({ ...obj, showed: false })))
-  const [focusChildren, setFocusChildren] = useState<boolean>(false)
 
   const closeAllMenus = () => {
     setProgramsListMapped(programsList.map(obj => ({ ...obj, showed: false })))
@@ -54,14 +53,13 @@ export const TaskBarButtonStart = () => {
   }
 
   const handleClickOption = (menu: IMenuItem) => {
-    setFocusChildren(false)
     setProgramsListMapped(
       programsList.map(obj => ({ ...obj, showed: obj.id === menu.id }))
     )
   }
 
   const handleClickChildren = () => {
-    setFocusChildren(true)
+    
   }
 
   return (
@@ -70,7 +68,7 @@ export const TaskBarButtonStart = () => {
         <div className="w98-start-menu__wrapper">
           <BordererPanel type='window'>
             <>
-              <div className={cn('w98-start-menu__banner', focusChildren && '--inverse-focus')}>
+              <div className={cn('w98-start-menu__banner')}>
                 <div className="w98-start-menu__banner-text">
                   <span>Windows</span>
                   <span>98</span>

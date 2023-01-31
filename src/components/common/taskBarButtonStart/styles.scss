@@ -30,10 +30,6 @@
     width: 21px;
     background-color: $blue;
 
-    &.--inverse-focus {
-      background-color: $gray-2;
-    }
-
     &-text {
       position: absolute;
       transform: rotate(-90deg) translate(-50%, 0%);
