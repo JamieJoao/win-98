@@ -2,7 +2,7 @@
   user-select: none;
 
   &__button {
-    width: $button-start-width-mobile;
+    // width: $button-start-width-mobile;
     font-weight: bold;
 
     span {
@@ -41,7 +41,7 @@
       top: 50%;
 
       span {
-        font-family: $windows;
+        font-family: $ms-sans;
         font-size: 11px;
 
         &:first-child {
@@ -69,7 +69,6 @@
     &-wrapper {
       position: absolute;
       top: -2px;
-      // width: 162px;
       width: max-content;
       left: calc(100% - 5px);
       background-color: $gray-1;
@@ -141,8 +140,9 @@
     }
 
     span {
-      font-family: $windows;
+      font-family: $ms-sans;
       font-size: 11px;
+      letter-spacing: 0.2px;
     }
   }
 

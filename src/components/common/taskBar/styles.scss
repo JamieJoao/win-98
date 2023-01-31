@@ -31,7 +31,7 @@ $side-spacing: 4px;
   }
 
   &__container {
-    padding: $side-spacing;
+    padding: $side-spacing 3px;
     display: flex;
     flex: 1;
     flex-direction: row;

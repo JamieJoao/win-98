@@ -1,7 +1,7 @@
 .w98-context-menu {
   &__wrapper {
     position: fixed;
-    min-width: 182px;
+    min-width: 120px;
     z-index: 9999;
     user-select: none;
 
@@ -26,15 +26,16 @@
         position: absolute;
         top: -6px;
         left: calc(100% - 5px);
-        max-width: 182px;
+        max-width: 120px;
         z-index: 9999;
       }
     }
   }
 
   &__item {
-    font-family: $windows;
+    font-family: $ms-sans;
     font-size: 11px;
+    letter-spacing: 0.2px;
     cursor: default;
     flex: 1;
     padding: 4px 22px;
