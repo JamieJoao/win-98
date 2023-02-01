@@ -5,6 +5,7 @@ export interface IButton {
 export interface IProgram {
   uid: string
   iconUrl: string
+  miniIconUrl?: string
   name: string
   template: string
 }

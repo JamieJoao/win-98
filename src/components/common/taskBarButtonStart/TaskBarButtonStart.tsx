@@ -9,7 +9,6 @@ import {
 import { programsList, IMenuItem } from './const'
 
 import StartIcon from 'assets/icons/icon-windows-start.png'
-import ShutDownIcon from 'assets/icons/shut_down_normal-2.png'
 import './styles.scss'
 
 interface IProps {
@@ -59,14 +58,16 @@ export const TaskBarButtonStart = () => {
   }
 
   const handleClickChildren = () => {
-    
+
   }
 
   return (
     <div className='w98-start-menu' ref={buttonRef}>
       {open && (
         <div className="w98-start-menu__wrapper">
-          <BordererPanel type='window'>
+          <BordererPanel
+            classNameContent='w98-start-menu__borderer-content'
+            type='window'>
             <>
               <div className={cn('w98-start-menu__banner')}>
                 <div className="w98-start-menu__banner-text">
@@ -137,7 +138,9 @@ export const RecursiveListMenu = (props: IPropsRecursive) => {
 
   const listMenu = (parentSublist: IMenuItem[], show: boolean = false) => (
     <div className={cn('w98-start-menu__list-wrapper', show && '--show')}>
-      <BordererPanel type='window'>
+      <BordererPanel
+        classNameContent='w98-start-menu__borderer-content'
+        type='window'>
         <ul className="w98-start-menu__list">
           {parentSublist.map((obj: IMenuItem) => (
             <div

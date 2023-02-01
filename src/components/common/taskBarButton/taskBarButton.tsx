@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export const TaskBarButton = (props: IProps) => {
-  const { data: { window: { uid, program: { iconUrl, name } } }, width, onClick } = props
+  const { data: { window: { uid, program: { iconUrl, miniIconUrl, name } } }, width, onClick } = props
 
   const dispatch = useAppDispatch()
   const { windowsStack, outOfFocus } = useAppSelector(state => state)
@@ -36,7 +36,7 @@ export const TaskBarButton = (props: IProps) => {
   return (
     <TaskBarButtonBase
       className={`${active && '--active'}`}
-      iconUrl={iconUrl}
+      iconUrl={miniIconUrl ?? iconUrl}
       label={name}
       style={{ width }}
       onClick={handleClick} />

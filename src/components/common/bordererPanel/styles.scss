@@ -1,13 +1,13 @@
 .w98-borderer-panel {
-  background-color: $gray-1;
+  background-color: $gray-main;
   padding: 2px;
 
   &.--window {
     box-shadow:
-      inset -1px -1px #0a0a0a,
-      inset 1px 1px #dfdfdf,
-      inset -2px -2px $gray-2,
-      inset 2px 2px #fff;
+      inset -1px -1px $black,
+      inset 1px 1px $gray-main,
+      inset -2px -2px $gray-secondary,
+      inset 2px 2px $white;
   }
 
   &.--button {

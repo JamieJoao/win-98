@@ -18,6 +18,10 @@
     }
   }
 
+  &__borderer-content {
+    padding: 1px;
+  }
+
   &__wrapper {
     position: absolute;
     width: 162px;
@@ -28,7 +32,7 @@
   &__banner {
     position: relative;
     width: 21px;
-    background-color: $blue;
+    background-color: $blue-main;
 
     &-text {
       position: absolute;
@@ -64,7 +68,7 @@
 
     &-wrapper {
       position: absolute;
-      top: -2px;
+      top: -3px;
       width: max-content;
       left: calc(100% - 5px);
       background-color: $gray-1;
@@ -119,7 +123,7 @@
 
     &:hover,
     &.--active {
-      background-color: $blue;
+      background-color: $blue-main;
 
       &>span {
         color: $white;

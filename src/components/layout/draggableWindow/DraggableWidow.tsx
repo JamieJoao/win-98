@@ -26,7 +26,7 @@ interface ICoords {
 
 export const DraggableWindow = (props: IProps) => {
   const { data, position } = props
-  const { program: { iconUrl, name }, minimized, size, lastCoords, uid } = data
+  const { program: { iconUrl, name, miniIconUrl }, minimized, size, lastCoords, uid } = data
 
   const dispatch = useAppDispatch()
   const { windowsStack, outOfFocus } = useAppSelector(state => state)
@@ -118,7 +118,7 @@ export const DraggableWindow = (props: IProps) => {
           <HeaderWindow
             focused={focused}
             title={name}
-            icon={iconUrl}
+            icon={miniIconUrl ?? iconUrl}
             ref={handleStartRef}
             useHandler>
             <ButtonControlWindow
