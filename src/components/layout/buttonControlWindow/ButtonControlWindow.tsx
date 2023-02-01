@@ -2,7 +2,7 @@ import cn from 'classnames'
 
 import './styles.scss'
 
-type TButtonControl = 'minimize' | 'maximize' | 'unmaximize' | 'close' | 'question'
+type TButtonControl = 'minimize' | 'maximize' | 'restore' | 'close' | 'question'
 
 interface IProps {
   type: TButtonControl

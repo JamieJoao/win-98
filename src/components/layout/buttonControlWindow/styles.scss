@@ -19,7 +19,7 @@
   }
 
   &.--maximize,
-  &.--unmaximize,
+  &.--restore,
   &.--question {
     background-position: bottom 3px center;
   }
@@ -28,8 +28,8 @@
     background-image: url('/src/assets/icons/icon-maximize.svg');
   }
 
-  &.--unmaximize {
-    background-image: url('/src/assets/icons/icon-unmaximize.svg');
+  &.--restore {
+    background-image: url('/src/assets/icons/icon-restore.svg');
   }
 
   &.--close {

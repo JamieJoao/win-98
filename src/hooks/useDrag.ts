@@ -9,8 +9,9 @@ import {
 
 interface IProps {
   canDragRef?: RefObject<boolean>
+  useShadow?: boolean
   onDragStart: () => void
-  onDragEnd: () => void
+  onDragEnd: (left: number, top: number) => void
   onDragging: (left: number, top: number) => void
 }
 
@@ -21,18 +22,20 @@ const METHODS_MAPPED = {
 }
 
 export const useDrag = (props: IProps) => {
-  const { onDragStart, onDragEnd, onDragging, canDragRef, } = props
+  const { onDragStart, onDragEnd, onDragging, canDragRef, useShadow } = props
 
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const elementRef = useRef<HTMLDivElement | null>(null)
-  const handleDragRef = useRef<HTMLDivElement | null>(null)
+  // const elementRef = useRef<HTMLDivElement | null>(null)
+  // const elementShadowRef = useRef<HTMLDivElement | null>(null)
+  const handleStartRef = useRef<HTMLDivElement | null>(null)
+  const handleEndRef = useRef<HTMLDivElement | null>(null)
   const draggingRef = useRef<boolean>(false)
   const pointersRef = useRef<{ startLeft: number, startTop: number }>({ startTop: 0, startLeft: 0 })
 
   const handlePointerMove = (event: any) => {
     let useEvent = event
 
-    if (!elementRef.current || !containerRef.current) return
+    if (!containerRef.current) return
     if (!draggingRef.current) {
       onDragStart?.call(event)
       draggingRef.current = true
@@ -53,9 +56,24 @@ export const useDrag = (props: IProps) => {
   }
 
   const handlePointerUp = (event: any) => {
+    let useEvent = event
+
+    if (!containerRef.current) return
     if (draggingRef.current) {
       draggingRef.current = false
-      onDragEnd?.call(event)
+
+      if (isMobile) {
+        useEvent = event.targetTouches[0]
+      }
+
+      const { offsetLeft, offsetTop } = containerRef.current
+      const { startLeft, startTop } = pointersRef.current
+
+      onDragEnd?.call(
+        event,
+        useEvent.clientX - offsetLeft - startLeft,
+        useEvent.clientY - offsetTop - startTop
+      )
     }
 
     containerRef.current?.removeEventListener(METHODS_MAPPED[PLATFORM].move, handlePointerMove)
@@ -66,7 +84,7 @@ export const useDrag = (props: IProps) => {
     let startLeft = event.offsetX
       , startTop = event.offsetY
 
-    if ((canDragRef && !canDragRef.current) || !handleDragRef.current) return
+    if ((canDragRef && !canDragRef.current) || !handleStartRef.current) return
 
     if (isMobile) {
       const rect = event.target.getBoundingClientRect()
@@ -84,38 +102,52 @@ export const useDrag = (props: IProps) => {
   }
 
   const cleanEvents = () => {
-    handleDragRef.current?.removeEventListener(METHODS_MAPPED[PLATFORM].end, handlePointerUp)
-    handleDragRef.current?.removeEventListener(METHODS_MAPPED[PLATFORM].start, handlePointerDown)
+    let handleEnd = handleStartRef.current
+
+    if (handleEndRef.current) {
+      handleEnd = handleEndRef.current
+    }
+
+    handleEnd?.removeEventListener(METHODS_MAPPED[PLATFORM].end, handlePointerUp)
+    handleStartRef.current?.removeEventListener(METHODS_MAPPED[PLATFORM].start, handlePointerDown)
   }
 
   useEffect(() => {
+    let handleEnd = handleStartRef.current
+
     containerRef.current = document.querySelector(SCREEN_CLASS)
 
-    handleDragRef.current?.addEventListener(METHODS_MAPPED[PLATFORM].end, handlePointerUp)
-    handleDragRef.current?.addEventListener(METHODS_MAPPED[PLATFORM].start, handlePointerDown)
+    if (handleEndRef.current) {
+      handleEnd = handleEndRef.current
+    }
+
+    handleEnd?.addEventListener(METHODS_MAPPED[PLATFORM].end, handlePointerUp)
+    handleStartRef.current?.addEventListener(METHODS_MAPPED[PLATFORM].start, handlePointerDown)
 
     return cleanEvents
   }, [])
 
-  const getCoords = (): { left: number, top: number } => {
-    const element = elementRef.current
-    if (!element) return { left: 0, top: 0 }
+  // const getCoords = (): { left: number, top: number } => {
+  //   const element = elementRef.current
+  //   if (!element) return { left: 0, top: 0 }
 
-    return { left: element.offsetLeft, top: element.offsetTop }
-  }
+  //   return { left: element.offsetLeft, top: element.offsetTop }
+  // }
 
-  const setCoords = (left: number = 0, top: number = 0): void => {
-    const box = elementRef.current
-    if (!box) return
+  // const setCoords = (left: number = 0, top: number = 0): void => {
+  //   const box = elementRef.current
+  //   if (!box) return
 
-    box.style.left = `${left}px`
-    box.style.top = `${top}px`
-  }
+  //   box.style.left = `${left}px`
+  //   box.style.top = `${top}px`
+  // }
 
   return {
-    elementRef,
-    handleDragRef,
-    getCoords,
-    setCoords,
+    // elementRef,
+    // elementShadowRef,
+    handleStartRef,
+    handleEndRef,
+    // getCoords,
+    // setCoords,
   }
 }

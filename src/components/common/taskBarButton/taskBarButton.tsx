@@ -14,7 +14,7 @@ export const TaskBarButton = (props: IProps) => {
   const { data: { window: { uid, program: { iconUrl, name } } }, width, onClick } = props
 
   const dispatch = useAppDispatch()
-  const windowsStack = useAppSelector(state => state.windowsStack)
+  const { windowsStack, outOfFocus } = useAppSelector(state => state)
 
   const windowAbove = windowsStack[0]
   const linkedWindow = windowsStack.find(obj => obj.uid === uid)

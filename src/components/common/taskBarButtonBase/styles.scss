@@ -7,6 +7,10 @@
 
   @include box-shadow-normal;
 
+  &:active {
+    @include box-shadow-normal(true);
+  }
+
   &__content {
     height: 100%;
     padding: 0 4px;

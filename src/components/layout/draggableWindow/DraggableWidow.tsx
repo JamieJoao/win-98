@@ -19,26 +19,36 @@ interface IProps {
   position: number
 }
 
+interface ICoords {
+  left: number
+  top: number,
+}
+
 export const DraggableWindow = (props: IProps) => {
   const { data, position } = props
   const { program: { iconUrl, name }, minimized, size, lastCoords, uid } = data
 
   const dispatch = useAppDispatch()
   const { windowsStack, outOfFocus } = useAppSelector(state => state)
+  const [coords, setCoords] = useState<ICoords>({ left: 0, top: 0 })
+  const [coordsShadow, setCoordsShadow] = useState<ICoords | null>(null)
+
   const canDragRef = useRef<boolean>(true)
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const [coords, setCoords] = useState({ left: 0, top: 0 })
+  const windowRef = useRef<HTMLDivElement | null>(null)
+
 
   const focused = windowsStack[0].uid === uid && !outOfFocus
 
   useLayoutEffect(() => {
     containerRef.current = document.querySelector(SCREEN_CLASS)
 
-    if (containerRef.current && elementRef.current) {
-      setCoords({
-        left: containerRef.current.clientWidth / 2 - elementRef.current.clientWidth / 2,
-        top: (containerRef.current.clientHeight / 2 - elementRef.current.clientHeight / 2) - TASKBAR_HEIGHT,
-      })
+    if (containerRef.current && windowRef.current) {
+      const left = containerRef.current.clientWidth / 2 - windowRef.current.clientWidth / 2
+        , top = ((containerRef.current.clientHeight - TASKBAR_HEIGHT) / 2 - windowRef.current.clientHeight / 2)
+
+      setCoords({ left, top })
+      // setCoordsShadow({ left, top })
     }
   }, [])
 
@@ -52,12 +62,18 @@ export const DraggableWindow = (props: IProps) => {
     return auxCoords
   }, [windowsStack, position, size, coords])
 
-  const { elementRef, handleDragRef, getCoords: getWindowCoords } = useDrag({
+  const { handleStartRef, handleEndRef } = useDrag({
     canDragRef,
-    onDragStart() { },
-    onDragEnd() { },
-    onDragging(left, top) {
+    onDragStart() {
+      // console.log('coords', coords)
+      // console.log('coords-shadow', coordsShadow)
+    },
+    onDragEnd(left, top) {
+      setCoordsShadow(null)
       setCoords({ left, top })
+    },
+    onDragging(left, top) {
+      setCoordsShadow({ left, top })
     },
   })
 
@@ -67,7 +83,7 @@ export const DraggableWindow = (props: IProps) => {
     dispatch(updateWindow({
       ...data,
       size: finalSize,
-      lastCoords: canDragRef.current ? getWindowCoords() : lastCoords,
+      // lastCoords: canDragRef.current ? getWindowCoords() : lastCoords,
     }))
   }
 
@@ -86,37 +102,49 @@ export const DraggableWindow = (props: IProps) => {
   }
 
   return (
-    <div
-      className={
-        cn('w98-float-window', `--${size}`, minimized && '--minimized')
-      }
-      ref={elementRef}
-      style={coordsMemo}
-      onMouseDown={handleFocus}>
-      <BordererPanel
-        type='window'
-        className='w98-float-window__wrapper'
-        classNameContent='w98-float-window__content'>
+    <>
+      <div
+        className={
+          cn('w98-float-window', `--${size}`, minimized && '--minimized')
+        }
+        ref={windowRef}
+        style={coordsMemo}
+        onMouseDown={handleFocus}>
+        <BordererPanel
+          type='window'
+          className='w98-float-window__wrapper'
+          classNameContent='w98-float-window__content'>
 
-        <HeaderWindow
-          focused={focused}
-          title={name}
-          icon={iconUrl}
-          ref={handleDragRef}
-          useHandler>
-          <ButtonControlWindow
-            type='minimize'
-            onClick={handleMinimize} />
-          <ButtonControlWindow
-            type='maximize'
-            onClick={handleToggleMaximize} />
-          <ButtonControlWindow
-            type='close'
-            style={{ marginLeft: 2 }}
-            onClick={handleClose} />
-        </HeaderWindow>
+          <HeaderWindow
+            focused={focused}
+            title={name}
+            icon={iconUrl}
+            ref={handleStartRef}
+            useHandler>
+            <ButtonControlWindow
+              type='minimize'
+              onClick={handleMinimize} />
+            <ButtonControlWindow
+              type={size === 'regular' ? 'maximize' : 'restore'}
+              onClick={handleToggleMaximize} />
+            <ButtonControlWindow
+              type='close'
+              style={{ marginLeft: 2 }}
+              onClick={handleClose} />
+          </HeaderWindow>
 
-      </BordererPanel>
-    </div>
+        </BordererPanel>
+      </div>
+
+      <div
+        className="w98-float-window__shadow"
+        ref={handleEndRef}
+        style={{ ...coordsShadow, display: coordsShadow ? 'block' : 'none' }}>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </>
   )
 }

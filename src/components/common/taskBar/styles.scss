@@ -42,7 +42,7 @@ $side-spacing: 4px;
 
   &__group {
     flex: 1;
-    display: flex;
+    display: grid;
     column-gap: $side-spacing;
     overflow: hidden;
     width: calc(100% - $button-start-width-mobile - $side-spacing);
