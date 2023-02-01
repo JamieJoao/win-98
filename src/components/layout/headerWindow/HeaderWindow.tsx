@@ -35,12 +35,10 @@ export const HeaderWindow = forwardRef<any, IProps>(
           </div>
         </div>
 
-        {useHandler && (
-          <div
-            className="w98-header-window__handler"
-            ref={ref}
-            style={{ width: widthInfo }} />
-        )}
+        <div
+          className="w98-header-window__handler"
+          ref={ref}
+          style={{ width: widthInfo, display: useHandler ? 'block' : 'none' }} />
 
         <div className="w98-header-window__controls" ref={controlsRef}>
           {children}

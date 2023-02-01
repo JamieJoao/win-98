@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import cn from 'classnames'
+import { isMobile } from 'react-device-detect';
 
 import {
   BordererPanel,
@@ -13,6 +14,8 @@ import { changePositionWindow, deleteWindow, minimizeWindow, updateWindow } from
 
 import './styles.scss'
 import { SCREEN_CLASS, TASKBAR_HEIGHT } from 'utils/const'
+import { WindowAnchors } from 'components/common/windowAnchors/WindowAnchors'
+import { useDragDrop } from 'hooks/useDragDrop';
 
 interface IProps {
   data: IWindow
@@ -26,19 +29,24 @@ interface ICoords {
 
 export const DraggableWindow = (props: IProps) => {
   const { data, position } = props
-  const { program: { iconUrl, name, miniIconUrl }, minimized, size, lastCoords, uid } = data
+    , { program: { iconUrl, name, miniIconUrl }, minimized, size, lastCoords, uid } = data
 
   const dispatch = useAppDispatch()
-  const { windowsStack, outOfFocus } = useAppSelector(state => state)
-  const [coords, setCoords] = useState<ICoords>({ left: 0, top: 0 })
-  const [coordsShadow, setCoordsShadow] = useState<ICoords | null>(null)
+    , { windowsStack, outOfFocus } = useAppSelector(state => state)
+    , [coords, setCoords] = useState<ICoords>({ left: 0, top: 0 })
+    , [coordsShadow, setCoordsShadow] = useState<ICoords | null>(null)
 
-  const canDragRef = useRef<boolean>(true)
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const windowRef = useRef<HTMLDivElement | null>(null)
+    , windowRef = useRef<HTMLDivElement | null>(null)
 
 
   const focused = windowsStack[0].uid === uid && !outOfFocus
+    , shadowStyles = {
+      ...coordsShadow,
+      display: (coordsShadow && size === 'regular')
+        ? 'block'
+        : 'none'
+    }
 
   useLayoutEffect(() => {
     containerRef.current = document.querySelector(SCREEN_CLASS)
@@ -48,7 +56,6 @@ export const DraggableWindow = (props: IProps) => {
         , top = ((containerRef.current.clientHeight - TASKBAR_HEIGHT) / 2 - windowRef.current.clientHeight / 2)
 
       setCoords({ left, top })
-      // setCoordsShadow({ left, top })
     }
   }, [])
 
@@ -62,12 +69,8 @@ export const DraggableWindow = (props: IProps) => {
     return auxCoords
   }, [windowsStack, position, size, coords])
 
-  const { handleStartRef, handleEndRef } = useDrag({
-    canDragRef,
-    onDragStart() {
-      // console.log('coords', coords)
-      // console.log('coords-shadow', coordsShadow)
-    },
+  const { startRef, endRef } = useDragDrop({
+    onDragStart() { },
     onDragEnd(left, top) {
       setCoordsShadow(null)
       setCoords({ left, top })
@@ -110,6 +113,9 @@ export const DraggableWindow = (props: IProps) => {
         ref={windowRef}
         style={coordsMemo}
         onMouseDown={handleFocus}>
+
+        {size === 'regular' && <WindowAnchors />}
+
         <BordererPanel
           type='window'
           className='w98-float-window__wrapper'
@@ -119,8 +125,8 @@ export const DraggableWindow = (props: IProps) => {
             focused={focused}
             title={name}
             icon={miniIconUrl ?? iconUrl}
-            ref={handleStartRef}
-            useHandler>
+            ref={startRef}
+            useHandler={size === 'regular'}>
             <ButtonControlWindow
               type='minimize'
               onClick={handleMinimize} />
@@ -138,8 +144,8 @@ export const DraggableWindow = (props: IProps) => {
 
       <div
         className="w98-float-window__shadow"
-        ref={handleEndRef}
-        style={{ ...coordsShadow, display: coordsShadow ? 'block' : 'none' }}>
+        ref={endRef}
+        style={shadowStyles}>
         <span></span>
         <span></span>
         <span></span>

@@ -1,0 +1,81 @@
+$anchor-width: 4px;
+
+.w98-window-anchor {
+  position: absolute;
+
+  &.--top,
+  &.--bottom,
+  &.--left,
+  &.--right {
+    background-color: transparent;
+  }
+
+  &.--top,
+  &.--bottom {
+    width: calc(100% - $anchor-width * 2);
+    height: $anchor-width;
+  }
+
+  &.--left,
+  &.--right {
+    height: calc(100% - $anchor-width * 2);
+    width: $anchor-width;
+  }
+
+  &.--top {
+    top: 0;
+    left: $anchor-width;
+    cursor: n-resize;
+  }
+
+  &.--right {
+    top: $anchor-width;
+    right: 0;
+    cursor: w-resize;
+  }
+
+  &.--bottom {
+    bottom: 0;
+    left: $anchor-width;
+    cursor: s-resize;
+  }
+
+  &.--left {
+    top: $anchor-width;
+    left: 0;
+    cursor: w-resize;
+  }
+
+  &.--top-left,
+  &.--top-right,
+  &.--bottom-left,
+  &.--bottom-right {
+    width: $anchor-width;
+    height: $anchor-width;
+    background-color: transparent;
+  }
+
+  &.--top-left {
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+  }
+
+  &.--top-right {
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+  }
+
+  &.--bottom-left {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+  }
+
+  &.--bottom-right {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+  }
+}
