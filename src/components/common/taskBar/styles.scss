@@ -29,6 +29,7 @@ $side-spacing: 3px;
     flex: 1;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     column-gap: $side-spacing;
     width: 100%;
   }

@@ -1,18 +1,14 @@
 .w98-narea {
   height: $button-taskbar-height;
-  background-color: $gray-1;
-  border: 1px solid;
+  background-color: $gray-main;
   user-select: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 4px;
-
-  border: 1px solid;
-  border-top-color: $gray-5;
-  border-left-color: $gray-5;
-  border-bottom-color: $white;
-  border-right-color: $white;
+  box-shadow: 
+    inset 1px 1px $gray-secondary,
+    inset -1px -1px $white;
 
   @include media-tablet {
     min-width: 96px;
@@ -26,6 +22,8 @@
     .w98-narea {
       &__icon-container {
         display: flex;
+        flex-direction: row;
+        column-gap: 2px;
 
         img {
           width: 16px;
@@ -40,8 +38,8 @@
   }
 
   &__date {
-    font-family: $windows;
-    font-size: 12px;
+    font-family: $ms-sans;
+    font-size: 11px;
     text-transform: uppercase;
   }
 }

@@ -5,10 +5,10 @@
   grid-row: 1;
   user-select: none;
 
-  @include box-shadow-normal;
+  @include box-shadow-simple;
 
   &:active {
-    @include box-shadow-normal(true);
+    @include box-shadow-simple(true);
   }
 
   &__content {
