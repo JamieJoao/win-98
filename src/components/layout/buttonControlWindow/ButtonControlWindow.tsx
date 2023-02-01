@@ -21,6 +21,7 @@ export const ButtonControlWindow = (props: IProps) => {
     <button
       className={cn('w98-button-window', `--${type}`)}
       style={{ ...style }}
-      onClick={handleClick} />
+      onClick={handleClick}
+      title={type} />
   )
 }

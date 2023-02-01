@@ -6,16 +6,20 @@ $button-start-width-mobile: 30px;
 $zindex-windows-mask: 1000;
 
 // COLORS
-$gray-1: #BFBFBF;
+$gray-1: #C2C6CA; // MAIN
 $gray-2: #808080;
 $gray-3: #D2D2D2;
 $gray-4: #DBDBDB;
 $gray-5: #7B7B7B;
+$gray-6: #85898D; // SECONDARY
 $black: #000000;
 $white: #ffffff;
 $blue: #000084;
 $blue-2: #0000AA;
 $green-1: #008081;
+
+$gray-main: #C2C6CA;
+$gray-secondary: #85898D;
 
 // FONTS
 $coders: "Coder's Crux";

@@ -48,17 +48,7 @@ $shadow-sides-width: 4px;
     span {
       position: absolute;
       backdrop-filter: invert(100%);
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAG0lEQVQYV2M8cODAf3t7ewbG/////z948CADAFuqCj64BtLKAAAAAElFTkSuQmCC);
-        opacity: .5;
-      }
+      background-image: url(/src/assets/icons/pattern-square-dark.png);
 
       &:nth-child(1) {
         width: calc(100% - $shadow-sides-width);

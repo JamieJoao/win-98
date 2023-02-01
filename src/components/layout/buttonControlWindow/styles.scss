@@ -1,27 +1,43 @@
 .w98-button-window {
   border: none;
-  background-color: $gray-1;
+  background-color: $gray-main;
   width: 16px;
   height: 14px;
   display: flex;
   padding: 2px;
   background-repeat: no-repeat;
 
-  @include box-shadow-normal;
+  @include box-shadow-simple;
 
   &:active {
-    @include box-shadow-normal(true);
+    @include box-shadow-simple(true);
+
+    &.--minimize {
+      background-position: left 5px bottom 2px;
+    }
+
+    &.--maximize,
+    &.--restore,
+    &.--question {
+      background-position-y: 3px;
+      background-position-x: 4px;
+    }
+
+    &.--close {
+      background-position-y: 4px;
+      background-position-x: 4.5px;
+    }
   }
 
   &.--minimize {
     background-image: url('/src/assets/icons/icon-minimize.svg');
-    background-position: left 4px bottom 4px;
+    background-position: left 4px bottom 3px;
   }
 
   &.--maximize,
   &.--restore,
   &.--question {
-    background-position: bottom 3px center;
+    background-position: bottom 3px right 4px;
   }
 
   &.--maximize {
