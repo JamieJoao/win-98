@@ -32,3 +32,5 @@ export interface IContextMenuItem {
   showed?: boolean
   action?: () => void
 }
+
+export type TCoordinates = 'north' | 'south' | 'west' | 'east' | 'north-west' | 'north-east' | 'south-west' | 'south-east'

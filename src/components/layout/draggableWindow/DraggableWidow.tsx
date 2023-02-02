@@ -1,21 +1,19 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import cn from 'classnames'
-import { isMobile } from 'react-device-detect';
 
 import {
   BordererPanel,
   HeaderWindow,
   ButtonControlWindow,
 } from 'components'
-import { IWindow } from 'types'
-import { useDrag } from 'hooks'
+import { IWindow, TCoordinates } from 'types'
+import { useDragDrop } from 'hooks'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
 import { changePositionWindow, deleteWindow, minimizeWindow, updateWindow } from 'redux-tk/slice'
-
-import './styles.scss'
 import { SCREEN_CLASS, TASKBAR_HEIGHT } from 'utils/const'
 import { WindowAnchors } from 'components/common/windowAnchors/WindowAnchors'
-import { useDragDrop } from 'hooks/useDragDrop';
+
+import './styles.scss'
 
 interface IProps {
   data: IWindow
@@ -24,7 +22,9 @@ interface IProps {
 
 interface ICoords {
   left: number
-  top: number,
+  top: number
+  width?: number
+  height?: number
 }
 
 export const DraggableWindow = (props: IProps) => {
@@ -38,6 +38,7 @@ export const DraggableWindow = (props: IProps) => {
 
   const containerRef = useRef<HTMLDivElement | null>(null)
     , windowRef = useRef<HTMLDivElement | null>(null)
+    , saveCoordsShadowRef = useRef<ICoords | null>(null)
 
 
   const focused = windowsStack[0].uid === uid && !outOfFocus
@@ -71,12 +72,17 @@ export const DraggableWindow = (props: IProps) => {
 
   const { startRef, endRef } = useDragDrop({
     onDragStart() { },
-    onDragEnd(left, top) {
+    onDragEnd(left, top, startLeft, startTop) {
+      const auxCoords = { left: left - startLeft, top: top - startTop }
+
       setCoordsShadow(null)
-      setCoords({ left, top })
+      setCoords(auxCoords)
     },
-    onDragging(left, top) {
-      setCoordsShadow({ left, top })
+    onDragging(left, top, startLeft, startTop) {
+      const auxCoords = { left: left - startLeft, top: top - startTop }
+
+      setCoordsShadow(auxCoords)
+      saveCoordsShadowRef.current = auxCoords
     },
   })
 
@@ -104,6 +110,28 @@ export const DraggableWindow = (props: IProps) => {
     }
   }
 
+  // const handleRezise = (coordinate: TCoordinates, variation: number) => {
+  //   if (windowRef.current) {
+  //     const { offsetTop, offsetLeft, clientHeight, clientWidth } = windowRef.current
+  //     let auxCoordsShadow = null
+
+  //     switch (coordinate) {
+  //       case 'north':
+  //         auxCoordsShadow = { top: offsetTop - variation, left: offsetLeft, height: clientHeight + variation }
+  //         break
+  //     }
+
+  //     setCoordsShadow(auxCoordsShadow)
+  //     saveCoordsShadowRef.current = auxCoordsShadow
+  //   }
+  // }
+
+  // const handleResized = () => {
+  //   if (saveCoordsShadowRef.current) {
+  //     setCoords(saveCoordsShadowRef.current)
+  //   }
+  // }
+
   return (
     <>
       <div
@@ -114,7 +142,7 @@ export const DraggableWindow = (props: IProps) => {
         style={coordsMemo}
         onMouseDown={handleFocus}>
 
-        {size === 'regular' && <WindowAnchors />}
+        {/* {size === 'regular' && <WindowAnchors onResizing={handleRezise} onResized={handleResized} baseRef={windowRef} />} */}
 
         <BordererPanel
           type='window'

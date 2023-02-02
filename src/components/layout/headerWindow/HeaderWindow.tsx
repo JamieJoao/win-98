@@ -27,7 +27,7 @@ export const HeaderWindow = forwardRef<any, IProps>(
 
     return (
       <div className={cn('w98-header-window', focused && '--focused')}>
-        <div className="w98-header-window__info" ref={infoRef}>
+        <div className="w98-header-window__info" ref={infoRef} draggable={false}>
           {icon && <img className='w98-header-window__info-icon' src={icon} draggable={false} />}
 
           <div className='w98-header-window__info-title-wrapper'>

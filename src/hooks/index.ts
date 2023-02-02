@@ -1,7 +1,7 @@
-import { useDrag } from './useDrag'
 import { useContextMenu } from './useContextMenu'
+import { useDragDrop } from './useDragDrop'
 
 export {
-  useDrag,
+  useDragDrop,
   useContextMenu,
 }

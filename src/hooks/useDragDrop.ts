@@ -4,13 +4,14 @@ import { isMobile } from 'react-device-detect'
 import { BORDER_BOX, BORDER_CONTENT, PADDING_BOX, SCREEN_CLASS } from 'utils/const'
 
 interface IProps {
-  onDragStart: (left: number, top: number) => void
-  onDragEnd: (left: number, top: number) => void
-  onDragging: (left: number, top: number) => void
+  endOnScreen?: boolean
+  onDragStart?: (left: number, top: number) => void
+  onDragEnd?: (left: number, top: number, startLeft: number, startTop: number) => void
+  onDragging?: (left: number, top: number, startLeft: number, startTop: number) => void
 }
 
 export const useDragDrop = (props: IProps) => {
-  const { onDragStart, onDragEnd, onDragging } = props
+  const { onDragStart, onDragEnd, onDragging, endOnScreen } = props
 
   const startRef = useRef<HTMLDivElement | null>(null)
     , endRef = useRef<HTMLDivElement | null>(null)
@@ -23,6 +24,7 @@ export const useDragDrop = (props: IProps) => {
     , methodMove = isMobile ? 'touchmove' : 'mousemove'
 
   useEffect(() => {
+    screenRef.current = document.querySelector(SCREEN_CLASS)
     /**
      * REMOVEMOS DE CUALQUIER MANERA LOS EVENTOS
      */
@@ -33,13 +35,11 @@ export const useDragDrop = (props: IProps) => {
   const addEvents = () => {
     const startDOM = startRef.current
       , endDOM = endRef.current
-      , auxEnd = endDOM ?? startDOM
+      , auxEnd = endOnScreen ? screenRef.current : (endDOM ?? startDOM)
 
     startDOM?.addEventListener(methodStart, handleStart)
     startDOM?.addEventListener(methodEnd, handleEnd)
     auxEnd?.addEventListener(methodEnd, handleEnd)
-
-    screenRef.current = document.querySelector(SCREEN_CLASS)
   }
 
   /**
@@ -48,7 +48,7 @@ export const useDragDrop = (props: IProps) => {
   const removeEvents = () => {
     const startDOM = startRef.current
       , endDOM = endRef.current
-      , auxEnd = endDOM ?? startDOM
+      , auxEnd = endOnScreen ? screenRef.current : (endDOM ?? startDOM)
 
     startDOM?.removeEventListener(methodStart, handleStart)
     startDOM?.removeEventListener(methodEnd, handleEnd)
@@ -79,11 +79,12 @@ export const useDragDrop = (props: IProps) => {
       , endDOM = endRef.current
       , auxEnd = endDOM ?? startDOM
       , screenDOM = screenRef.current
+      , { startLeft, startTop } = pointersRef.current
       , { currentLeft, currentTop } = pointersRef.current
 
     screenDOM?.removeEventListener(methodMove, handleMove)
 
-    if (onDragEnd) onDragEnd(currentLeft, currentTop)
+    if (onDragEnd) onDragEnd(currentLeft, currentTop, startLeft, startTop)
   }
 
   const handleMove = (e: any) => {
@@ -91,16 +92,16 @@ export const useDragDrop = (props: IProps) => {
       , endDOM = endRef.current
       , auxEnd = endDOM ?? startDOM
       , screenDOM = screenRef.current
+      , { startLeft, startTop } = pointersRef.current
       , { left, top } = getPositions(e)
 
-    if (onDragging) onDragging(left, top)
+    if (onDragging) onDragging(left, top, startLeft, startTop)
   }
 
-  const getPositions = (event: any): { left: number, top: number } => {
+  const getPositions = (event: any) => {
     let left = 0
       , top = 0
       , auxEvent = event
-      , { startLeft, startTop } = pointersRef.current
 
     if (screenRef.current) {
       const { offsetLeft, offsetTop } = screenRef.current
@@ -109,8 +110,8 @@ export const useDragDrop = (props: IProps) => {
         auxEvent = event.targetTouches[0]
       }
 
-      left = auxEvent.clientX - offsetLeft - startLeft
-      top = auxEvent.clientY - offsetTop - startTop
+      left = auxEvent.clientX - offsetLeft
+      top = auxEvent.clientY - offsetTop
 
       pointersRef.current = {
         ...pointersRef.current,
