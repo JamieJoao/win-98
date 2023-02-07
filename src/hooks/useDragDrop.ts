@@ -5,7 +5,7 @@ import { BORDER_BOX, BORDER_CONTENT, PADDING_BOX, SCREEN_CLASS } from 'utils/con
 
 interface IProps {
   endOnScreen?: boolean
-  onDragStart?: (left: number, top: number) => void
+  onDragStart?: (left: number, top: number, startLeft: number, startTop: number) => void
   onDragEnd?: (left: number, top: number, startLeft: number, startTop: number) => void
   onDragging?: (left: number, top: number, startLeft: number, startTop: number) => void
 }
@@ -56,6 +56,8 @@ export const useDragDrop = (props: IProps) => {
   }
 
   const handleStart = (e: any) => {
+    e.stopPropagation()
+    
     const startDOM = startRef.current
       , endDOM = endRef.current
       , auxEnd = endDOM ?? startDOM
@@ -75,6 +77,8 @@ export const useDragDrop = (props: IProps) => {
   }
 
   const handleEnd = (e: any) => {
+    e.stopPropagation()
+
     const startDOM = startRef.current
       , endDOM = endRef.current
       , auxEnd = endDOM ?? startDOM
@@ -85,6 +89,7 @@ export const useDragDrop = (props: IProps) => {
     screenDOM?.removeEventListener(methodMove, handleMove)
 
     if (onDragEnd) onDragEnd(currentLeft, currentTop, startLeft, startTop)
+    draggingRef.current = false
   }
 
   const handleMove = (e: any) => {
@@ -95,6 +100,10 @@ export const useDragDrop = (props: IProps) => {
       , { startLeft, startTop } = pointersRef.current
       , { left, top } = getPositions(e)
 
+    if (!draggingRef.current) {
+      if (onDragStart) onDragStart(left, top, startLeft, startTop)
+      draggingRef.current = true
+    }
     if (onDragging) onDragging(left, top, startLeft, startTop)
   }
 
@@ -126,7 +135,6 @@ export const useDragDrop = (props: IProps) => {
   const getStartPositions = (event: any) => {
     let offsetLeft = event.offsetX
       , offsetTop = event.offsetY
-      , fixErrorBorders = PADDING_BOX + BORDER_BOX + BORDER_CONTENT
 
     if (isMobile) {
       const rect = event.target.getBoundingClientRect()
@@ -137,8 +145,8 @@ export const useDragDrop = (props: IProps) => {
     }
 
     return {
-      offsetLeft: offsetLeft + fixErrorBorders,
-      offsetTop: offsetTop + fixErrorBorders,
+      offsetLeft: offsetLeft,
+      offsetTop: offsetTop,
     }
   }
 

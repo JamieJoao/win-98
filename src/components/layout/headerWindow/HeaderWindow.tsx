@@ -17,17 +17,17 @@ export const HeaderWindow = forwardRef<any, IProps>(
 
     const infoRef = useRef<HTMLDivElement>(null)
     const controlsRef = useRef<HTMLDivElement>(null)
-    const [widthInfo, setWidthInfo] = useState<number>(0)
+    const [widthInfo, setWidthInfo] = useState<string>('')
 
     useLayoutEffect(() => {
-      if (infoRef.current) {
-        setWidthInfo(infoRef.current.clientWidth)
+      if (controlsRef.current) {
+        setWidthInfo(`calc(100% - ${controlsRef.current.clientWidth}px)`)
       }
     }, [])
 
     return (
       <div className={cn('w98-header-window', focused && '--focused')}>
-        <div className="w98-header-window__info" ref={infoRef} draggable={false}>
+        <div className="w98-header-window__info" draggable={false}>
           {icon && <img className='w98-header-window__info-icon' src={icon} draggable={false} />}
 
           <div className='w98-header-window__info-title-wrapper'>

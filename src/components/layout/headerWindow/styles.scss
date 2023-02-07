@@ -9,13 +9,15 @@
   align-items: center;
   user-select: none;
   touch-action: none;
+  // border: 1px solid green;
 
   &.--focused {
     background-color: $blue-main;
   }
 
   &__info {
-    width: 70%;
+    // width: 70%;
+    flex: 1;
     height: 100%;
     padding-left: 2px;
     display: flex;
@@ -46,6 +48,7 @@
   }
 
   &__handler {
+    // border: 1px solid yellow;
     position: absolute;
     height: 100%;
   }

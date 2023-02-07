@@ -1,79 +1,82 @@
-$anchor-width: 4px;
+$anchor-size: 4px;
 
 .w98-window-anchor {
   position: absolute;
+  user-select: none;
+  touch-action: none;
+  z-index: 1;
 
-  &.--top,
-  &.--bottom,
-  &.--left,
-  &.--right {
-    background-color: transparent;
+  &.--north,
+  &.--south,
+  &.--west,
+  &.--east {
+    background-color: red;
   }
 
-  &.--top,
-  &.--bottom {
-    width: calc(100% - $anchor-width * 2);
-    height: $anchor-width;
+  &.--north,
+  &.--south {
+    width: calc(100% - $anchor-size * 2);
+    height: $anchor-size;
   }
 
-  &.--left,
-  &.--right {
-    height: calc(100% - $anchor-width * 2);
-    width: $anchor-width;
+  &.--west,
+  &.--east {
+    height: calc(100% - $anchor-size * 2);
+    width: $anchor-size;
   }
 
-  &.--top {
+  &.--north {
     top: 0;
-    left: $anchor-width;
+    left: $anchor-size;
     cursor: n-resize;
   }
 
-  &.--right {
-    top: $anchor-width;
+  &.--east {
+    top: $anchor-size;
     right: 0;
     cursor: w-resize;
   }
 
-  &.--bottom {
+  &.--south {
     bottom: 0;
-    left: $anchor-width;
+    left: $anchor-size;
     cursor: s-resize;
   }
 
-  &.--left {
-    top: $anchor-width;
+  &.--west {
+    top: $anchor-size;
     left: 0;
     cursor: w-resize;
   }
 
-  &.--top-left,
-  &.--top-right,
-  &.--bottom-left,
-  &.--bottom-right {
-    width: $anchor-width;
-    height: $anchor-width;
+  &.--north-west,
+  &.--north-east,
+  &.--south-west,
+  &.--south-east {
+    width: $anchor-size;
+    height: $anchor-size;
     background-color: transparent;
   }
 
-  &.--top-left {
+  &.--north-west {
     top: 0;
     left: 0;
     cursor: nw-resize;
   }
 
-  &.--top-right {
+  &.--north-east {
     top: 0;
     right: 0;
     cursor: ne-resize;
   }
 
-  &.--bottom-left {
+  &.--south-west {
     bottom: 0;
     left: 0;
     cursor: sw-resize;
   }
 
-  &.--bottom-right {
+  &.--south-east {
     bottom: 0;
     right: 0;
     cursor: se-resize;

@@ -6,8 +6,7 @@ $shadow-sides-width: 4px;
   left: 0;
   z-index: 1;
 
-  &.--regular,
-  &__shadow {
+  &.--regular {
     width: 210px;
     height: 200px;
   }
