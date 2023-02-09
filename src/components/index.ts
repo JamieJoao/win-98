@@ -1,22 +1,3 @@
-import {
-  TaskBar,
-  TaskBarButton,
-  TaskBarButtonBase,
-  TaskBarButtonStart,
-  NotificationArea,
-  DirectAccess,
-  BordererPanel,
-  ContextMenu,
-  Separator,
-} from './common'
-
-import {
-  Screen,
-  DraggableWindow,
-  HeaderWindow,
-  ButtonControlWindow,
-} from './layout'
-
 export {
   TaskBar,
   TaskBarButton,
@@ -27,8 +8,13 @@ export {
   BordererPanel,
   ContextMenu,
   Separator,
+  WindowAnchors,
+  FakeWindow,
+} from './common'
+
+export {
   Screen,
   DraggableWindow,
   HeaderWindow,
   ButtonControlWindow,
-}
+} from './layout'

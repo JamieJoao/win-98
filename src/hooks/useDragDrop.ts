@@ -42,9 +42,6 @@ export const useDragDrop = (props: IProps) => {
     auxEnd?.addEventListener(methodEnd, handleEnd)
   }
 
-  /**
-   * VER PORQUE NO SE QUITA NINGUN EVENTO AL MAXIMIZAR LA PANTALLA
-   */
   const removeEvents = () => {
     const startDOM = startRef.current
       , endDOM = endRef.current
@@ -64,10 +61,7 @@ export const useDragDrop = (props: IProps) => {
       , screenDOM = screenRef.current
 
     screenDOM?.addEventListener(methodMove, handleMove)
-
-    /**
-     * GUARDAMOS LOS OFFSETS INICIALES
-     */
+    
     const { offsetLeft, offsetTop } = getStartPositions(e)
     pointersRef.current = {
       ...pointersRef.current,
@@ -145,13 +139,14 @@ export const useDragDrop = (props: IProps) => {
     }
 
     return {
-      offsetLeft: offsetLeft,
-      offsetTop: offsetTop,
+      offsetLeft,
+      offsetTop,
     }
   }
 
   return {
     startRef,
     endRef,
+    draggingRef,
   }
 }

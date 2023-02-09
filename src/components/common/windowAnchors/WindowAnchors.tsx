@@ -1,12 +1,12 @@
-import { forwardRef, RefObject } from 'react'
+import { forwardRef, RefObject, useEffect, useMemo, useRef } from 'react'
 import cn from 'classnames'
 
-import { useDragDrop } from 'hooks'
+import { useDragDrop, useFakeWindow, useResize } from 'hooks'
 import { TCoordinates } from 'types'
 
-import './styles.scss'
+import './WindowAnchors.styles.scss'
 
-type THandleFunction = (top: number, left: number, end?: boolean) => void
+type THandleFunction = (coordinate: TCoordinates, top: number, left: number, end?: boolean) => void
 
 interface ISingleAnchorProps {
   coordinate: TCoordinates
@@ -14,45 +14,29 @@ interface ISingleAnchorProps {
 }
 
 interface IProps {
-  onResizing: (coordinate: TCoordinates, variation: number) => void
-  onResized: (coordinate: TCoordinates, variation: number) => void
-  baseRef: RefObject<HTMLElement>
+
 }
 
 export const WindowAnchors = (props: IProps) => {
-  const {
-    onResizing,
-    onResized,
-    baseRef,
-  } = props
+  const {  wrapperRef, handleDrag } = useResize()
 
-  const handleDrag = (orientation: TCoordinates, left: number, top: number, end?: boolean) => {
-    if (!baseRef.current) return
-    const auxMethod = end ? onResized : onResizing
-    const { offsetLeft, offsetTop, clientWidth, clientHeight } = baseRef.current
-
-    switch (orientation) {
-      case 'north':
-        auxMethod(orientation, offsetTop - top)
-        break
-      case 'south':
-        auxMethod(orientation, offsetTop - top + clientHeight)
-        break
-      case 'west':
-        auxMethod(orientation, offsetLeft - left)
-        break
-      case 'east':
-        auxMethod(orientation, offsetLeft - left + clientWidth) // HAY UNOS PIXELES DE ERROR AL JALAR A LA DERECHA, DONDE SEA QUE CLICKEMOS NOS PONE EN TODO EL BORDE
-        break
-    }
-  }
+  // useEffect(() => {
+  //   applyStyles(coords)
+  // }, [coords])
 
   return (
-    <div className="w98-window-anchor__wrapper" draggable={false}>
-      <SingleAnchor coordinate='north' onDrag={(...points) => handleDrag.call(null, 'north', ...points)} />
+    <div
+      className="w98-window-anchor__wrapper"
+      draggable={false}
+      ref={wrapperRef}
+      // style={coords}
+    >
+      <SingleAnchor coordinate='north' onDrag={handleDrag} />
+      {/* <SingleAnchor coordinate='south' onDrag={handleDrag} /> */}
+      {/* <SingleAnchor coordinate='north' onDrag={(...points) => handleDrag.call(null, 'north', ...points)} />
       <SingleAnchor coordinate='south' onDrag={(...points) => handleDrag.call(null, 'south', ...points)} />
       <SingleAnchor coordinate='west' onDrag={(...points) => handleDrag.call(null, 'west', ...points)} />
-      <SingleAnchor coordinate='east' onDrag={(...points) => handleDrag.call(null, 'east', ...points)} />
+      <SingleAnchor coordinate='east' onDrag={(...points) => handleDrag.call(null, 'east', ...points)} /> */}
       {/* <div className='w98-window-anchor --top' ref={topRef}></div>
       <div className='w98-window-anchor --bottom' ref={bottomRef}></div>
       <div className='w98-window-anchor --left' ref={leftRef}></div>
@@ -69,21 +53,26 @@ export const WindowAnchors = (props: IProps) => {
 const SingleAnchor = forwardRef<HTMLDivElement, ISingleAnchorProps>((props, ref) => {
   const { coordinate, onDrag } = props
 
-  const { startRef } = useDragDrop({
-    // endOnScreen: true,
+  const { startRef, draggingRef } = useDragDrop({
+    endOnScreen: true,
     onDragging(left, top, startLeft, startTop) {
       if (startRef.current === null) return
       if (onDrag) {
-        let finalLeft = left - startLeft + (coordinate === 'east' ? startRef.current.clientWidth : 0)
-          , finalTop = top - startTop + (coordinate === 'south' ? startRef.current.clientHeight : 0)
+        const finalLeft = left - startLeft
+        const finalTop = top - startTop
 
-        onDrag(finalLeft, finalTop)
+        onDrag(coordinate, finalLeft, finalTop)
       }
     },
-    onDragEnd(left, top) {
-      console.log('[end]')
-      if (onDrag) onDrag(left, top, true)
-    }
+    onDragEnd(left, top, startLeft, startTop) {
+      if (startRef.current === null || !draggingRef.current) return
+      if (onDrag) {
+        const finalLeft = left - startLeft
+        const finalTop = top - startTop
+
+        onDrag(coordinate, finalLeft, finalTop, true)
+      }
+    },
   })
 
   return (

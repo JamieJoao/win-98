@@ -9,22 +9,19 @@ import {
   DraggableWindow,
   Screen,
   ContextMenu,
+  FakeWindow,
 } from 'components'
 import { IProgram } from 'types'
-import { useContextMenu } from 'hooks'
-import { contextMenuItems } from './const'
 
 import './styles.scss'
 
 export const Desktop = () => {
   const dispatch = useAppDispatch()
-  // const { setData } = useContextMenu()
   const { contextMenu: { items }, directsAccess, windowsStack, outOfFocus } = useAppSelector(state => state)
   const windowsInformationRef = useRef<{ length: number, outFocus: boolean }>({ length: windowsStack.length, outFocus: outOfFocus })
   const screenRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    // setData(contextMenuItems, screenRef)
     document.body.addEventListener('mousedown', handleMouseDown)
 
     return () => document.body.removeEventListener('mousedown', handleMouseDown)
@@ -39,7 +36,7 @@ export const Desktop = () => {
 
   const handleMouseDown = (e: MouseEvent) => {
     const { length, outFocus } = windowsInformationRef.current
-    
+
     if (length && !outFocus) {
       const elementRef = document.elementFromPoint(e.clientX, e.clientY)
 
@@ -82,9 +79,9 @@ export const Desktop = () => {
         <TaskBar />
       </div>
 
-      <>
-        {!!items.length && <ContextMenu />}
-      </>
+      {Boolean(items.length) && <ContextMenu />}
+
+      <FakeWindow />
     </Screen>
   )
 }

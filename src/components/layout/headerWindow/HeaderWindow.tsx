@@ -6,16 +6,15 @@ import './styles.scss'
 interface IProps {
   title: string
   icon?: string
-  children: JSX.Element | JSX.Element[]
   useHandler?: boolean
   focused?: boolean
+  children: React.ReactNode
 }
 
 export const HeaderWindow = forwardRef<any, IProps>(
   (props, ref) => {
     const { title, icon, children, useHandler, focused = true } = props
 
-    const infoRef = useRef<HTMLDivElement>(null)
     const controlsRef = useRef<HTMLDivElement>(null)
     const [widthInfo, setWidthInfo] = useState<string>('')
 
@@ -27,7 +26,10 @@ export const HeaderWindow = forwardRef<any, IProps>(
 
     return (
       <div className={cn('w98-header-window', focused && '--focused')}>
-        <div className="w98-header-window__info" draggable={false}>
+        <div
+          className="w98-header-window__info"
+          draggable={false}
+          style={{ width: widthInfo }}>
           {icon && <img className='w98-header-window__info-icon' src={icon} draggable={false} />}
 
           <div className='w98-header-window__info-title-wrapper'>

@@ -6,3 +6,4 @@ export const WINDOW_HEADER_SPACING = TASKBAR_HEIGHT + 36
 export const CONTEXT_MENU_CLASS = '.w98-context-menu__wrapper'
 export const SCREEN_CLASS = '.w98-screen__content'
 export const WINDOW_CLASS = '.w98-float-window'
+export const FAKE_WINDOW_CLASS = '.w98-fake-window'
