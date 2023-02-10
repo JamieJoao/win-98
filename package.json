@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://jamiejoao.github.io/win-98",
   "scripts": {
-    "start": "vite",
+    "start": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "predeploy": "vite build",

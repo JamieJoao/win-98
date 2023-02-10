@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 
-import './styles.scss'
+import './Header.styles.scss'
 
 interface IProps {
   title: string

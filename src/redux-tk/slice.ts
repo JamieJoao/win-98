@@ -32,7 +32,7 @@ const slice = createSlice({
         uid: uuidv4(),
         program: action.payload,
         size: 'regular',
-        lastCoords: { left: 0, top: 0 },
+        lastCoords: {},
         minimized: false,
       }
       const newWindowsStack: IWindow[] = [

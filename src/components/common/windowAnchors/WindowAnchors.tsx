@@ -1,8 +1,8 @@
-import { forwardRef, RefObject, useEffect, useMemo, useRef } from 'react'
+import { forwardRef } from 'react'
 import cn from 'classnames'
 
-import { useDragDrop, useFakeWindow, useResize } from 'hooks'
-import { TCoordinates } from 'types'
+import { useDragDrop, useResize } from 'hooks'
+import { TCoordinates, TCoords } from 'types'
 
 import './WindowAnchors.styles.scss'
 
@@ -14,38 +14,28 @@ interface ISingleAnchorProps {
 }
 
 interface IProps {
-
+  onResizeEnd: (coords: TCoords) => void
 }
 
 export const WindowAnchors = (props: IProps) => {
-  const {  wrapperRef, handleDrag } = useResize()
-
-  // useEffect(() => {
-  //   applyStyles(coords)
-  // }, [coords])
+  const { onResizeEnd } = props
+  
+  const { wrapperRef, handleDrag } = useResize(onResizeEnd)
 
   return (
     <div
       className="w98-window-anchor__wrapper"
       draggable={false}
-      ref={wrapperRef}
-      // style={coords}
-    >
+      ref={wrapperRef}>
       <SingleAnchor coordinate='north' onDrag={handleDrag} />
-      {/* <SingleAnchor coordinate='south' onDrag={handleDrag} /> */}
-      {/* <SingleAnchor coordinate='north' onDrag={(...points) => handleDrag.call(null, 'north', ...points)} />
-      <SingleAnchor coordinate='south' onDrag={(...points) => handleDrag.call(null, 'south', ...points)} />
-      <SingleAnchor coordinate='west' onDrag={(...points) => handleDrag.call(null, 'west', ...points)} />
-      <SingleAnchor coordinate='east' onDrag={(...points) => handleDrag.call(null, 'east', ...points)} /> */}
-      {/* <div className='w98-window-anchor --top' ref={topRef}></div>
-      <div className='w98-window-anchor --bottom' ref={bottomRef}></div>
-      <div className='w98-window-anchor --left' ref={leftRef}></div>
-      <div className='w98-window-anchor --right' ref={rightRef}></div>
+      <SingleAnchor coordinate='south' onDrag={handleDrag} />
+      <SingleAnchor coordinate='west' onDrag={handleDrag} />
+      <SingleAnchor coordinate='east' onDrag={handleDrag} />
 
-      <div className='w98-window-anchor --top-left' ref={topLeftRef}></div>
-      <div className='w98-window-anchor --top-right' ref={topRightRef}></div>
-      <div className='w98-window-anchor --bottom-left' ref={bottomLeftRef}></div>
-      <div className='w98-window-anchor --bottom-right' ref={bottomRightRef}></div> */}
+      <SingleAnchor coordinate='north-west' onDrag={handleDrag} />
+      <SingleAnchor coordinate='north-east' onDrag={handleDrag} />
+      <SingleAnchor coordinate='south-west' onDrag={handleDrag} />
+      <SingleAnchor coordinate='south-east' onDrag={handleDrag} />
     </div>
   )
 }

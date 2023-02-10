@@ -3,7 +3,6 @@
   height: $button-taskbar-height;
 
   &__button {
-    // width: $button-start-width-mobile;
     font-weight: bold;
 
     span {
@@ -11,8 +10,6 @@
     }
 
     @include media-tablet {
-      // width: $button-start-width-desktop;
-
       span {
         display: initial;
       }

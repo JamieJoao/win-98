@@ -33,6 +33,7 @@ export const DraggableWindow = (props: IProps) => {
     handleMinimize,
     handleClose,
     handleToggleMaximize,
+    handleResizeEnd,
   } = useDraggableWindow({ data, position })
 
   return (
@@ -46,7 +47,7 @@ export const DraggableWindow = (props: IProps) => {
         onMouseDown={handleFocus}>
 
         {size === 'regular' && (
-          <WindowAnchors />
+          <WindowAnchors onResizeEnd={handleResizeEnd} />
         )}
 
         <BordererPanel
@@ -68,7 +69,7 @@ export const DraggableWindow = (props: IProps) => {
               onClick={handleToggleMaximize} />
             <ButtonControlWindow
               type='close'
-              style={{ marginLeft: 2 }}
+              style={{ marginLeft: 3 }}
               onClick={handleClose} />
           </HeaderWindow>
 

@@ -1,28 +1,12 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect } from 'react'
 
-import { TCoordinates } from 'types'
+import { TCoordinates, TCoords } from 'types'
 import { useFakeWindow } from './useFakeWindow'
-import { useStateRef } from './useStateRef'
 
-interface IPropsHook {
-  // onResizing: (coordinate: TCoordinates, variation: number) => void
-}
-
-interface ICoords {
-  // coordinate?: TCoordinates
-  display?: string
-  top?: number
-  left?: number
-  width?: number
-  height?: number
-}
-
-export const useResize = () => {
+export const useResize = (onResizeEnd: (coords: TCoords) => void) => {
   const { applyStyles } = useFakeWindow()
-  // const [coords, setCoords, coordsRef] = useStateRef<ICoords>({})
   const parentRef = useRef<HTMLElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const lastCoordsRef = useRef<number>(0)
 
   useEffect(() => {
     if (wrapperRef.current) {
@@ -32,49 +16,63 @@ export const useResize = () => {
 
   const handleDrag = (coordinate: TCoordinates, left: number, top: number, end?: boolean) => {
     if (!parentRef.current || !wrapperRef.current) return
-    const { offsetLeft: parentLeft, offsetTop: parentTop, clientWidth: parentWidth, clientHeight: parentHeight } = parentRef.current
-      , { clientHeight: wrapperHeight, offsetTop: wrapperTop } = wrapperRef.current
+    const { offsetLeft, offsetTop, clientWidth, clientHeight } = parentRef.current
 
-    let auxCoords: ICoords = { width: parentWidth, height: parentHeight, left: parentLeft, top: parentTop }
+    let auxCoords: TCoords = { width: clientWidth, height: clientHeight, left: offsetLeft, top: offsetTop }
 
     switch (coordinate) {
       case 'north':
-        console.log(top, parentTop, wrapperTop, parentHeight, wrapperHeight)
-        // auxCoords = { top: top - parentTop, height: top - parentTop - wrapperTop - (top - parentTop) }
-        auxCoords = { ...auxCoords, top, height: parentHeight + (parentTop - top) }
-        break
-      case 'south':
-        // console.log(wrapperHeight, wrapperHeight + (top - parentHeight - parentTop))
-        // auxCoords = { height:  parentHeight + (top - parentHeight - parentTop) }
-        // console.log(wrapperHeight, top, parentTop, wrapperTop)
-        // auxCoords = { height: top - parentTop - wrapperTop }
-        // handleRezise(coordinate, parentTop - top + parentHeight)
+        auxCoords = { ...auxCoords, top, height: clientHeight + (offsetTop - top) }
         break
       case 'west':
-        // handleRezise(coordinate, offsetLeft - left)
+        auxCoords = { ...auxCoords, left, width: clientWidth + (offsetLeft - left) }
+        break
+      case 'south':
+        auxCoords = { ...auxCoords, height: top - offsetTop }
         break
       case 'east':
-        // handleRezise(coordinate, offsetLeft - left + clientWidth)
+        auxCoords = { ...auxCoords, width: left - offsetLeft }
+        break
+
+      case 'north-west':
+        auxCoords = {
+          ...auxCoords,
+          top, height: clientHeight + (offsetTop - top),
+          left, width: clientWidth + (offsetLeft - left),
+        }
+        break
+      case 'north-east':
+        auxCoords = {
+          ...auxCoords,
+          top, height: clientHeight + (offsetTop - top),
+          width: left - offsetLeft
+        }
+        break
+      case 'south-west':
+        auxCoords = {
+          ...auxCoords,
+          height: top - offsetTop,
+          left, width: clientWidth + (offsetLeft - left)
+        }
+        break
+      case 'south-east':
+        auxCoords = {
+          ...auxCoords,
+          height: top - offsetTop,
+          width: left - offsetLeft
+        }
         break
     }
-
-    // setCoords({ ...coordsRef.current, coordinate, ...auxCoords })
-    // setCoords({ ...auxCoords, display: end ? 'none' : 'block' })
-
-    // if (coordsRef.current) {
-    //   applyStyles(coordsRef.current)
-    // }
 
     applyStyles({ ...auxCoords, display: end ? 'none' : 'block' })
 
     if (end) {
-      console.log('[END]')
       applyStyles(auxCoords, parentRef.current)
+      onResizeEnd(auxCoords)
     }
   }
 
   return {
-    // coords,
     wrapperRef,
     handleDrag,
   }

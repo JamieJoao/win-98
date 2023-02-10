@@ -1,4 +1,4 @@
-$anchor-size: 14px;
+$anchor-size: 4px;
 
 .w98-window-anchor {
   position: absolute;
@@ -15,48 +15,39 @@ $anchor-size: 14px;
   }
 
   &.--north,
-  &.--south,
-  &.--west,
-  &.--east {
-    background-color: red;
-    cursor: default;
-  }
-
-  &.--north,
   &.--south {
-    width: calc(100% - $anchor-size * 2);
+    width: 100%;
     height: $anchor-size;
   }
 
   &.--west,
   &.--east {
-    height: calc(100% - $anchor-size * 2);
+    height: calc(100% - $anchor-size);
     width: $anchor-size;
   }
 
   &.--north {
     top: 0;
-    left: $anchor-size;
-    // cursor: n-resize;
+    left: 0;
+    cursor: n-resize;
   }
 
   &.--east {
     top: $anchor-size;
-    right: 0;
-    // cursor: w-resize;
+    left: 100%;
+    cursor: w-resize;
   }
 
   &.--south {
     top: 100%;
-    // bottom: 0;
-    left: $anchor-size;
-    // cursor: s-resize;
+    left: 0;
+    cursor: s-resize;
   }
 
   &.--west {
     top: $anchor-size;
-    left: 0;
-    // cursor: w-resize;
+    left: -$anchor-size;
+    cursor: w-resize;
   }
 
   &.--north-west,
@@ -65,7 +56,6 @@ $anchor-size: 14px;
   &.--south-east {
     width: $anchor-size;
     height: $anchor-size;
-    background-color: transparent;
   }
 
   &.--north-west {

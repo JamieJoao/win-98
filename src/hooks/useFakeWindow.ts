@@ -1,8 +1,7 @@
 import { RefObject, useLayoutEffect, useRef } from 'react'
+import { TCoords } from 'types'
 import { FAKE_WINDOW_CLASS } from 'utils/const'
 import { getKeys } from 'utils/functions'
-
-type TStyles = { top?: number, left?: number, width?: number, height?: number, display?: string }
 
 export const useFakeWindow = () => {
   const fakeWindowRef = useRef<HTMLElement | null>(null)
@@ -11,12 +10,12 @@ export const useFakeWindow = () => {
     fakeWindowRef.current = document.querySelector(FAKE_WINDOW_CLASS)
   }, [])
 
-  const applyStyles = (stylesObj: TStyles, customElement?: HTMLElement) => {
+  const applyStyles = (stylesObj: TCoords, customElement?: HTMLElement | null) => {
     const useElement = customElement ?? fakeWindowRef.current
 
     if (!useElement) return
 
-    getKeys<TStyles>(stylesObj)
+    getKeys<TCoords>(stylesObj)
       .forEach(key => {
         const value = stylesObj[key]
         if (useElement && value !== undefined) {

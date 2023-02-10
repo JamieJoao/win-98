@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import cn from 'classnames'
 
 import {
@@ -10,10 +10,6 @@ import { programsList, IMenuItem } from './const'
 
 import StartIcon from 'assets/icons/icon-windows-start.png'
 import './styles.scss'
-
-interface IProps {
-  children: JSX.Element
-}
 
 interface IPropsRecursive {
   sublist: IMenuItem[]
@@ -98,16 +94,6 @@ export const TaskBarButtonStart = () => {
                     )}
                   </div>
                 ))}
-
-                {/* <li className='w98-start-menu__separator'>
-                  <Separator aligment='horizontal' />
-                </li>
-
-                <li
-                  className="w98-start-menu__item">
-                  <img src={ShutDownIcon} draggable={false} />
-                  <span>Apagar</span>
-                </li> */}
               </ul>
             </>
           </BordererPanel>

@@ -1,3 +1,5 @@
+import { TCoords } from 'types'
+
 export interface IButton {
 
 }
@@ -14,7 +16,7 @@ export interface IWindow {
   uid: string
   program: IProgram
   size: 'fullscreen' | 'regular'
-  lastCoords: { left: number, top: number }
+  lastCoords: TCoords
   minimized: boolean
 }
 

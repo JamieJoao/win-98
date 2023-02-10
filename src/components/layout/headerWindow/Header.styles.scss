@@ -9,7 +9,6 @@
   align-items: center;
   user-select: none;
   touch-action: none;
-  // border: 1px solid green;
 
   &.--focused {
     background-color: $blue-main;
@@ -46,7 +45,6 @@
   }
 
   &__handler {
-    // border: 1px solid yellow;
     position: absolute;
     height: 100%;
   }
@@ -55,6 +53,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-right: 2px;
+    padding-right: 3px;
   }
 }

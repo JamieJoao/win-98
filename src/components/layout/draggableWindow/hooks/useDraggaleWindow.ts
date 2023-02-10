@@ -1,50 +1,42 @@
 import { RefObject, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 
 import { useDragDrop, useFakeWindow, useStateRef } from 'hooks'
+import { IWindow, TCoords } from 'types'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
-import { BORDER_BOX, BORDER_CONTENT, PADDING_BOX, SCREEN_CLASS, TASKBAR_HEIGHT } from 'utils/const'
 import { changePositionWindow, deleteWindow, minimizeWindow, updateWindow } from 'redux-tk/slice'
-import { IWindow, TCoordinates } from 'types'
+import { BORDER_BOX, BORDER_CONTENT, PADDING_BOX, SCREEN_CLASS, TASKBAR_HEIGHT } from 'utils/const'
+import { removeStyles } from 'utils/functions'
 
 interface IProps {
   position: number
   data: IWindow
 }
 
-interface ICoords {
-  left?: number
-  top?: number
-  width?: number
-  height?: number
-}
-
 interface TReturnHook {
   windowRef: RefObject<HTMLDivElement>
-  coordsMemo: { zIndex: number, left?: number, top?: number },
-  focused: boolean,
-  startRef: RefObject<HTMLDivElement>,
-  // endRef: RefObject<HTMLDivElement>,
-  // shadowStyles: { display: string, width?: number, height?: number, top?: number, left?: number },
-  handleFocus: () => void,
-  // handleRezise: (coordinate: TCoordinates, variation: number) => void,
-  // handleResized: () => void,
-  handleMinimize: () => void,
-  handleClose: () => void,
-  handleToggleMaximize: () => void,
+  coordsMemo: TCoords
+  focused: boolean
+  startRef: RefObject<HTMLDivElement>
+  handleFocus: () => void
+  handleMinimize: () => void
+  handleClose: () => void
+  handleToggleMaximize: () => void
+  handleResizeEnd: (coords: TCoords) => void
 }
 
 export const useDraggableWindow = (props: IProps): TReturnHook => {
   const { data, position } = props
-    , { size, uid } = data
+    , { size, uid, lastCoords } = data
     , fixErrorBorders = PADDING_BOX + BORDER_BOX + BORDER_CONTENT
 
   const dispatch = useAppDispatch()
     , { windowsStack, outOfFocus } = useAppSelector(state => state)
-    , [coords, setCoords, coordsRef] = useStateRef<ICoords>({})
-    , [coordsShadow, setCoordsShadow, coordsShadowRef] = useStateRef<ICoords>({})
+    , [coords, setCoords, coordsRef] = useStateRef<TCoords>({})
+    , [coordsShadow, setCoordsShadow, coordsShadowRef] = useStateRef<TCoords>({})
 
   const containerRef = useRef<HTMLDivElement | null>(null)
     , windowRef = useRef<HTMLDivElement | null>(null)
+    , lastCoordsRef = useRef<TCoords | null>(null)
     , focused = windowsStack[0].uid === uid && !outOfFocus
 
   useEffect(() => {
@@ -58,6 +50,10 @@ export const useDraggableWindow = (props: IProps): TReturnHook => {
     )
   }, [coordsShadow])
 
+  useEffect(() => {
+    lastCoordsRef.current = lastCoords
+  }, [lastCoords])
+
   useLayoutEffect(() => {
     containerRef.current = document.querySelector(SCREEN_CLASS)
 
@@ -70,7 +66,7 @@ export const useDraggableWindow = (props: IProps): TReturnHook => {
   }, [])
 
   const coordsMemo = useMemo(() => {
-    let auxCoords: { zIndex: number, left?: number, top?: number } = { zIndex: windowsStack.length - position }
+    let auxCoords: TCoords = { zIndex: windowsStack.length - position }
 
     if (size === 'regular') {
       auxCoords = { ...auxCoords, ...coords }
@@ -83,8 +79,6 @@ export const useDraggableWindow = (props: IProps): TReturnHook => {
     endOnScreen: true,
     onDragStart() {
       if (windowRef.current) {
-        handleFocus()
-
         const { clientWidth, clientHeight } = windowRef.current
         setCoordsShadow({ ...coordsShadowRef.current, width: clientWidth, height: clientHeight })
       }
@@ -96,6 +90,11 @@ export const useDraggableWindow = (props: IProps): TReturnHook => {
           ...coords,
           left: left - startLeft - fixErrorBorders,
           top: top - startTop - fixErrorBorders
+        }))
+
+        dispatch(updateWindow({
+          ...data,
+          lastCoords: { ...lastCoordsRef.current, ...coordsRef.current }
         }))
       }
     },
@@ -110,11 +109,17 @@ export const useDraggableWindow = (props: IProps): TReturnHook => {
     , { applyStyles } = useFakeWindow()
 
   const handleToggleMaximize = () => {
-    const finalSize = size === 'fullscreen' ? 'regular' : 'fullscreen'
+    const toggleSize = size === 'fullscreen' ? 'regular' : 'fullscreen'
+    if (toggleSize === 'fullscreen') {
+      removeStyles(['width', 'height'], windowRef.current)
+    }
+    else {
+      applyStyles(lastCoordsRef.current ?? {}, windowRef.current)
+    }
 
     dispatch(updateWindow({
       ...data,
-      size: finalSize,
+      size: toggleSize,
     }))
   }
 
@@ -128,25 +133,26 @@ export const useDraggableWindow = (props: IProps): TReturnHook => {
 
   const handleFocus = () => {
     if (!focused) {
-      console.log('[focus]')
       dispatch(changePositionWindow({ uid, destIndex: 0 }))
     }
   }
 
-  const handleResized = () => { }
+  const handleResizeEnd = (auxCoords: TCoords) => {
+    dispatch(updateWindow({
+      ...data,
+      lastCoords: { ...lastCoords, ...auxCoords }
+    }))
+  }
 
   return {
     windowRef,
     coordsMemo,
     focused,
     startRef,
-    // endRef,
-    // shadowStyles,
     handleFocus,
-    // handleResized,
-    // handleRezise,
     handleMinimize,
     handleClose,
     handleToggleMaximize,
+    handleResizeEnd,
   }
 }
