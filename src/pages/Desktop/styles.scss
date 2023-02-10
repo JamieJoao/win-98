@@ -8,6 +8,7 @@ $size-direct-access: 74px;
   background-color: $green-1; // quitar
   overflow: hidden;
   padding: 1px;
+  cursor: url('src/assets/icons/cursor-default.gif'), default;
 
   &__icon-group {
     width: 100%;

@@ -11,7 +11,7 @@ import {
 import './styles.scss'
 
 const COLUMN_GAP = 4
-const WIDTH_BASE = 158
+const WIDTH_BASE = 160
 
 export const TaskBar = () => {
   const taskBarButtonsStack = useAppSelector(state => state.taskBarButtonsStack)
@@ -33,7 +33,7 @@ export const TaskBar = () => {
       <div className="w98-taskbar__container">
         <TaskBarButtonStart />
 
-        <Separator aligment='vertical' />
+        <Separator className='w98-taskbar__separator' aligment='vertical' />
 
         <div className="w98-taskbar__group" ref={taskBarRef}>
           {taskBarButtonsStack.map((obj, index) => (
@@ -44,7 +44,7 @@ export const TaskBar = () => {
           ))}
         </div>
 
-        <Separator aligment='vertical' />
+        <Separator className='w98-taskbar__separator' aligment='vertical' />
 
         <div className="w98-taskbar__info">
           <NotificationArea />

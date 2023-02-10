@@ -1,33 +1,35 @@
 import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 
-import './styles.scss'
+import './Header.styles.scss'
 
 interface IProps {
   title: string
   icon?: string
-  children: JSX.Element | JSX.Element[]
   useHandler?: boolean
   focused?: boolean
+  children: React.ReactNode
 }
 
 export const HeaderWindow = forwardRef<any, IProps>(
   (props, ref) => {
     const { title, icon, children, useHandler, focused = true } = props
 
-    const infoRef = useRef<HTMLDivElement>(null)
     const controlsRef = useRef<HTMLDivElement>(null)
-    const [widthInfo, setWidthInfo] = useState<number>(0)
+    const [widthInfo, setWidthInfo] = useState<string>('')
 
     useLayoutEffect(() => {
-      if (infoRef.current) {
-        setWidthInfo(infoRef.current.clientWidth)
+      if (controlsRef.current) {
+        setWidthInfo(`calc(100% - ${controlsRef.current.clientWidth}px)`)
       }
     }, [])
 
     return (
       <div className={cn('w98-header-window', focused && '--focused')}>
-        <div className="w98-header-window__info" ref={infoRef}>
+        <div
+          className="w98-header-window__info"
+          draggable={false}
+          style={{ width: widthInfo }}>
           {icon && <img className='w98-header-window__info-icon' src={icon} draggable={false} />}
 
           <div className='w98-header-window__info-title-wrapper'>
@@ -35,12 +37,10 @@ export const HeaderWindow = forwardRef<any, IProps>(
           </div>
         </div>
 
-        {useHandler && (
-          <div
-            className="w98-header-window__handler"
-            ref={ref}
-            style={{ width: widthInfo }} />
-        )}
+        <div
+          className="w98-header-window__handler"
+          ref={ref}
+          style={{ width: widthInfo, display: useHandler ? 'block' : 'none' }} />
 
         <div className="w98-header-window__controls" ref={controlsRef}>
           {children}

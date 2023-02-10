@@ -1,5 +1,5 @@
 // LOCAL VARIABLES
-$side-spacing: 4px;
+$side-spacing: 3px;
 
 .w98-taskbar {
   position: absolute;
@@ -8,34 +8,25 @@ $side-spacing: 4px;
   width: 100%;
   height: $taskbar-height;
   background-color: $gray-1;
-  border-top: 1px solid $white;
+  box-shadow: 
+    0 -1px $white,
+    0 -2px $gray-1;
 
   display: flex;
   flex-direction: row;
   align-items: center;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    width: 100%;
-    height: 1px;
-    background-color: $gray-3;
-  }
-
   &__separator {
-    width: 0;
-    height: 30px;
-    border-right: 1px solid $white;
-    border-left: 1px solid $gray-5;
+    height: $button-taskbar-height;
   }
 
   &__container {
-    padding: $side-spacing 3px;
+    padding: $side-spacing;
     display: flex;
     flex: 1;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     column-gap: $side-spacing;
     width: 100%;
   }

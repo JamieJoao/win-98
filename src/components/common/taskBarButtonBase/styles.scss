@@ -5,7 +5,11 @@
   grid-row: 1;
   user-select: none;
 
-  @include box-shadow-normal;
+  @include box-shadow-simple;
+
+  &:active {
+    @include box-shadow-simple(true);
+  }
 
   &__content {
     height: 100%;
@@ -39,8 +43,14 @@
   }
 
   &.--active {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAG0lEQVQYV2M8cODAf3t7ewbG/////z948CADAFuqCj64BtLKAAAAAElFTkSuQmCC);
+    background-image: url(/src/assets/icons/pattern-square-light.png);
+    font-weight: bold;
 
-    @include box-shadow-normal(true);
+    box-shadow:
+      inset -1px -1px #fff,
+      inset 1px 1px #0a0a0a,
+      inset -2px -2px #dfdfdf,
+      inset 2px 2px $gray-2,
+      inset 0px 3px $white;
   }
 }

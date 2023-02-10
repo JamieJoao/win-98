@@ -16,6 +16,23 @@
   }
 }
 
+@mixin box-shadow-simple($invert: false) {
+  @if $invert {
+    box-shadow:
+      inset -1px -1px $white,
+      inset 1px 1px $black,
+      inset -2px -2px $gray-main,
+      inset 2px 2px $gray-secondary, ;
+  }
+
+  @else {
+    box-shadow:
+      inset -1px -1px $black,
+      inset 1px 1px $white,
+      inset -2px -2px $gray-secondary;
+  }
+}
+
 @mixin fix-font {
   letter-spacing: .8px;
   text-shadow: 1px 0 black;

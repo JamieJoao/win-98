@@ -2,6 +2,7 @@
   {
     "uid": "1",
     "imageKey": "myPc",
+    "icon": "myPcSmall",
     "name": "Mi PC",
     "template": "MyPC",
     "position": 0
@@ -9,6 +10,7 @@
   {
     "uid": "2",
     "imageKey": "myDocuments",
+    "icon": "myDocumentsSmall",
     "name": "Mis documentos",
     "template": "MyDocuments",
     "position": 0

@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import './styles.scss'
 
 interface IProps {
-  children: JSX.Element | JSX.Element[]
+  children: React.ReactNode
 }
 
 export const Screen = (props: IProps) => {

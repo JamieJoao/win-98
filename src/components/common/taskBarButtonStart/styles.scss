@@ -1,8 +1,8 @@
 .w98-start-menu {
   user-select: none;
+  height: $button-taskbar-height;
 
   &__button {
-    // width: $button-start-width-mobile;
     font-weight: bold;
 
     span {
@@ -10,29 +10,27 @@
     }
 
     @include media-tablet {
-      width: $button-start-width-desktop;
-
       span {
         display: initial;
       }
     }
   }
 
+  &__borderer-content {
+    padding: 1px;
+  }
+
   &__wrapper {
     position: absolute;
     width: 162px;
-    bottom: $taskbar-height + 2px;
-    left: 2px;
+    bottom: $taskbar-height - 2px;
+    left: 3px;
   }
 
   &__banner {
     position: relative;
     width: 21px;
-    background-color: $blue;
-
-    &.--inverse-focus {
-      background-color: $gray-2;
-    }
+    background-color: $blue-main;
 
     &-text {
       position: absolute;
@@ -68,7 +66,7 @@
 
     &-wrapper {
       position: absolute;
-      top: -2px;
+      top: -3px;
       width: max-content;
       left: calc(100% - 5px);
       background-color: $gray-1;
@@ -123,7 +121,7 @@
 
     &:hover,
     &.--active {
-      background-color: $blue;
+      background-color: $blue-main;
 
       &>span {
         color: $white;

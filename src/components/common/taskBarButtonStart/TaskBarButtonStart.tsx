@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import cn from 'classnames'
 
 import {
@@ -9,12 +9,7 @@ import {
 import { programsList, IMenuItem } from './const'
 
 import StartIcon from 'assets/icons/icon-windows-start.png'
-import ShutDownIcon from 'assets/icons/shut_down_normal-2.png'
 import './styles.scss'
-
-interface IProps {
-  children: JSX.Element
-}
 
 interface IPropsRecursive {
   sublist: IMenuItem[]
@@ -26,7 +21,6 @@ export const TaskBarButtonStart = () => {
   const [open, setOpen] = useState<boolean>(false)
   const buttonRef = useRef<HTMLDivElement>(null)
   const [programsListMapped, setProgramsListMapped] = useState(programsList.map(obj => ({ ...obj, showed: false })))
-  const [focusChildren, setFocusChildren] = useState<boolean>(false)
 
   const closeAllMenus = () => {
     setProgramsListMapped(programsList.map(obj => ({ ...obj, showed: false })))
@@ -54,23 +48,24 @@ export const TaskBarButtonStart = () => {
   }
 
   const handleClickOption = (menu: IMenuItem) => {
-    setFocusChildren(false)
     setProgramsListMapped(
       programsList.map(obj => ({ ...obj, showed: obj.id === menu.id }))
     )
   }
 
   const handleClickChildren = () => {
-    setFocusChildren(true)
+
   }
 
   return (
     <div className='w98-start-menu' ref={buttonRef}>
       {open && (
         <div className="w98-start-menu__wrapper">
-          <BordererPanel type='window'>
+          <BordererPanel
+            classNameContent='w98-start-menu__borderer-content'
+            type='window'>
             <>
-              <div className={cn('w98-start-menu__banner', focusChildren && '--inverse-focus')}>
+              <div className={cn('w98-start-menu__banner')}>
                 <div className="w98-start-menu__banner-text">
                   <span>Windows</span>
                   <span>98</span>
@@ -99,16 +94,6 @@ export const TaskBarButtonStart = () => {
                     )}
                   </div>
                 ))}
-
-                {/* <li className='w98-start-menu__separator'>
-                  <Separator aligment='horizontal' />
-                </li>
-
-                <li
-                  className="w98-start-menu__item">
-                  <img src={ShutDownIcon} draggable={false} />
-                  <span>Apagar</span>
-                </li> */}
               </ul>
             </>
           </BordererPanel>
@@ -139,7 +124,9 @@ export const RecursiveListMenu = (props: IPropsRecursive) => {
 
   const listMenu = (parentSublist: IMenuItem[], show: boolean = false) => (
     <div className={cn('w98-start-menu__list-wrapper', show && '--show')}>
-      <BordererPanel type='window'>
+      <BordererPanel
+        classNameContent='w98-start-menu__borderer-content'
+        type='window'>
         <ul className="w98-start-menu__list">
           {parentSublist.map((obj: IMenuItem) => (
             <div

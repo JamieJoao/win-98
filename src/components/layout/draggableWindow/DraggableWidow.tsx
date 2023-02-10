@@ -1,15 +1,13 @@
-import { useMemo, useRef, useState } from 'react'
 import cn from 'classnames'
 
 import {
   BordererPanel,
   HeaderWindow,
   ButtonControlWindow,
+  WindowAnchors,
 } from 'components'
 import { IWindow } from 'types'
-import { useDrag } from 'hooks'
-import { useAppDispatch, useAppSelector } from 'redux-tk/store'
-import { changePositionWindow, deleteWindow, minimizeWindow, updateWindow } from 'redux-tk/slice'
+import { useDraggableWindow } from './hooks/useDraggaleWindow'
 
 import './styles.scss'
 
@@ -20,90 +18,63 @@ interface IProps {
 
 export const DraggableWindow = (props: IProps) => {
   const { data, position } = props
-  const { program: { iconUrl, name }, minimized, size, lastCoords, uid } = data
+    , { program: { iconUrl, name, miniIconUrl }, minimized, size, lastCoords, uid } = data
 
-  const dispatch = useAppDispatch()
-  const windowsStack = useAppSelector(state => state.windowsStack)
-  const canDragRef = useRef<boolean>(true)
-  const [coords, setCoords] = useState({ left: 0, top: 0 })
-
-  const focused = windowsStack[0].uid === uid
-
-  const coordsMemo = useMemo(() => {
-    let auxCoords: { zIndex: number, left?: number, top?: number } = { zIndex: windowsStack.length - position }
-
-    if (size === 'regular') {
-      auxCoords = { ...auxCoords, ...coords }
-    }
-
-    return auxCoords
-  }, [windowsStack, position, size, coords])
-
-  const { elementRef, handleDragRef, getCoords: getWindowCoords } = useDrag({
-    canDragRef,
-    onDragStart() { },
-    onDragEnd() { },
-    onDragging(left, top) {
-      setCoords({ left, top })
-    },
-  })
-
-  const handleToggleMaximize = () => {
-    const finalSize = size === 'fullscreen' ? 'regular' : 'fullscreen'
-
-    dispatch(updateWindow({
-      ...data,
-      size: finalSize,
-      lastCoords: canDragRef.current ? getWindowCoords() : lastCoords,
-    }))
-  }
-
-  const handleMinimize = () => {
-    dispatch(minimizeWindow({ ...data }))
-  }
-
-  const handleClose = () => {
-    dispatch(deleteWindow(uid))
-  }
-
-  const handleFocus = () => {
-    if (!focused) {
-      dispatch(changePositionWindow({ uid, destIndex: 0 }))
-    }
-  }
+  const {
+    windowRef,
+    coordsMemo,
+    focused,
+    startRef,
+    // endRef,
+    // shadowStyles,
+    handleFocus,
+    // handleResized,
+    // handleRezise,
+    handleMinimize,
+    handleClose,
+    handleToggleMaximize,
+    handleResizeEnd,
+  } = useDraggableWindow({ data, position })
 
   return (
-    <div
-      className={
-        cn('w98-float-window', `--${size}`, minimized && '--minimized')
-      }
-      ref={elementRef}
-      style={coordsMemo}
-      onMouseDown={handleFocus}>
-      <BordererPanel
-        type='window'
-        className='w98-float-window__wrapper'
-        classNameContent='w98-float-window__content'>
+    <>
+      <div
+        className={
+          cn('w98-float-window', `--${size}`, minimized && '--minimized')
+        }
+        ref={windowRef}
+        style={coordsMemo}
+        onMouseDown={handleFocus}>
 
-        <HeaderWindow
-          focused={focused}
-          title={name}
-          icon={iconUrl}
-          ref={handleDragRef}
-          useHandler>
-          <ButtonControlWindow
-            type='minimize'
-            onClick={handleMinimize} />
-          <ButtonControlWindow
-            type='maximize'
-            onClick={handleToggleMaximize} />
-          <ButtonControlWindow
-            type='close'
-            style={{ marginLeft: 2 }}
-            onClick={handleClose} />
-        </HeaderWindow>
+        {size === 'regular' && (
+          <WindowAnchors onResizeEnd={handleResizeEnd} />
+        )}
 
-      </BordererPanel>
-    </div>
+        <BordererPanel
+          type='window'
+          className='w98-float-window__wrapper'
+          classNameContent='w98-float-window__content'>
+
+          <HeaderWindow
+            focused={focused}
+            title={name}
+            icon={miniIconUrl ?? iconUrl}
+            ref={startRef}
+            useHandler={size === 'regular'}>
+            <ButtonControlWindow
+              type='minimize'
+              onClick={handleMinimize} />
+            <ButtonControlWindow
+              type={size === 'regular' ? 'maximize' : 'restore'}
+              onClick={handleToggleMaximize} />
+            <ButtonControlWindow
+              type='close'
+              style={{ marginLeft: 3 }}
+              onClick={handleClose} />
+          </HeaderWindow>
+
+        </BordererPanel>
+      </div>
+    </>
   )
 }

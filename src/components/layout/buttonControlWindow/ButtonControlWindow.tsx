@@ -2,7 +2,7 @@ import cn from 'classnames'
 
 import './styles.scss'
 
-type TButtonControl = 'minimize' | 'maximize' | 'unmaximize' | 'close' | 'question'
+type TButtonControl = 'minimize' | 'maximize' | 'restore' | 'close' | 'question'
 
 interface IProps {
   type: TButtonControl
@@ -21,6 +21,7 @@ export const ButtonControlWindow = (props: IProps) => {
     <button
       className={cn('w98-button-window', `--${type}`)}
       style={{ ...style }}
-      onClick={handleClick} />
+      onClick={handleClick}
+      title={type} />
   )
 }

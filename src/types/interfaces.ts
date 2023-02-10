@@ -1,3 +1,5 @@
+import { TCoords } from 'types'
+
 export interface IButton {
 
 }
@@ -5,6 +7,7 @@ export interface IButton {
 export interface IProgram {
   uid: string
   iconUrl: string
+  miniIconUrl?: string
   name: string
   template: string
 }
@@ -13,7 +16,7 @@ export interface IWindow {
   uid: string
   program: IProgram
   size: 'fullscreen' | 'regular'
-  lastCoords: { left: number, top: number }
+  lastCoords: TCoords
   minimized: boolean
 }
 
@@ -31,3 +34,5 @@ export interface IContextMenuItem {
   showed?: boolean
   action?: () => void
 }
+
+export type TCoordinates = 'north' | 'south' | 'west' | 'east' | 'north-west' | 'north-east' | 'south-west' | 'south-east'

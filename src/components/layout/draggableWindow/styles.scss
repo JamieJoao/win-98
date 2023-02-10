@@ -14,6 +14,13 @@
     left: 0;
     width: 100%;
     height: calc(100% - $taskbar-height);
+
+    .w98-float-window {
+      &__wrapper {
+        box-shadow: none;
+        padding: 0;
+      }
+    }
   }
 
   &.--minimized {
