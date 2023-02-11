@@ -1,0 +1,38 @@
+[
+  {
+    "uid": "program-my-pc",
+    "name": "My Pc",
+    "image": 0,
+    "componentName": "MyPc"
+  },
+  {
+    "uid": "program-my-documents",
+    "name": "My Documents",
+    "image": 1,
+    "componentName": "MyDocuments"
+  },
+  {
+    "uid": "program-internet-explorer",
+    "name": "Internet Explorer",
+    "image": 2,
+    "componentName": "InternetExplorer"
+  },
+  {
+    "uid": "program-recycle-bin",
+    "name": "Recycle Bin",
+    "image": 3,
+    "componentName": "RecycleBin"
+  },
+  {
+    "uid": "program-file-explorer",
+    "name": "File Explorer",
+    "image": 4,
+    "componentName": "FileExplorer"
+  },
+  {
+    "uid": "program-notepad",
+    "name": "Notepad",
+    "image": 5,
+    "componentName": "Notepad"
+  }
+]

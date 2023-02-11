@@ -1,0 +1,1 @@
+export { getFileFromPath } from './functions'

@@ -7,8 +7,7 @@ import {
 } from 'react-router-dom'
 
 import {
-  Home,
-  Desktop,
+  System,
 } from '../pages'
 
 export const MainRoute = () => {
@@ -16,8 +15,8 @@ export const MainRoute = () => {
   return (
     <Router basename='/win-98'>
       <Routes>
-        <Route path='/' element={<Desktop />} />
-        {/* <Route path='/' element={<Home />} /> */}
+        {/* <Route path='/' element={<Desktop />} /> */}
+        <Route path='/' element={<System />} />
       </Routes>
     </Router>
   )

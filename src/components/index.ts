@@ -18,3 +18,7 @@ export {
   HeaderWindow,
   ButtonControlWindow,
 } from './layout'
+
+export {
+  Desktop,
+} from './templates'

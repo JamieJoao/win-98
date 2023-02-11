@@ -1,3 +1,4 @@
+import { IFile, IHardDisk } from 'models/types'
 import { TCoords } from 'types'
 
 export const getKeys = <T extends object>(obj: T): (keyof T)[] => {
@@ -18,11 +19,23 @@ export const getPositionsElement = (element: HTMLElement | null): { left: number
 
 export const removeStyles = (stylesList: (keyof TCoords)[], customElement?: HTMLElement | null) => {
   if (!customElement) return
-  
+
   stylesList
     .forEach(key => {
       customElement.style[key] = ''
     })
+}
 
-  console.log(customElement.style)
+const splitPath = (path: string): string[] => {
+  return path.split(/\\/g)
+}
+
+export const getFileFromPath = (path: string, storage: any) => {
+  const pathParts = splitPath(path)
+
+  const recursiveSearch = (file: IHardDisk | IFile) => {
+    console.log(file)
+  }
+
+  recursiveSearch(storage)
 }

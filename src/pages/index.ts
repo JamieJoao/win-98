@@ -1,7 +1,5 @@
-import { Home } from './Home/Home'
-import { Desktop } from './Desktop/Desktop'
+import { System } from './system/System'
 
 export {
-  Home,
-  Desktop,
+  System,
 }
