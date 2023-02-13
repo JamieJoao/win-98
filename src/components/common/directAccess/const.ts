@@ -1,5 +1,7 @@
 import { IContextMenuItem } from 'types/interfaces'
+import { programsInstalledModel } from 'models'
 
+/*
 export const directAccessContextMenu: IContextMenuItem[] = [
   {
     id: 1,
@@ -26,3 +28,8 @@ export const directAccessContextMenu: IContextMenuItem[] = [
     underlineLetter: 'P',
   },
 ]
+*/
+
+export const getProgramForUID = (programUID: string) => {
+  return programsInstalledModel.find(obj => obj.uid === programUID)
+}

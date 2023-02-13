@@ -16,6 +16,7 @@ const initialState: IState = {
     items: [],
   },
   outOfFocus: false,
+  hardDisk: []
 }
 
 const slice = createSlice({

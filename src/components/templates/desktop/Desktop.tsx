@@ -1,12 +1,9 @@
 import { useDesktop } from './hooks/useDesktop'
+import { IFile } from 'types/interfaces'
 
 import './Desktop.styles.scss'
 
-const PATH = 'Cx\\Windows\\Desktop'
-
 export const Desktop = () => {
-  console.log(localStorage.getItem('hard-disk'))
-
   return (
     <div className="w98-desktop">
       

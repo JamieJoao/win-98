@@ -16,23 +16,25 @@
         "createdAt": "10/03/2023 05:00",
         "files": [
           {
-            "name": "Accesories",
+            "name": "Notepad",
             "size": 0,
-            "createdAt": "10/03/2023 05:00",
-            "files": []
-          },
-          {
-            "name": "Internet Explorer",
-            "size": 0,
-            "createdAt": "10/03/2023 05:00",
-            "files": []
-          },
-          {
-            "name": "Desktop",
-            "size": 5,
-            "extension": "ini",
-            "createdAt": "10/03/2023 05:00",
-            "data": "Content of Desktop"
+            "createdAt":"10/03/2023 05:00",
+            "files": [
+              {
+                "name": "config",
+                "size": 0,
+                "createdAt":"10/03/2023 05:00",
+                "extension": "ini",
+                "data": ["txt", "ini"]
+              },
+              {
+                "name": "Notepad",
+                "size": 0,
+                "createdAt":"10/03/2023 05:00",
+                "extension": "exe",
+                "data": "src/assets/icons/notepad-5.png"
+              }
+            ]
           }
         ]
       },
@@ -42,44 +44,34 @@
         "createdAt": "10/03/2023 05:00",
         "files": [
           {
+            "name": "System32",
+            "size": 0,
+            "createdAt": "10/03/2023 05:00",
+            "files": []
+          },
+          {
             "name": "Desktop",
             "size": 0,
             "createdAt": "10/03/2023 05:00",
             "readOnly": true,
             "files": [
               {
-                "name": "Online Services",
+                "name": "Notepad",
                 "size": 0,
-                "createdAt": "10/03/2023 05:00",
-                "files": []
-              },
-              {
-                "name": "Sheep",
-                "size": 12,
-                "extension": "exe",
-                "createdAt": "10/03/2023 05:00",
-                "data": null
-              },
-              {
-                "name": "My Pc",
-                "programUID": "program-my-pc"
-              },
-              {
-                "name": "My Documents",
-                "programUID": "program-my-documents"
-              },
-              {
-                "name": "Internet Explorer",
-                "programUID": "program-internet-explorer"
-              },
-              {
-                "name": "Recycle Bin",
-                "programUID": "program-recycle-bin"
+                "createdAt":"10/03/2023 05:00",
+                "extension": "lnk",
+                "data": "C\\Program Files\\Notepad\\Notepad.exe"
               }
             ]
           }
         ]
       }
     ]
+  },
+  {
+    "name": "D",
+    "totalCapacity": 256,
+    "remainingCapacity": 50,
+    "files": []
   }
 ]

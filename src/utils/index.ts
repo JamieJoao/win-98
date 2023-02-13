@@ -1,1 +1,2 @@
-export { getFileFromPath } from './functions'
+export { getFromPath } from './functions'
+export { parseHardDiskModel } from './transform'

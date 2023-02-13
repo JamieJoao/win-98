@@ -1,34 +1,24 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect } from 'react'
 
-import { useLocalStorage } from 'hooks'
+import { DiskModel } from 'types'
 import { hardDiskModel } from 'models'
-import { getFileFromPath } from 'utils'
+import { useLocalStorage } from 'hooks'
+import { parseHardDiskModel } from 'utils'
 import { KEY_HARD_DISK } from 'utils/const'
-
-const PATH = 'C\\Windows\\Desktop'
+import { useAppDispatch } from 'redux-tk/store'
+import { setKeyValue } from 'redux-tk/slice'
 
 export const useSystem = () => {
-  const { storage, setValue } = useLocalStorage(KEY_HARD_DISK, hardDiskModel)
+  const { storage } = useLocalStorage(KEY_HARD_DISK, hardDiskModel)
+  const dispatch = useAppDispatch()
 
   /**
-   * 1. ARRANCAMOS EL SISTEMA [SE MONTA EL COMPONENT SYSTEM]
-   * 2. CARGAMOS EL DISCO DURO [EJECUTAMOS SETVALUE]
-   * 3. TRAEMOS EL DESKTOP
-   * 4. CARGAMOS EL DEKSTOP
-   * 
-   * EN CASO DE HABER ALGÚN ERROR EN LA LECTURA O ESCRITURA DEL DISCO DURO
-   * 1. MOSTRAMOS PANTALLA AZUL
+   * 1. LUEGO DE ENCENDER LA PC
+   * 2. CARGO EL DISCO DURO EN EL REDUX
+   * 3. PROCEDO A MOSTRAR EL DESKTOP
    */
-
-  const desktopFolder = useMemo(() => {
-    getFileFromPath(PATH, storage)
-  }, [storage])
-
   useEffect(() => {
-    setValue(hardDiskModel)
+    const disk = parseHardDiskModel<DiskModel>(storage)
+    dispatch(setKeyValue({ key: 'hardDisk', value: disk }))
   }, [])
-
-  return {
-    desktopFolder,
-  }
 }

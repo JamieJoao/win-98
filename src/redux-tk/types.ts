@@ -2,6 +2,7 @@ import { Action, ThunkAction } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook } from 'react-redux'
 
 import { IProgram, IWindow, ITaskBarButton, IContextMenuItem } from 'types'
+import { DiskModel } from 'types/interfaces'
 import store from './store'
 
 export interface IState {
@@ -10,6 +11,7 @@ export interface IState {
   taskBarButtonsStack: ITaskBarButton[]
   contextMenu: IContextMenuStore
   outOfFocus: boolean
+  hardDisk: DiskModel[]
 }
 
 export interface IContextMenuStore {
@@ -23,6 +25,7 @@ export type TAction =
   | { key: 'taskBarButtonsStack', value: ITaskBarButton[] }
   | { key: 'contextMenu', value: IContextMenuStore }
   | { key: 'outOfFocus', value: boolean }
+  | { key: 'hardDisk', value: DiskModel[] }
 
 export type TDispatch = () => typeof store.dispatch
 export type TSelector = TypedUseSelectorHook<ReturnType<typeof store.getState>>

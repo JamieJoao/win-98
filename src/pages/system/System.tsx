@@ -1,16 +1,14 @@
-import { useEffect } from 'react'
-
 import { Desktop, Screen } from 'components'
-
-import './System.styles.scss'
 import { useSystem } from './hooks/useSystem'
 
+import './System.styles.scss'
+
 export const System = () => {
-  const { } = useSystem()
+  useSystem()
 
   return (
     <Screen>
-      {/* <Desktop /> */}
+      <Desktop />
     </Screen>
   )
 }
