@@ -1,11 +1,18 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
 
-import { IProgram, ITaskBarButton, IWindow } from 'types'
+import { FileModel, FolderModel, ITaskBarButton, Window } from 'types'
 import { IContextMenuStore, IState, TAction, TReturnThunk } from './types'
 import { transformImageKeys } from 'utils/transform'
 
 import DirectsAccess from 'models/directsAccess.json'
+
+type AnyFileModel = FileModel | FolderModel
+interface ChangePositonPayload {
+  uid: string,
+  destIndex: number,
+  additional?: { [key in keyof Window]?: any }
+}
 
 const initialState: IState = {
   directsAccess: transformImageKeys(DirectsAccess),
@@ -15,7 +22,6 @@ const initialState: IState = {
     position: { left: 0, top: 0, offsetX: 0, offsetY: 0 },
     items: [],
   },
-  outOfFocus: false,
   hardDisk: []
 }
 
@@ -28,17 +34,18 @@ const slice = createSlice({
 
       return { ...state, [payload.key]: payload.value }
     },
-    createWindow(state, action: PayloadAction<IProgram>) {
-      const newWindow: IWindow = {
+    createWindow(state, action: PayloadAction<AnyFileModel>) {
+      const newWindow: Window = {
         uid: uuidv4(),
-        program: action.payload,
+        file: action.payload,
         size: 'regular',
         lastCoords: {},
         minimized: false,
+        focused: true,
       }
-      const newWindowsStack: IWindow[] = [
+      const newWindowsStack: Window[] = [
         newWindow,
-        ...state.windowsStack,
+        ...state.windowsStack.map(obj => ({ ...obj, focused: false })),
       ]
       const newTaskBarButtonsStack: ITaskBarButton[] = [
         ...state.taskBarButtonsStack,
@@ -48,7 +55,7 @@ const slice = createSlice({
         },
       ]
 
-      return { ...state, outOfFocus: false, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
+      return { ...state, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
     },
     deleteWindow(state, action: PayloadAction<string>) {
       const newWindowsStack = state.windowsStack.filter(obj => obj.uid !== action.payload)
@@ -56,26 +63,29 @@ const slice = createSlice({
 
       return { ...state, windowsStack: newWindowsStack, taskBarButtonsStack: newTaskBarButtonsStack }
     },
-    updateWindow(state, action: PayloadAction<IWindow>) {
+    updateWindow(state, action: PayloadAction<{ [key in keyof Window]?: any }>) {
       const newWindowsStack = state.windowsStack.map(obj => {
         if (obj.uid !== action.payload.uid) return obj
 
-        return action.payload
+        return {
+          ...obj,
+          ...action.payload
+        }
       })
 
-      return { ...state, outOfFocus: false, windowsStack: newWindowsStack }
+      return { ...state, windowsStack: newWindowsStack }
     },
-    changePositionWindow(state, action: PayloadAction<{ uid: string, destIndex: number }>) {
-      const cloneWindowsStack = [...state.windowsStack]
-        , { uid, destIndex } = action.payload
+    changePositionWindow(state, action: PayloadAction<ChangePositonPayload>) {
+      const { uid, destIndex, additional } = action.payload
+        , cloneWindowsStack = state.windowsStack.map(obj => ({ ...obj, focused: false }))
         , windowsIndex = cloneWindowsStack.findIndex(obj => obj.uid === uid)
         , windowRemoved = cloneWindowsStack.splice(windowsIndex, 1)
 
-      cloneWindowsStack.splice(destIndex, 0, windowRemoved[0])
+      cloneWindowsStack.splice(destIndex, 0, { ...windowRemoved[0], ...additional })
 
-      return { ...state, outOfFocus: false, windowsStack: cloneWindowsStack }
+      return { ...state, windowsStack: cloneWindowsStack }
     },
-    reorderTaskBarsStack(state, action: PayloadAction<IWindow>) {
+    reorderTaskBarsStack(state, action: PayloadAction<Window>) {
 
     },
     closeContextMenu(state) {
@@ -100,11 +110,33 @@ export const {
   closeContextMenu,
 } = slice.actions
 
-export const minimizeWindow = (window: IWindow): TReturnThunk => (dispatch: any, getState) => {
+/**
+ * ACCIONES PRECONFIGURADAS
+ */
+export const minimizeWindow = (uid: string): TReturnThunk => (dispatch: any, getState) => {
   const state = getState()
 
-  dispatch(updateWindow({ ...window, minimized: true }))
-  dispatch(changePositionWindow({ uid: window.uid, destIndex: state.windowsStack.length - 1 }))
+  dispatch(updateWindow({ minimized: true }))
+  dispatch(changePositionWindow({ uid: uid, destIndex: state.windowsStack.length - 1 }))
+}
+
+export const removeWindowFocus = (): TReturnThunk => (dispatch: any, getState) => {
+  const { windowsStack } = getState()
+
+  if (Boolean(windowsStack.length)) {
+    dispatch(updateWindow({
+      uid: windowsStack[0].uid,
+      focused: false,
+    }))
+  }
+}
+
+export const putFocusOnWindow = (uid: string): TReturnThunk => (dispatch: any, getState) => {
+  dispatch(changePositionWindow({
+    uid,
+    destIndex: 0,
+    additional: { focused: true }
+  }))
 }
 
 export const openContextMenu = createAsyncThunk(

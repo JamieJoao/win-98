@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import cn from 'classnames'
 
 import { useDragDrop, useResize } from 'hooks'
-import { TCoordinates, TCoords } from 'types'
+import { TCoordinates, CommonStyles } from 'types'
 
 import './WindowAnchors.styles.scss'
 
@@ -14,7 +14,7 @@ interface ISingleAnchorProps {
 }
 
 interface IProps {
-  onResizeEnd: (coords: TCoords) => void
+  onResizeEnd: (coords: CommonStyles) => void
 }
 
 export const WindowAnchors = (props: IProps) => {

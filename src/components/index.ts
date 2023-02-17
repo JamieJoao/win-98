@@ -14,9 +14,11 @@ export {
 
 export {
   Screen,
-  DraggableWindow,
   HeaderWindow,
   ButtonControlWindow,
+  Program,
+  Header,
+  ButtonControl,
 } from './layout'
 
 export {

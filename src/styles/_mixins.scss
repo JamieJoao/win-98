@@ -1,4 +1,7 @@
 @mixin box-shadow-normal($invert: false) {
+  /*
+  VER SI SE USA EL INVERTIDO
+  */
   @if $invert {
     box-shadow:
       inset -1px -1px #fff,
@@ -9,10 +12,10 @@
 
   @else {
     box-shadow:
-      inset -1px -1px #0a0a0a,
-      inset 1px 1px #fff,
-      inset -2px -2px grey,
-      inset 2px 2px #dfdfdf;
+      inset -1px -1px $black,
+      inset 1px 1px $gray-main,
+      inset -2px -2px $gray-secondary,
+      inset 2px 2px $white;
   }
 }
 

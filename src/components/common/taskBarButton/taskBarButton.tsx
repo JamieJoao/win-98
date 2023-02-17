@@ -11,10 +11,10 @@ interface IProps {
 }
 
 export const TaskBarButton = (props: IProps) => {
-  const { data: { window: { uid, program: { iconUrl, miniIconUrl, name } } }, width, onClick } = props
+  const { data: { window: { uid, file: { icon, name } } }, width, onClick } = props
 
   const dispatch = useAppDispatch()
-  const { windowsStack, outOfFocus } = useAppSelector(state => state)
+  const { windowsStack } = useAppSelector(state => state)
 
   const windowAbove = windowsStack[0]
   const linkedWindow = windowsStack.find(obj => obj.uid === uid)
@@ -29,14 +29,17 @@ export const TaskBarButton = (props: IProps) => {
           ? windowsStack.length - 1
           : 0
       }))
-      dispatch(updateWindow({ ...linkedWindow, minimized: active }))
+      dispatch(updateWindow({
+        uid,
+        minimized: active,
+      }))
     }
   }
 
   return (
     <TaskBarButtonBase
       className={`${active && '--active'}`}
-      iconUrl={miniIconUrl ?? iconUrl}
+      iconUrl={icon}
       label={name}
       style={{ width }}
       onClick={handleClick} />

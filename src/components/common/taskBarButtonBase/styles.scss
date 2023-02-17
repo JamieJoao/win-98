@@ -4,6 +4,7 @@
   background-color: $gray-1;
   grid-row: 1;
   user-select: none;
+  outline: none;
 
   @include box-shadow-simple;
 

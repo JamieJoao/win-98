@@ -2,11 +2,10 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: $black;
+  background-color: #111111;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $black;
   // background: #283048;
   // background: -webkit-linear-gradient(to right, #859398, #283048);
   // background: linear-gradient(to right, #859398, #283048);
@@ -20,6 +19,8 @@
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+    // border: 1px solid #555555;
 
     @include media-tablet {
       width: 640px;

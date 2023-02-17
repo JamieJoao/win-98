@@ -15,6 +15,7 @@ interface FileBase {
   size: number
   createdAt: string
   path: string
+  icon?: string
 }
 
 interface Folder {
@@ -36,11 +37,16 @@ export type FileModel = FileBase & File
 
 /** END MODELS */
 
-export interface IDirectAccess {
-  name: string
-  programLink?: IFileProgram
-  file?: IFile
+export interface CommonStyles {
+  left?: string | number
+  top?: string | number
+  width?: string | number
+  height?: string | number
+  display?: 'block' | 'none'
+  zIndex?: number
 }
+
+export type AccessLink = { position: CommonStyles } & (FileModel | FolderModel)
 
 export interface IFileProgram {
   programUID: string
@@ -69,17 +75,22 @@ export interface IProgram {
   template: string
 }
 
-export interface IWindow {
+/**
+ * FOCUSED ES NECESARIA POR SI SE HACE CLICK FUERA DE LA VENTANA
+ * TODOS LOS FOCUSED SON FALSES
+ */
+export interface Window {
   uid: string
-  program: IProgram
+  file: FileModel | FolderModel
   size: 'fullscreen' | 'regular'
   lastCoords: TCoords
   minimized: boolean
+  focused?: boolean
 }
 
 export interface ITaskBarButton {
   uid: string
-  window: IWindow
+  window: Window
 }
 
 export interface IContextMenuItem {

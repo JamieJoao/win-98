@@ -18,6 +18,8 @@ export const useSystem = () => {
    * 3. PROCEDO A MOSTRAR EL DESKTOP
    */
   useEffect(() => {
+    localStorage.clear()
+
     const disk = parseHardDiskModel<DiskModel>(storage)
     dispatch(setKeyValue({ key: 'hardDisk', value: disk }))
   }, [])

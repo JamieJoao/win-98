@@ -1,0 +1,44 @@
+.w98-program {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px;
+  background-color: $gray-main;
+  outline: none;
+
+  @include box-shadow-normal;
+
+  &__content {
+    padding: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &.--minimized {
+    display: none;
+  }
+
+  &.--regular {
+    width: 200px;
+    height: 200px;
+  }
+
+  &.--fullscreen {
+    box-shadow: none;
+    padding: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - $taskbar-height);
+
+    .w98-program {
+      &__content {
+        padding: 0;
+      }
+    }
+  }
+
+  // &:focus {
+  //   border: 1px solid red;
+  // }
+}

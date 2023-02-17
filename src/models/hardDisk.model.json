@@ -29,10 +29,11 @@
               },
               {
                 "name": "Notepad",
+                "icon": "src/assets/icons/notepad-5.png",
                 "size": 0,
                 "createdAt":"10/03/2023 05:00",
                 "extension": "exe",
-                "data": "src/assets/icons/notepad-5.png"
+                "data": "NotepadTemplate"
               }
             ]
           }
@@ -57,6 +58,7 @@
             "files": [
               {
                 "name": "Notepad",
+                "icon": "src/assets/icons/notepad-5.png",
                 "size": 0,
                 "createdAt":"10/03/2023 05:00",
                 "extension": "lnk",

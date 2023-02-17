@@ -9,8 +9,14 @@ $shadow-sides-width: 4px;
 
   span {
     position: absolute;
-    backdrop-filter: invert(100%);
     background-image: url('/src/assets/icons/pattern-square-dark.png');
+
+    @include media-desktop {
+      background-image: none;
+      backdrop-filter: invert(100%) contrast(300%);
+      -webkit-mask-image: url('/src/assets/icons/pattern-square-dark.png');
+      mask-image: url('/src/assets/icons/pattern-square-dark.png');
+    }
 
     &:nth-child(1) {
       width: calc(100% - $shadow-sides-width);

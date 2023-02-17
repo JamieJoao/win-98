@@ -1,5 +1,5 @@
 export {
-  IWindow,
+  Window,
   IProgram,
   ITaskBarButton,
   IContextMenuItem,
@@ -8,6 +8,8 @@ export {
   FolderModel,
   FileModel,
   DiskModel,
+  AccessLink,
+  CommonStyles,
 } from './interfaces'
 
 export { TCoords } from './types'

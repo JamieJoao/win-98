@@ -82,7 +82,7 @@ export const useDragDrop = (props: IProps) => {
 
     screenDOM?.removeEventListener(methodMove, handleMove)
 
-    if (onDragEnd) onDragEnd(currentLeft, currentTop, startLeft, startTop)
+    if (onDragEnd && draggingRef.current) onDragEnd(currentLeft, currentTop, startLeft, startTop)
     draggingRef.current = false
   }
 

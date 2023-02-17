@@ -1,22 +1,29 @@
-import { IFileProgram } from 'types/interfaces'
+import { AccessLink } from 'types/interfaces'
 
-import './styles.scss'
+import './DirectAccess.styles.scss'
+import { useDirectAccess } from './useDirectAccess'
 
 interface IProps {
-  data: IFileProgram
-  onDoubleClick?: () => void
+  file: AccessLink
 }
 
 export const DirectAccess = (props: IProps) => {
-  const { data, onDoubleClick } = props
+  const { file } = props
+  const { name, icon, position } = file
+
+  const { startRef, coords, handleDoubleClick } = useDirectAccess(file, position)
 
   return (
-    <div
+    <section
+      tabIndex={0}
       className="w98-direct-access"
-      onDoubleClick={onDoubleClick}>
-      {/* <img src={url} draggable={false} /> */}
-
-      {/* <span>{name}</span> */}
-    </div>
+      onDoubleClick={handleDoubleClick}
+      ref={startRef}
+      style={coords}>
+      <div className='w98-direct-access__icon'>
+        <img src={icon} draggable={false} />
+      </div>
+      <p className='w98-direct-access__name'>{name}</p>
+    </section>
   )
 }

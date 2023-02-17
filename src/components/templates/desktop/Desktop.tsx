@@ -1,12 +1,37 @@
+import { DirectAccess, Program, FakeWindow, TaskBar } from 'components'
 import { useDesktop } from './hooks/useDesktop'
-import { IFile } from 'types/interfaces'
 
 import './Desktop.styles.scss'
+import { useAppSelector } from 'redux-tk/store'
+import { useEffect } from 'react'
 
 export const Desktop = () => {
+  const {
+    desktopLinks
+    , windowsList
+    , handleMouseDown } = useDesktop()
+
+  if (!desktopLinks) {
+    return <h1 style={{ color: '#fff' }}>Error</h1>
+  }
+
   return (
-    <div className="w98-desktop">
-      
+    <div className="w98-desktop" onMouseDown={handleMouseDown}>
+      <div className="w98-desktop__links-group">
+        {desktopLinks.map((obj, index) => (
+          <DirectAccess
+            key={index}
+            file={obj} />
+        ))}
+      </div>
+
+      <div className="w98-desktop__windows">
+        {windowsList.map(obj => <Program {...obj} />)}
+      </div>
+
+      <FakeWindow />
+
+      <TaskBar />
     </div>
   )
 }
