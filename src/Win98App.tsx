@@ -1,10 +1,10 @@
-import MainRoute from './routes'
+import { System } from 'views'
 
 import 'styles/global.scss'
 
 function App() {
   return (
-    <MainRoute />
+    <System />
   )
 }
 

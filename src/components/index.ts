@@ -14,8 +14,6 @@ export {
 
 export {
   Screen,
-  HeaderWindow,
-  ButtonControlWindow,
   Program,
   Header,
   ButtonControl,

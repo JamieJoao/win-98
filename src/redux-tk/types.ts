@@ -6,7 +6,6 @@ import { DiskModel } from 'types/interfaces'
 import store from './store'
 
 export interface IState {
-  directsAccess: IProgram[]
   windowsStack: Window[]
   taskBarButtonsStack: ITaskBarButton[]
   contextMenu: IContextMenuStore
@@ -19,7 +18,6 @@ export interface IContextMenuStore {
 }
 
 export type TAction =
-  | { key: 'directsAccess', value: IProgram[] }
   | { key: 'windowsStack', value: Window[] }
   | { key: 'taskBarButtonsStack', value: ITaskBarButton[] }
   | { key: 'contextMenu', value: IContextMenuStore }

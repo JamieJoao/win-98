@@ -3,9 +3,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { FileModel, FolderModel, ITaskBarButton, Window } from 'types'
 import { IContextMenuStore, IState, TAction, TReturnThunk } from './types'
-import { transformImageKeys } from 'utils/transform'
-
-import DirectsAccess from 'models/directsAccess.json'
 
 type AnyFileModel = FileModel | FolderModel
 interface ChangePositonPayload {
@@ -15,7 +12,6 @@ interface ChangePositonPayload {
 }
 
 const initialState: IState = {
-  directsAccess: transformImageKeys(DirectsAccess),
   windowsStack: [],
   taskBarButtonsStack: [],
   contextMenu: {
