@@ -1,21 +1,13 @@
-import { useRef, useEffect } from 'react'
+import { RefObject } from 'react'
 
 import { TCoordinates, TCoords } from 'types'
 import { useFakeWindow } from './useFakeWindow'
 
-export const useResize = (onResizeEnd: (coords: TCoords) => void) => {
+export const useResize = (onResizeEnd: (coords: TCoords) => void, parentRef: RefObject<HTMLDivElement>) => {
   const { applyStyles } = useFakeWindow()
-  const parentRef = useRef<HTMLElement | null>(null)
-  const wrapperRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (wrapperRef.current) {
-      parentRef.current = wrapperRef.current.parentElement
-    }
-  }, [])
 
   const handleDrag = (coordinate: TCoordinates, left: number, top: number, end?: boolean) => {
-    if (!parentRef.current || !wrapperRef.current) return
+    if (!parentRef.current) return
     const { offsetLeft, offsetTop, clientWidth, clientHeight } = parentRef.current
 
     let auxCoords: TCoords = { width: clientWidth, height: clientHeight, left: offsetLeft, top: offsetTop }
@@ -73,7 +65,6 @@ export const useResize = (onResizeEnd: (coords: TCoords) => void) => {
   }
 
   return {
-    wrapperRef,
     handleDrag,
   }
 }

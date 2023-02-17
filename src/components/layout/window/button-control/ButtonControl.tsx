@@ -13,15 +13,11 @@ interface ButtonControlProps {
 export const ButtonControl = (props: ButtonControlProps) => {
   const { style, type, onClick } = props
 
-  const handleClick = (e: React.MouseEvent) => {
-    onClick()
-  }
-
   return (
     <button
       className={cn('w98-button-window', `--${type}`)}
       style={{ ...style }}
-      onClick={handleClick}
+      onClick={onClick}
       title={type} />
   )
 }

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, RefObject } from 'react'
 import cn from 'classnames'
 
 import { useDragDrop, useResize } from 'hooks'
@@ -13,20 +13,18 @@ interface ISingleAnchorProps {
   onDrag: THandleFunction
 }
 
-interface IProps {
+interface WindowAnchorsProps {
   onResizeEnd: (coords: CommonStyles) => void
+  parentRef: RefObject<HTMLDivElement>
 }
 
-export const WindowAnchors = (props: IProps) => {
-  const { onResizeEnd } = props
-  
-  const { wrapperRef, handleDrag } = useResize(onResizeEnd)
+export const WindowAnchors = (props: WindowAnchorsProps) => {
+  const { onResizeEnd, parentRef } = props
+
+  const { handleDrag } = useResize(onResizeEnd, parentRef)
 
   return (
-    <div
-      className="w98-window-anchor__wrapper"
-      draggable={false}
-      ref={wrapperRef}>
+    <>
       <SingleAnchor coordinate='north' onDrag={handleDrag} />
       <SingleAnchor coordinate='south' onDrag={handleDrag} />
       <SingleAnchor coordinate='west' onDrag={handleDrag} />
@@ -36,7 +34,7 @@ export const WindowAnchors = (props: IProps) => {
       <SingleAnchor coordinate='north-east' onDrag={handleDrag} />
       <SingleAnchor coordinate='south-west' onDrag={handleDrag} />
       <SingleAnchor coordinate='south-east' onDrag={handleDrag} />
-    </div>
+    </>
   )
 }
 

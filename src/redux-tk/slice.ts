@@ -109,30 +109,39 @@ export const {
 /**
  * ACCIONES PRECONFIGURADAS
  */
-export const minimizeWindow = (uid: string): TReturnThunk => (dispatch: any, getState) => {
-  const state = getState()
 
-  dispatch(updateWindow({ minimized: true }))
-  dispatch(changePositionWindow({ uid: uid, destIndex: state.windowsStack.length - 1 }))
-}
-
-export const removeWindowFocus = (): TReturnThunk => (dispatch: any, getState) => {
-  const { windowsStack } = getState()
-
-  if (Boolean(windowsStack.length)) {
-    dispatch(updateWindow({
-      uid: windowsStack[0].uid,
-      focused: false,
-    }))
-  }
-}
-
-export const putFocusOnWindow = (uid: string): TReturnThunk => (dispatch: any, getState) => {
+export const putFocusOnWindow = (uid: string): TReturnThunk => (dispatch: any) => {
   dispatch(changePositionWindow({
     uid,
     destIndex: 0,
     additional: { focused: true }
   }))
+}
+
+export const manageWindow = (actionType: 'minimize' | 'close' | 'unfocused', uid?: string): TReturnThunk => (dispatch: any, getState) => {
+  const { windowsStack } = getState()
+    , [windowTop, windowBelow] = windowsStack
+
+  switch (actionType) {
+    case 'minimize':
+      if (uid) dispatch(updateWindow({ uid, minimized: true }))
+      break
+    case 'close':
+      if (uid) dispatch(deleteWindow(uid))
+      break
+    case 'unfocused':
+      if (windowTop) {
+        dispatch(updateWindow({
+          uid: windowTop.uid,
+          focused: false,
+        }))
+      }
+      break
+  }
+  
+  if (windowBelow && actionType !== 'unfocused') {
+    dispatch(putFocusOnWindow(windowBelow.uid))
+  }
 }
 
 export const openContextMenu = createAsyncThunk(

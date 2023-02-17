@@ -45,7 +45,13 @@ export const Program = (props: ProgramProps): JSX.Element => {
           ref={headerRef} />
       </div>
 
-      {/* {size === 'regular' && <WindowAnchors onResizeEnd={handleResized} />} */}
+      <button>ABC</button>
+
+      {size === 'regular' && (
+        <WindowAnchors
+          parentRef={windowRef}
+          onResizeEnd={handleResized} />
+      )}
     </div>
   )
 }

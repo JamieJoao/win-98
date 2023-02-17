@@ -27,11 +27,11 @@ export const TaskBarButton = (props: IProps) => {
         uid: linkedWindow.uid,
         destIndex: active
           ? windowsStack.length - 1
-          : 0
-      }))
-      dispatch(updateWindow({
-        uid,
-        minimized: active,
+          : 0,
+        additional: {
+          focused: true,
+          minimized: active,
+        }
       }))
     }
   }

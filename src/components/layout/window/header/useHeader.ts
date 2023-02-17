@@ -1,11 +1,11 @@
-import { minimizeWindow, updateWindow, deleteWindow } from "redux-tk/slice"
+import { updateWindow, manageWindow } from "redux-tk/slice"
 import { useAppDispatch } from "redux-tk/store"
 
 export const useHeader = (size: 'fullscreen' | 'regular', uid: string) => {
   const dispatch = useAppDispatch()
 
   const handleClose = () => {
-    dispatch(deleteWindow(uid))
+    dispatch(manageWindow('close', uid))
   }
 
   const handleToggleMaximize = () => {
@@ -17,8 +17,7 @@ export const useHeader = (size: 'fullscreen' | 'regular', uid: string) => {
   }
 
   const handleMinimize = () => {
-    console.log('[minimize]')
-    // dispatch(minimizeWindow(uid))
+    dispatch(manageWindow('minimize', uid))
   }
 
   return {

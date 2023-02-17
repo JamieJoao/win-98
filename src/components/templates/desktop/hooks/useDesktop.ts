@@ -1,10 +1,10 @@
-import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
+import { useLayoutEffect, useMemo, useRef } from 'react'
 
 import { AccessLink, Window } from 'types'
 import { useFileExplorer } from 'hooks'
 import { isFolder, SCREEN_CLASS, WINDOW_CLASS } from 'utils'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
-import { removeWindowFocus } from 'redux-tk/slice'
+import { manageWindow } from 'redux-tk/slice'
 
 const DESKTOP_PATH = 'C\\Windows\\Desktop'
   , SIZE_BOX = 70
@@ -74,7 +74,7 @@ export const useDesktop = () => {
       topWindow &&
       topWindow.focused &&
       !e.target.closest(WINDOW_CLASS)) {
-      dispatch(removeWindowFocus())
+      dispatch(manageWindow('unfocused'))
     }
   }
 

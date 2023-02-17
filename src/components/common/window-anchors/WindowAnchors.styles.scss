@@ -15,6 +15,13 @@ $anchor-size: 4px;
   }
 
   &.--north,
+  &.--south,
+  &.--east,
+  &.--west {
+    // background-color: rgba(255, 0, 0);
+  }
+
+  &.--north,
   &.--south {
     width: 100%;
     height: $anchor-size;
@@ -56,29 +63,30 @@ $anchor-size: 4px;
   &.--south-east {
     width: $anchor-size;
     height: $anchor-size;
+    // background-color: green;
   }
 
   &.--north-west {
     top: 0;
-    left: 0;
+    left: -$anchor-size;
     cursor: nw-resize;
   }
 
   &.--north-east {
     top: 0;
-    right: 0;
+    right: -$anchor-size;
     cursor: ne-resize;
   }
 
   &.--south-west {
-    bottom: 0;
-    left: 0;
+    bottom: -$anchor-size;
+    left: -$anchor-size;
     cursor: sw-resize;
   }
 
   &.--south-east {
-    bottom: 0;
-    right: 0;
+    bottom: -$anchor-size;
+    right: -$anchor-size;
     cursor: se-resize;
   }
 }
