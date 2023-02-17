@@ -18,22 +18,25 @@
           {
             "name": "Notepad",
             "size": 0,
-            "createdAt":"10/03/2023 05:00",
+            "createdAt": "10/03/2023 05:00",
             "files": [
               {
                 "name": "config",
                 "size": 0,
-                "createdAt":"10/03/2023 05:00",
+                "createdAt": "10/03/2023 05:00",
                 "extension": "ini",
-                "data": ["txt", "ini"]
+                "data": [
+                  "txt",
+                  "ini"
+                ]
               },
               {
                 "name": "Notepad",
-                "icon": "src/assets/icons/notepad-5.png",
+                "icon": "/src/assets/icons/notepad-5.png",
                 "size": 0,
-                "createdAt":"10/03/2023 05:00",
+                "createdAt": "10/03/2023 05:00",
                 "extension": "exe",
-                "data": "NotepadTemplate"
+                "data": "notepad"
               }
             ]
           }
@@ -48,7 +51,30 @@
             "name": "System32",
             "size": 0,
             "createdAt": "10/03/2023 05:00",
-            "files": []
+            "files": [
+              {
+                "name": "File Explorer",
+                "size": 0,
+                "createdAt": "10/03/2023 05:00",
+                "files": [
+                  {
+                    "name": "config",
+                    "size": 0,
+                    "createdAt": "10/03/2023 05:00",
+                    "extension": "ini",
+                    "data": []
+                  },
+                  {
+                    "name": "File Explorer",
+                    "icon": "/src/assets/icons/directory_explorer-5.png",
+                    "size": 0,
+                    "createdAt": "10/03/2023 05:00",
+                    "extension": "exe",
+                    "data": "file-explorer"
+                  }
+                ]
+              }
+            ]
           },
           {
             "name": "Desktop",
@@ -60,9 +86,17 @@
                 "name": "Notepad",
                 "icon": "src/assets/icons/notepad-5.png",
                 "size": 0,
-                "createdAt":"10/03/2023 05:00",
+                "createdAt": "10/03/2023 05:00",
                 "extension": "lnk",
                 "data": "C\\Program Files\\Notepad\\Notepad.exe"
+              },
+              {
+                "name": "File Explorer",
+                "icon": "/src/assets/icons/directory_explorer-5.png",
+                "size": 0,
+                "createdAt": "10/03/2023 05:00",
+                "extension": "lnk",
+                "data": "C\\Windows\\System32\\File Explorer\\File Explorer.exe"
               }
             ]
           }

@@ -1,4 +1,4 @@
-import { DiskModel, FileModel, FolderModel, IFile } from 'types/interfaces'
+import { DiskModel, FileModel, FolderModel } from 'types/interfaces'
 import { TCoords } from 'types'
 
 export const getKeys = <T extends object>(obj: T): (keyof T)[] => {

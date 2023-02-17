@@ -7,7 +7,7 @@
   "scripts": {
     "start": "vite --host",
     "build": "tsc && vite build",
-    "preview": "vite preview",
+    "preview": "vite build && vite preview",
     "predeploy": "vite build",
     "deploy": "gh-pages -d dist",
     "test": "vitest",

@@ -6,4 +6,5 @@ export {
   , PADDING_BOX
   , WINDOW_CLASS
   , SCREEN_CLASS
+  , KEY_HARD_DISK
 } from './const'

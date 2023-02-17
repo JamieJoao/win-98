@@ -21,4 +21,5 @@ export {
 
 export {
   Desktop,
+  NotepadTemplate,
 } from './templates'

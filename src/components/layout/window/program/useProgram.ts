@@ -1,15 +1,17 @@
 import { useRef, useState, useEffect, useMemo, useLayoutEffect } from 'react'
 
+import { isFolder } from 'utils'
 import { CommonStyles, Window } from 'types'
 import { useDragDrop, useFakeWindow } from 'hooks'
 import { useAppDispatch, useAppSelector } from 'redux-tk/store'
-import { changePositionWindow, putFocusOnWindow, updateWindow } from 'redux-tk/slice'
+import { putFocusOnWindow, updateWindow } from 'redux-tk/slice'
+import { templateMap } from 'models/maps'
 
 const PADDING_PROGRAM = 2
   , PADDING_CONTENT = 2
 
 export const useProgram = (window: Window, indexInStack: number) => {
-  const { size, lastCoords, uid, focused } = window
+  const { size, lastCoords, uid, focused, file } = window
 
   const dispatch = useAppDispatch()
   const { windowsStack } = useAppSelector(state => state)
@@ -40,6 +42,12 @@ export const useProgram = (window: Window, indexInStack: number) => {
       applyStyles({ ...coordinates, display: 'block' })
     }
   })
+
+  const ProgramTemplate = useMemo(() => {
+    return !isFolder(file)
+      ? templateMap[file.data]
+      : null
+  }, [file])
 
   useLayoutEffect(() => {
     if (windowRef.current) {
@@ -81,9 +89,6 @@ export const useProgram = (window: Window, indexInStack: number) => {
   }
 
   const handleResized = (coordinates: CommonStyles) => {
-    /**
-     * SAVE COORDINATES EN REDUX
-     */
     dispatch(updateWindow({
       uid,
       lastCoords: coordinates
@@ -101,6 +106,8 @@ export const useProgram = (window: Window, indexInStack: number) => {
     windowRef,
     stylesForWindow,
     focused,
+
+    ProgramTemplate,
 
     handleResized,
     handleMouseDown,

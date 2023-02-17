@@ -19,6 +19,7 @@ export const Program = (props: ProgramProps): JSX.Element => {
     stylesForWindow
     , headerRef
     , windowRef
+    , ProgramTemplate
     , handleResized
     , handleMouseDown
     , focused } = useProgram(window, indexInStack)
@@ -39,13 +40,13 @@ export const Program = (props: ProgramProps): JSX.Element => {
       <div className="w98-program__content">
         <Header
           icon={icon!}
-          title={`${name} - ${window.uid}`}
+          title={name}
           window={window}
           focused={focused!}
           ref={headerRef} />
-      </div>
 
-      <button>ABC</button>
+        {ProgramTemplate && <ProgramTemplate />}
+      </div>
 
       {size === 'regular' && (
         <WindowAnchors
