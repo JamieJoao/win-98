@@ -10,6 +10,7 @@ export {
   Separator,
   WindowAnchors,
   FakeWindow,
+  Cursor,
 } from './common'
 
 export {

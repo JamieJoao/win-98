@@ -1,0 +1,172 @@
+.w98-explorer {
+  &-header {
+    box-shadow:
+      inset -1px -1px $white,
+      inset -2px -2px $gray-secondary,
+      inset 1px 1px $gray-secondary,
+      inset 2px 2px $white;
+    padding: 2px;
+
+    .w98-list {
+      display: flex;
+      flex-direction: row;
+      padding: 2px;
+      overflow: hidden;
+
+      &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $gray-main;
+        height: 100%;
+        padding: 0 8px;
+        border: none;
+        outline: none;
+
+
+        &:hover,
+        &.--handler {
+          box-shadow:
+            inset -1px -1px $gray-secondary,
+            inset 1px 1px $white;
+        }
+
+        span {
+          display: block;
+          font-family: $windows;
+          font-size: 12px;
+          line-height: 9px;
+          color: $black;
+
+          &.--underline {
+            display: inline;
+            position: relative;
+
+            &::before {
+              content: '';
+              position: absolute;
+              bottom: -2px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 6px;
+              height: 1px;
+              background-color: $black;
+            }
+          }
+        }
+
+        &.--handler {
+          flex: none;
+          width: 3px;
+          margin-right: 4px;
+          padding: 1px;
+        }
+
+        &.--big {
+          flex-direction: column;
+          row-gap: 2px;
+
+          svg {
+            width: 20px;
+            height: 17px;
+          }
+        }
+
+        &.--separator {
+          width: 0;
+          padding: 0;
+          border-left: 1px solid $gray-secondary;
+          border-right: 1px solid $white;
+          margin: 2px;
+          height: calc(100% - 4px);
+        }
+      }
+    }
+  }
+
+  &-controls,
+  &-actions {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+
+    &__side-left {
+      flex: 1;
+    }
+
+    &__side-right {
+      &.w98-list {
+        padding: 0;
+      }
+
+      .w98-list {
+        &__item {
+          &-container {
+            padding-left: 4px;
+            height: 100%;
+            background-color: $gray-main;
+          }
+
+          &.--arrow {
+            flex: none;
+            width: 12px;
+            height: 100%;
+            padding: 0;
+
+            img {
+              align-self: flex-start;
+              margin-top: 5px;
+            }
+          }
+        }
+
+        &__icon {
+          width: 40px;
+          background-color: $black;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 1px;
+          box-shadow:
+            inset 1px 0 $gray-secondary,
+            inset 2px 0 $white;
+
+          img {
+            height: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  &-controls {
+    height: 22px;
+  }
+
+  &-separator {
+    height: 2px;
+    border-top: 1px solid $gray-secondary;
+    border-bottom: 1px solid $white;
+  }
+
+  &-actions {
+    height: 40px;
+
+    .w98-list {
+      padding: 0;
+      padding-left: 2px;
+
+      &__item {
+        &.--handler {
+          margin-top: 2px;
+          height: calc(100% - 4px);
+        }
+      }
+    }
+  }
+
+  &-address {
+    height: 22px;
+    padding: 2px;
+  }
+}

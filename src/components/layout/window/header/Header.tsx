@@ -30,7 +30,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>((props, ref) => {
       </div>
       <div className="w98-header__controls">
         <ButtonControl type='minimize' onClick={handleMinimize} />
-        <ButtonControl type='maximize' onClick={handleToggleMaximize} />
+        <ButtonControl type={size === 'fullscreen' ? 'restore' : 'maximize'} onClick={handleToggleMaximize} />
 
         <div className="w98-header__controls-separator" />
 
