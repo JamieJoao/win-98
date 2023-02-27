@@ -1,3 +1,16 @@
+$icons-list: (
+  'back',
+  'forward',
+  'up',
+  'cut',
+  'copy',
+  'paste',
+  'undo',
+  'delete',
+  'properties',
+  'views'
+);
+
 .w98-explorer {
   &-header {
     box-shadow:
@@ -7,37 +20,44 @@
       inset 2px 2px $white;
     padding: 2px;
 
-    .w98-list {
-      display: flex;
-      flex-direction: row;
-      padding: 2px;
-      overflow: hidden;
-
+    .w98-list,
+    .w98-list-dropdown {
       &__item {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: $gray-main;
-        height: 100%;
-        padding: 0 8px;
-        border: none;
-        outline: none;
 
+        &.--big,
+        &.--big-dropdown {
+          background-repeat: no-repeat;
+          background-size: 17px;
 
-        &:hover,
-        &.--handler {
-          box-shadow:
-            inset -1px -1px $gray-secondary,
-            inset 1px 1px $white;
+          &.--icon {
+            @each $icon-name in $icons-list {
+              &-#{$icon-name} {
+                background-image: url('/src/assets/icons/explorer/#{$icon-name}.png');
+
+                &:hover,
+                &:focus {
+                  background-image: url('/src/assets/icons/explorer/#{$icon-name}-color.png');
+                }
+              }
+            }
+          }
+        }
+
+        &.--big {
+          background-position: center 4px;
+
+          span {
+            position: relative;
+            bottom: -10px;
+          }
+        }
+
+        &.--big-dropdown,
+        &.--small-dropdown {
+          width: 100%;
         }
 
         span {
-          display: block;
-          font-family: $windows;
-          font-size: 12px;
-          line-height: 9px;
-          color: $black;
-
           &.--underline {
             display: inline;
             position: relative;
@@ -55,21 +75,59 @@
           }
         }
 
+        &.--small-dropdown {
+          display: flex;
+          flex-direction: row;
+
+          span::before {
+            bottom: 1px;
+          }
+        }
+      }
+    }
+
+    .w98-list {
+      display: flex;
+      flex-direction: row;
+      padding: 2px;
+      overflow: hidden;
+
+      &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $gray-main;
+        height: 100%;
+        padding: 0 8px;
+        border: none;
+        outline: none;
+
+        &:hover,
+        &.--handler {
+          box-shadow:
+            inset -1px -1px $gray-secondary,
+            inset 1px 1px $white;
+        }
+
+        &:focus {
+          box-shadow:
+            inset 1px 1px $gray-secondary,
+            inset -1px -1px $white;
+        }
+
+        span {
+          display: block;
+          font-family: $windows;
+          font-size: 12px;
+          line-height: 9px;
+          color: $black;
+        }
+
         &.--handler {
           flex: none;
           width: 3px;
           margin-right: 4px;
           padding: 1px;
-        }
-
-        &.--big {
-          flex-direction: column;
-          row-gap: 2px;
-
-          svg {
-            width: 20px;
-            height: 17px;
-          }
         }
 
         &.--separator {
@@ -79,6 +137,76 @@
           border-right: 1px solid $white;
           margin: 2px;
           height: calc(100% - 4px);
+        }
+      }
+
+      &-dropdown {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        z-index: 1;
+        padding: 3px;
+        background-color: $gray-main;
+
+        visibility: hidden;
+        transform: scale(0);
+        transform-origin: top left;
+        transition: all .1s;
+
+        @include box-shadow-normal;
+
+        &.--open {
+          visibility: visible;
+          transform: scale(1);
+        }
+
+        &__item {
+          font-family: $windows;
+          font-size: 12px;
+          background-color: transparent;
+          border: none;
+
+          &:hover {
+            box-shadow:
+              inset -1px -1px $gray-secondary,
+              inset 1px 1px $white;
+          }
+
+          &:focus {
+            box-shadow:
+              inset 1px 1px $gray-secondary,
+              inset -1px -1px $white;
+          }
+
+          &.--big-dropdown {
+            padding: 3px 5px;
+            background-position: 3px center;
+            text-align: left;
+            color: $black;
+
+            span {
+              margin-left: 22px;
+            }
+          }
+
+          &.--small-dropdown {
+            padding: 3px 28px;
+            box-shadow: none;
+            text-align: left;
+            color: $black;
+
+            &:hover {
+              background-color: $blue-main;
+              color: $white;
+
+              span::before {
+                background-color: $white;
+              }
+            }
+          }
         }
       }
     }
@@ -167,6 +295,28 @@
 
   &-address {
     height: 22px;
-    padding: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    padding-left: 2px;
+    padding-right: 4px;
+
+    .w98-list {
+      &__item {
+        &.--handler {
+          height: calc(100% - 4px);
+        }
+      }
+    }
+
+    &__title {
+      font-family: $windows;
+      font-size: 12px;
+    }
+
+    &__dropdown {
+      margin-left: 4px;
+    }
   }
 }

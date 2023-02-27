@@ -11,6 +11,7 @@ export {
   WindowAnchors,
   FakeWindow,
   Cursor,
+  Dropdown,
 } from './common'
 
 export {

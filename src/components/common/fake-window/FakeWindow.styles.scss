@@ -11,7 +11,7 @@ $shadow-sides-width: 4px;
     position: absolute;
     background-image: url('/src/assets/icons/pattern-square-dark.png');
 
-    @include media-desktop {
+    @include media-tablet {
       background-image: none;
       backdrop-filter: invert(100%) contrast(300%);
       -webkit-mask-image: url('/src/assets/icons/pattern-square-dark.png');

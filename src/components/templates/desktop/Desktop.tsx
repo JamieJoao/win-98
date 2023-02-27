@@ -2,8 +2,6 @@ import { DirectAccess, Program, FakeWindow, TaskBar } from 'components'
 import { useDesktop } from './hooks/useDesktop'
 
 import './Desktop.styles.scss'
-import { useAppSelector } from 'redux-tk/store'
-import { useEffect } from 'react'
 
 export const Desktop = () => {
   const {

@@ -1,13 +1,10 @@
 @mixin box-shadow-normal($invert: false) {
-  /*
-  VER SI SE USA EL INVERTIDO
-  */
   @if $invert {
     box-shadow:
-      inset -1px -1px #fff,
-      inset 1px 1px #0a0a0a,
-      inset -2px -2px #dfdfdf,
-      inset 2px 2px grey;
+      inset -1px -1px $white,
+      inset 1px 1px $gray-secondary,
+      inset -2px -2px $gray-main,
+      inset 2px 2px $black;
   }
 
   @else {
@@ -56,5 +53,65 @@
 @mixin media-desktop() {
   @media(min-width: 1024px) {
     @content;
+  }
+}
+
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-image: url('/src/assets/icons/pattern-square-gray.png');
+  }
+
+  &::-webkit-scrollbar-button {
+    width: 16px;
+    height: 16px;
+    box-shadow:
+      inset -1px -1px $black,
+      inset 1px 1px $gray-main,
+      inset -2px -2px $gray-secondary,
+      inset 2px 2px $white;
+    background-color: $gray-main;
+    background-repeat: no-repeat;
+
+    &:vertical {
+      &:decrement {
+        background-image: url('/src/assets/icons/chevron-up.png');
+        background-position: center 5px;
+      }
+
+      &:increment {
+        background-image: url('/src/assets/icons/chevron-down.png');
+        background-position: center 6px;
+      }
+    }
+
+    &:horizontal {
+      &:decrement {
+        background-image: url('/src/assets/icons/chevron-left.png');
+        background-position: 5px center;
+      }
+
+      &:increment {
+        background-image: url('/src/assets/icons/chevron-right.png');
+        background-position: 6px center;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray-main;
+    box-shadow:
+      inset -1px -1px $black,
+      inset 1px 1px $gray-main,
+      inset -2px -2px $gray-secondary,
+      inset 2px 2px $white;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: $gray-main;
   }
 }

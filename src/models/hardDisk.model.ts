@@ -1,5 +1,5 @@
-import NotePadIcon from 'assets/icons/notepad-0.png'
-import FileExplorerIcon from 'assets/icons/directory_open_file_mydocs-3.png'
+import NotePadIcon from 'assets/icons/notepad-5.png'
+import FileExplorerIcon from 'assets/icons/directory_explorer-5.png'
 
 export const hardDiskModel = [
   {
