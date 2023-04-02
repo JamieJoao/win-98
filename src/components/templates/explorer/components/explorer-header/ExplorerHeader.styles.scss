@@ -22,7 +22,10 @@ $icons-list: (
 
     .w98-list,
     .w98-list-dropdown {
-      &__item {
+
+      &__item,
+      &__item-dropdown__item {
+        position: relative;
 
         &.--big,
         &.--big-dropdown {
@@ -81,6 +84,86 @@ $icons-list: (
 
           span::before {
             bottom: 1px;
+          }
+        }
+
+        &:focus {
+          +.w98-list {
+            &__item {
+              &-dropdown {
+                visibility: visible;
+                z-index: 1;
+              }
+            }
+          }
+        }
+
+        &-dropdown {
+          position: absolute;
+          width: auto;
+          height: auto;
+          top: 100%;
+          left: 0;
+          list-style: none;
+          background-color: $gray-main;
+          display: flex;
+          flex-direction: column;
+          visibility: hidden;
+          z-index: 1;
+          padding: 3px;
+
+          @include box-shadow-normal;
+
+          &__item {
+            font-family: $windows;
+            font-size: 12px;
+            line-height: 9px;
+            height: 17px;
+            padding: 0 6px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 8px;
+
+            &:hover {
+              background-color: $blue-main;
+              color: $white;
+
+              &.--checked {
+                .w98-list__item-dropdown__item-check {
+                  background-image: url('/src/assets/icons/explorer/check-white.png');
+                }
+              }
+            }
+
+            &.--checked {
+              .w98-list__item-dropdown__item-check {
+                background-image: url('/src/assets/icons/explorer/check-dark.png');
+              }
+            }
+
+            &-check {
+              width: 7px;
+              height: 7px;
+            }
+          }
+        }
+      }
+
+      &__item-dropdown__item {
+        &:hover {
+          span {
+            &.--underline {
+              &::before {
+                background-color: $white;
+              }
+            }
+          }
+        }
+
+        span {
+          &.--underline {
+            display: inline-block;
           }
         }
       }

@@ -20,23 +20,36 @@ export const ExplorerHeader = (): JSX.Element => {
     , actionsList
   } = useExpolorerHeader()
 
-  const splitName = (name: string, hotKey: string) => {
-    
-  }
-
-  splitName('File', 'F')
-
   return (
     <div className="w98-explorer-header">
       <div className="w98-explorer-controls">
         <div className="w98-explorer-controls__side-left w98-list" ref={controlsListRef}>
           <div className='w98-list__item --handler' />
-          {controlsList.map(({ action, ...restProps }) => (
-            <button
-              className='w98-list__item'
-              onClick={action}>
-              <SplitName {...restProps} />
-            </button>
+          {controlsList.map(({ action, options, ...restProps }, index) => (
+            <div className='w98-list__item-wrapper' key={index}>
+              <button
+                className='w98-list__item'
+                onClick={action}>
+                <SplitName {...restProps} />
+              </button>
+
+              {options !== undefined && (
+                <ul className="w98-list__item-dropdown">
+                  {options.map(({ name, action: actionChild, hotKey }) => {
+                    return name === 'separator'
+                      ? <li className='w98-list__item-dropdown__separator' />
+                      : (
+                        <li className='w98-list__item-dropdown__item'>
+                          <div className="w98-list__item-dropdown__item-check" />
+                          <span>
+                            <SplitName name={name} hotKey={hotKey} />
+                          </span>
+                        </li>
+                      )
+                  })}
+                </ul>
+              )}
+            </div>
           ))}
         </div>
         <div className="w98-explorer-controls__side-right w98-list" ref={controlsPivotRef}>

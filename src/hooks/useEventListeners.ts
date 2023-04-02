@@ -23,6 +23,8 @@ export const useEventListeners = () => {
   }
 
   const handleClickOutsideScreen = (event: any) => {
+    console.log('out!')
+
     const { target } = event
     if (paramsForClickOutsideRef.current) {
       const { targetClass, callback, targetNode } = paramsForClickOutsideRef.current

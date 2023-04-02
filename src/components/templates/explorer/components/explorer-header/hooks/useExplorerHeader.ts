@@ -10,29 +10,44 @@ export const useExpolorerHeader = () => {
   const controlsListRef = useRef<HTMLDivElement>(null)
   const controlsPivotRef = useRef<HTMLDivElement>(null)
 
+  const controlsList: ControlItem[] = [
+    {
+      name: 'File',
+      hotKey: 'F',
+      options: [
+        { name: 'Delete', hotKey: 'D' },
+        { name: 'Rename', hotKey: 'm' },
+        { name: 'Properties', hotKey: 'r' },
+        { name: 'separator' },
+        { name: 'Close', hotKey: 'C' },
+      ]
+    },
+    {
+      name: 'Edit',
+      hotKey: 'E',
+      action() { }
+    },
+    {
+      name: 'View',
+      hotKey: 'V',
+      action() { }
+    },
+  ]
+
   const actionsList: ActionItem[] = [
     { name: 'Back', iconKey: 'back', action() { } },
     { name: 'Forward', iconKey: 'forward', action() { } },
     { name: 'Up', iconKey: 'up', action() { } },
-    { name: 'separator', action() { } },
+    { name: 'separator' },
     { name: 'Cut', iconKey: 'cut', action() { } },
     { name: 'Copy', iconKey: 'copy', action() { } },
     { name: 'Paste', iconKey: 'paste', action() { } },
-    { name: 'separator', action() { } },
+    { name: 'separator' },
     { name: 'Undo', iconKey: 'undo', action() { } },
     { name: 'Delete', iconKey: 'delete', action() { } },
     { name: 'Properties', iconKey: 'properties', action() { } },
-    { name: 'separator', action() { } },
+    { name: 'separator' },
     { name: 'Views', iconKey: 'views', action() { } },
-  ]
-
-  const controlsList: ControlItem[] = [
-    { name: 'File', hotKey: 'F', action() { } },
-    { name: 'Edit', hotKey: 'E', action() { } },
-    { name: 'View', hotKey: 'V', action() { } },
-    { name: 'Go', hotKey: 'G', action() { } },
-    { name: 'Favorites', hotKey: 'a', action() { } },
-    { name: 'Help', hotKey: 'H', action() { } },
   ]
 
   useEffect(() => {
