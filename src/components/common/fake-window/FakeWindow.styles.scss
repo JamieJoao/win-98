@@ -1,0 +1,49 @@
+$shadow-sides-width: 4px;
+
+.w98-fake-window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default;
+  z-index: $zindex-windows-mask;
+
+  span {
+    position: absolute;
+    background-image: url('/src/assets/icons/pattern-square-dark.png');
+
+    @include media-tablet {
+      background-image: none;
+      backdrop-filter: invert(100%) contrast(300%);
+      -webkit-mask-image: url('/src/assets/icons/pattern-square-dark.png');
+      mask-image: url('/src/assets/icons/pattern-square-dark.png');
+    }
+
+    &:nth-child(1) {
+      width: calc(100% - $shadow-sides-width);
+      height: $shadow-sides-width;
+      top: 0;
+      left: 0;
+    }
+
+    &:nth-child(2) {
+      width: $shadow-sides-width;
+      height: calc(100% - $shadow-sides-width);
+      top: 0;
+      right: 0;
+    }
+
+    &:nth-child(3) {
+      width: calc(100% - $shadow-sides-width);
+      height: $shadow-sides-width;
+      bottom: 0;
+      right: 0;
+    }
+
+    &:nth-child(4) {
+      width: $shadow-sides-width;
+      height: calc(100% - $shadow-sides-width);
+      top: $shadow-sides-width;
+      left: 0;
+    }
+  }
+}

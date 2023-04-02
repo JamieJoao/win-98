@@ -1,6 +1,9 @@
 import { useRef } from 'react'
 
+import { useCursor } from 'hooks'
+
 import './styles.scss'
+import { Cursor } from 'components/common'
 
 interface IProps {
   children: React.ReactNode
@@ -9,6 +12,7 @@ interface IProps {
 export const Screen = (props: IProps) => {
   const { children } = props
 
+  // const { cursorRef, handleMouseMove } = useCursor()
   const contentRef = useRef<HTMLDivElement>(null)
 
   /**
@@ -24,9 +28,12 @@ export const Screen = (props: IProps) => {
       <div
         ref={contentRef}
         className="w98-screen__content"
+        // onMouseMove={handleMouseMove}
         onContextMenu={handleContextMenu}>
         {children}
       </div>
+
+      {/* <Cursor ref={cursorRef} /> */}
     </div>
   )
 }

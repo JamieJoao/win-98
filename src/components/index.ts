@@ -10,11 +10,18 @@ export {
   Separator,
   WindowAnchors,
   FakeWindow,
+  Cursor,
+  Dropdown,
 } from './common'
 
 export {
   Screen,
-  DraggableWindow,
-  HeaderWindow,
-  ButtonControlWindow,
+  Program,
+  Header,
+  ButtonControl,
 } from './layout'
+
+export {
+  Desktop,
+  NotepadTemplate,
+} from './templates'

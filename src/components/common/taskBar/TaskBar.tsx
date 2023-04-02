@@ -14,7 +14,7 @@ const COLUMN_GAP = 4
 const WIDTH_BASE = 160
 
 export const TaskBar = () => {
-  const taskBarButtonsStack = useAppSelector(state => state.taskBarButtonsStack)
+  const { taskBarButtonsStack } = useAppSelector(state => state)
   const taskBarRef = useRef<HTMLDivElement | null>(null)
 
   const buttonWidthMemo = useMemo<number>(() => {

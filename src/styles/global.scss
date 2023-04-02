@@ -3,6 +3,11 @@
   margin: 0;
   box-sizing: border-box;
   image-rendering: pixelated;
+
+  &::selection {
+    background-color: $blue-main;
+    color: $white;
+  }
 }
 
 html,

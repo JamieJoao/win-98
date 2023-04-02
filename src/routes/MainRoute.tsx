@@ -2,22 +2,16 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Outlet,
-  Link,
 } from 'react-router-dom'
 
-import {
-  Home,
-  Desktop,
-} from '../pages'
+import { System } from 'views'
 
 export const MainRoute = () => {
 
   return (
     <Router basename='/win-98'>
       <Routes>
-        <Route path='/' element={<Desktop />} />
-        {/* <Route path='/' element={<Home />} /> */}
+        <Route path='/' element={<System />} />
       </Routes>
     </Router>
   )
